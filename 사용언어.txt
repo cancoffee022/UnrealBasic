@@ -1,0 +1,4 @@
+사용 언어:
+FString : 문자열
+FText 	: 현지화기능
+FName	: 대소문자 구별 x
