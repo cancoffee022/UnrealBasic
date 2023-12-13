@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-TicTacToe.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\User\Documents\Unreal Projects\TicTacToe\Intermediate\Build\Win64\x64\TicTacToeEditor\Development\Engine\SharedPCH.Engine.Cpp20.h.obj"
+"C:\Users\User\Documents\Unreal Projects\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\TicTacToe.cpp.obj"
+"C:\Users\User\Documents\Unreal Projects\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\Default.rc2.res"
+/OUT:"C:\Users\User\Documents\Unreal Projects\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\UnrealEditor-TicTacToe.lib"

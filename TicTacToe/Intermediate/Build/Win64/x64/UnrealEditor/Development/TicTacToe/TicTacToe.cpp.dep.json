@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\user\\documents\\unreal projects\\tictactoe\\source\\tictactoe\\tictactoe.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\user\\documents\\unreal projects\\tictactoe\\intermediate\\build\\win64\\x64\\tictactoeeditor\\development\\engine\\sharedpch.engine.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\user\\documents\\unreal projects\\tictactoe\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\tictactoe\\definitions.tictactoe.h",
+            "c:\\users\\user\\documents\\unreal projects\\tictactoe\\source\\tictactoe\\tictactoe.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

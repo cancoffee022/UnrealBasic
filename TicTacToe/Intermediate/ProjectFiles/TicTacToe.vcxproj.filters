@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\TicTacToe.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\TicTacToe.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\TicTacToeEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\TicTacToe">
+      <UniqueIdentifier>{80212694-8648-32F1-9D7F-53BC72BE7EAD}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\TicTacToe\TicTacToe.Build.cs">
+      <Filter>Source\TicTacToe</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\TicTacToe\TicTacToe.cpp">
+      <Filter>Source\TicTacToe</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TicTacToe\TicTacToe.h">
+      <Filter>Source\TicTacToe</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
