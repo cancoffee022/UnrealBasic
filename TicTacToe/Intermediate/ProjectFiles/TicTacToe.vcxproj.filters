@@ -11,6 +11,7 @@
     <None Include="..\..\Source\TicTacToeEditor.Target.cs">
       <Filter>Source</Filter>
     </None>
+    <None Include="..\..\.vsconfig" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
     </Filter>
@@ -29,6 +30,18 @@
     <Filter Include="Source\TicTacToe">
       <UniqueIdentifier>{80212694-8648-32F1-9D7F-53BC72BE7EAD}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\TicTacToe\MyActor.cpp">
+      <Filter>Source\TicTacToe</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TicTacToe\MyActor.h">
+      <Filter>Source\TicTacToe</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\TicTacToe\MyClass.cpp">
+      <Filter>Source\TicTacToe</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TicTacToe\MyClass.h">
+      <Filter>Source\TicTacToe</Filter>
+    </ClInclude>
     <None Include="..\..\Source\TicTacToe\TicTacToe.Build.cs">
       <Filter>Source\TicTacToe</Filter>
     </None>
@@ -37,6 +50,15 @@
     </ClCompile>
     <ClInclude Include="..\..\Source\TicTacToe\TicTacToe.h">
       <Filter>Source\TicTacToe</Filter>
+    </ClInclude>
+    <Filter Include="Source\TicTacToe\Private">
+      <UniqueIdentifier>{1C35CA44-A05D-3EBE-91DE-5FED1CF02E55}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\TicTacToe\Private\MyUserWidget.cpp">
+      <Filter>Source\TicTacToe\Private</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TicTacToe\Private\MyUserWidget.h">
+      <Filter>Source\TicTacToe\Private</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

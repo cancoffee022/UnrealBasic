@@ -1,0 +1,12 @@
+지우면 안 됨
+.uproject : 언리얼 에디터 구동시 프로젝트에 대한 정보를 포함하고 있는 json 파일
+Config : 프로젝트 환경 설정 파일들을 담고 있는 폴더
+Pulgin : 프로젝트에서 사용하고자 하는 외부 플러그인들을 모아 노흥ㄴ 폴더
+Source : 생명줄
+
+지워도 큰 문제 없음
+.sin : visual studio solution 파일
+.vs : visual Studio 부가 정보 파일
+Binaries : C++ 코드 컴파일 결과물이 저장되는 폴더
+Intermediate : 프로젝트 관리를 위한 임시파일을 저장하는 폴더
+Saved : 프로젝트 사용중 저장되는 파일드렝 대한 내용을 담는 폴더

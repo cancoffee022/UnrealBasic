@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TicTacToeModuleRules
-build_property.ProjectDir = C:\Users\User\Documents\Unreal Projects\TicTacToe\Intermediate\Build\BuildRulesProjects\TicTacToeModuleRules\
+build_property.ProjectDir = D:\UnrealBasic\TicTacToe\Intermediate\Build\BuildRulesProjects\TicTacToeModuleRules\
