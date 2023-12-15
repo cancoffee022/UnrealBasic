@@ -1,0 +1,15 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\unrealeditor\\inc\\tictactoe\\uht\\myplayercontroller.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\x64\\tictactoeeditor\\development\\engine\\sharedpch.engine.cpp20.h.pch",
+        "Includes": [
+            "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\tictactoe\\definitions.tictactoe.h",
+            "d:\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\actor\\myplayercontroller.h",
+            "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\unrealeditor\\inc\\tictactoe\\uht\\myplayercontroller.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

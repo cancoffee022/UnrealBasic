@@ -30,18 +30,6 @@
     <Filter Include="Source\TicTacToe">
       <UniqueIdentifier>{80212694-8648-32F1-9D7F-53BC72BE7EAD}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\TicTacToe\MyActor.cpp">
-      <Filter>Source\TicTacToe</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\TicTacToe\MyActor.h">
-      <Filter>Source\TicTacToe</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\Source\TicTacToe\MyClass.cpp">
-      <Filter>Source\TicTacToe</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\TicTacToe\MyClass.h">
-      <Filter>Source\TicTacToe</Filter>
-    </ClInclude>
     <None Include="..\..\Source\TicTacToe\TicTacToe.Build.cs">
       <Filter>Source\TicTacToe</Filter>
     </None>
@@ -54,11 +42,23 @@
     <Filter Include="Source\TicTacToe\Private">
       <UniqueIdentifier>{1C35CA44-A05D-3EBE-91DE-5FED1CF02E55}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\TicTacToe\Private\MyUserWidget.cpp">
-      <Filter>Source\TicTacToe\Private</Filter>
+    <Filter Include="Source\TicTacToe\Private\Actor">
+      <UniqueIdentifier>{4F794F41-8EB0-3893-9A5E-843C2303D780}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\TicTacToe\Private\Actor\MyPlayerController.cpp">
+      <Filter>Source\TicTacToe\Private\Actor</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\TicTacToe\Private\MyUserWidget.h">
-      <Filter>Source\TicTacToe\Private</Filter>
+    <ClInclude Include="..\..\Source\TicTacToe\Private\Actor\MyPlayerController.h">
+      <Filter>Source\TicTacToe\Private\Actor</Filter>
+    </ClInclude>
+    <Filter Include="Source\TicTacToe\Private\Widget">
+      <UniqueIdentifier>{2A10E9D3-466B-3821-BB97-388CFE523873}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\TicTacToe\Private\Widget\GameMapWidget.cpp">
+      <Filter>Source\TicTacToe\Private\Widget</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TicTacToe\Private\Widget\GameMapWidget.h">
+      <Filter>Source\TicTacToe\Private\Widget</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

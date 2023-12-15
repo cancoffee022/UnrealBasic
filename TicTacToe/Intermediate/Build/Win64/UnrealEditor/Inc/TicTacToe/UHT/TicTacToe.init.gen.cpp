@@ -17,13 +17,13 @@ void EmptyLinkFunctionForGeneratedCodeTicTacToe_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0x36854894,
-				0x1A682E40,
+				0x493711B2,
+				0xBAF8635F,
 				METADATA_PARAMS(0, nullptr)
 			};
 			UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_TicTacToe.OuterSingleton, PackageParams);
 		}
 		return Z_Registration_Info_UPackage__Script_TicTacToe.OuterSingleton;
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_TicTacToe(Z_Construct_UPackage__Script_TicTacToe, TEXT("/Script/TicTacToe"), Z_Registration_Info_UPackage__Script_TicTacToe, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x36854894, 0x1A682E40));
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_TicTacToe(Z_Construct_UPackage__Script_TicTacToe, TEXT("/Script/TicTacToe"), Z_Registration_Info_UPackage__Script_TicTacToe, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x493711B2, 0xBAF8635F));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
