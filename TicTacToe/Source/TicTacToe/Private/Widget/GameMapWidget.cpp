@@ -37,5 +37,15 @@ void UGameMapWidget::FindAllWidgets()
 	// UWidget 클래스 : 모든 위젯 요소의 기반 클래스 입니다.
 	//Cast<T> : T* 으로 캐스팅을 진행합니다
 	// TArray.Add(value) : value를 배열에 추가합니다.
+}
 
+void UGameMapWidget::SetAISimbol(int x, int y)
+{
+	//XY 위치의 TextBlock 객체를 얻기 위한 인덱스를 계산합니다
+	int32 index = (y * 3) + x;
+
+	// index 위치에
+	UTextBlock* textBlock = SimbolTexts[index];
+	
+	textBlock->SetText(FText::FromString(TEXT("O")));
 }

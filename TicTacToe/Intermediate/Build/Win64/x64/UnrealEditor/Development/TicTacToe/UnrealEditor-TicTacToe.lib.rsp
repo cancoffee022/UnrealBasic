@@ -7,11 +7,17 @@
 /IGNORE:4221
 /NODEFAULTLIB
 "D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\TicTacToeEditor\Development\Engine\SharedPCH.Engine.Cpp20.h.obj"
+"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\GameBoardInfo.gen.cpp.obj"
 "D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\GameMapWidget.gen.cpp.obj"
+"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\GameTurn.gen.cpp.obj"
+"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\MyGameModeBase.gen.cpp.obj"
 "D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\MyPlayerController.gen.cpp.obj"
 "D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\TicTacToe.init.gen.cpp.obj"
 "D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\TicTacToe.cpp.obj"
 "D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\MyPlayerController.cpp.obj"
+"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\GameTurn.cpp.obj"
+"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\MyGameModeBase.cpp.obj"
+"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\GameBoardInfo.cpp.obj"
 "D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\GameMapWidget.cpp.obj"
 "D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\Default.rc2.res"
 /OUT:"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\UnrealEditor-TicTacToe.lib"

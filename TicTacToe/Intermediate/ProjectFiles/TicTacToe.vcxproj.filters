@@ -51,6 +51,33 @@
     <ClInclude Include="..\..\Source\TicTacToe\Private\Actor\MyPlayerController.h">
       <Filter>Source\TicTacToe\Private\Actor</Filter>
     </ClInclude>
+    <Filter Include="Source\TicTacToe\Private\Enum">
+      <UniqueIdentifier>{DF14354C-D345-3F66-911B-E56700D96E44}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\TicTacToe\Private\Enum\GameTurn.cpp">
+      <Filter>Source\TicTacToe\Private\Enum</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TicTacToe\Private\Enum\GameTurn.h">
+      <Filter>Source\TicTacToe\Private\Enum</Filter>
+    </ClInclude>
+    <Filter Include="Source\TicTacToe\Private\GameMode">
+      <UniqueIdentifier>{E78724E5-D31E-362E-991A-8CC8E1E5928C}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\TicTacToe\Private\GameMode\MyGameModeBase.cpp">
+      <Filter>Source\TicTacToe\Private\GameMode</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TicTacToe\Private\GameMode\MyGameModeBase.h">
+      <Filter>Source\TicTacToe\Private\GameMode</Filter>
+    </ClInclude>
+    <Filter Include="Source\TicTacToe\Private\Struct">
+      <UniqueIdentifier>{92B623B4-7144-3B8F-AF79-15B3AC1CD75F}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\TicTacToe\Private\Struct\GameBoardInfo.cpp">
+      <Filter>Source\TicTacToe\Private\Struct</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TicTacToe\Private\Struct\GameBoardInfo.h">
+      <Filter>Source\TicTacToe\Private\Struct</Filter>
+    </ClInclude>
     <Filter Include="Source\TicTacToe\Private\Widget">
       <UniqueIdentifier>{2A10E9D3-466B-3821-BB97-388CFE523873}</UniqueIdentifier>
     </Filter>
