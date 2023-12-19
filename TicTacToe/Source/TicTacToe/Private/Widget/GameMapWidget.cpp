@@ -1,23 +1,23 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Widget/GameMapWidget.h"
 
-// UTextBlock Çì´õÆÄÀÏ Æ÷ÇÔ
+// UTextBlock í—¤ë”íŒŒì¼ í¬í•¨
 #include "Components/TextBlock.h"
 #include "Components/Button.h"
 
 void UGameMapWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-	// Super : ºÎ¸ğÅ¬·¡½º¸¦ ³ªÅ¸³À´Ï´Ù
-	// ThisClass : ÀÚ½Å Å¬·¡½º¸¦ ³ªÅ¸³À´Ï´Ù.
-	// this : ÀÚ±â ÀÚ½Å °´Ã¼¸¦ ³ªÅ¸³À´Ï´Ù.
+	// Super : ë¶€ëª¨í´ë˜ìŠ¤ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤
+	// ThisClass : ìì‹  í´ë˜ìŠ¤ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.
+	// this : ìê¸° ìì‹  ê°ì²´ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.
 
-	// »ç¿ëµÇ´Â À§Á¬À» ¸ğµÎ Ã£½À´Ï´Ù
+	// ì‚¬ìš©ë˜ëŠ” ìœ„ì ¯ì„ ëª¨ë‘ ì°¾ìŠµë‹ˆë‹¤
 	FindAllWidgets();
 
-	// ¹öÆ° ÀÌº¥Æ®¸¦ ¹ÙÀÎµùÇÕ´Ï´Ù.
+	// ë²„íŠ¼ ì´ë²¤íŠ¸ë¥¼ ë°”ì¸ë”©í•©ë‹ˆë‹¤.
 	BindButtonEvents();
 }
 
@@ -33,44 +33,77 @@ void UGameMapWidget::FindAllWidgets()
 	SimbolTexts.Add(Cast<UTextBlock>(GetWidgetFromName(TEXT("TextBlock_20"))));
 	SimbolTexts.Add(Cast<UTextBlock>(GetWidgetFromName(TEXT("TextBlock_21"))));
 	SimbolTexts.Add(Cast<UTextBlock>(GetWidgetFromName(TEXT("TextBlock_22"))));
-	// GetWidgetFromName(NameData) : NameData¿¡ ÇØ´çÇÏ´Â À§Á¬À» Ã£¾Æ UWidget* Çü½ÄÀ¸·Î ¹İÈ¯ÇÕ´Ï´Ù
-	// UWidget Å¬·¡½º : ¸ğµç À§Á¬ ¿ä¼ÒÀÇ ±â¹İ Å¬·¡½º ÀÔ´Ï´Ù.
-	//Cast<T> : T* À¸·Î Ä³½ºÆÃÀ» ÁøÇàÇÕ´Ï´Ù
-	// TArray.Add(value) : value¸¦ ¹è¿­¿¡ Ãß°¡ÇÕ´Ï´Ù.
+	// GetWidgetFromName(NameData) : NameDataì— í•´ë‹¹í•˜ëŠ” ìœ„ì ¯ì„ ì°¾ì•„ UWidget* í˜•ì‹ìœ¼ë¡œ ë°˜í™˜í•©ë‹ˆë‹¤
+	// UWidget í´ë˜ìŠ¤ : ëª¨ë“  ìœ„ì ¯ ìš”ì†Œì˜ ê¸°ë°˜ í´ë˜ìŠ¤ ì…ë‹ˆë‹¤.
+	//Cast<T> : T* ìœ¼ë¡œ ìºìŠ¤íŒ…ì„ ì§„í–‰í•©ë‹ˆë‹¤
+	// TArray.Add(value) : valueë¥¼ ë°°ì—´ì— ì¶”ê°€í•©ë‹ˆë‹¤.
 }
 
 void UGameMapWidget::BindButtonEvents()
 {
+	// í…ìŠ¤íŠ¸ë¸”ë¡ ê°ì²´ë“¤ì„ ê°€ì§€ëŠ” ë²„íŠ¼ ê°ì²´ë¥¼ ë‹´ê¸°ìœ„í•œ ë°°ì—´
+	TArray<UButton*> buttons;
+
 	for (int i = 0; i < SimbolTexts.Num(); ++i)
 	{
-		// ÅØ½ºÆ® ºí·ÏÀ» ¼ÒÀ¯ÇÏ´Â Button. °´Ã¼¸¦ ¾ò½À´Ï´Ù.
+		// í…ìŠ¤íŠ¸ ë¸”ë¡ì„ ì†Œìœ í•˜ëŠ” Button. ê°ì²´ë¥¼ ì–»ìŠµë‹ˆë‹¤.
 		UButton* button = Cast<UButton>(SimbolTexts[i]->GetParent());
-		// WidgetInstance->GetParent() : ÇØ´ç WidgetInstance¸¦ ¼ÒÀ¯ÇÏ´Â ºÎ¸ğ À§Á¬ °´Ã¼¸¦ ¾ò½À´Ï´Ù
+		// WidgetInstance->GetParent() : í•´ë‹¹ WidgetInstanceë¥¼ ì†Œìœ í•˜ëŠ” ë¶€ëª¨ ìœ„ì ¯ ê°ì²´ë¥¼ ì–»ìŠµë‹ˆë‹¤
 
-		// OnGameBoardClicked ¸â¹ö ÇÔ¼ö¸¦ ¹öÆ° ÀÌº¥Æ®¿¡ ¹ÙÀÎµù ÇÕ´Ï´Ù.
-		// ´ë¸®ÀÚ¿¡ ÇÔ¼ö¸¦ ¹ÙÀÎµù½ÃÅ°´Â ¹æ¹ı
-		// Dynamic Multicast Delegate : AddDynamic(È£Ãâ½Ã »ç¿ëµÉ °´Ã¼, ¸â¹öÇÔ¼ö Æ÷ÀÎÅÍ)
-		// Dynamic Singlecast Delegate : BindDynamic(È£Ãâ½Ã »ç¿ëµÉ °´Ã¼, ¸â¹öÇÔ¼ö Æ÷ÀÎÅÍ)
-		// Multicast Delegate : Add(È£Ãâ½Ã »ç¿ëµÉ °´Ã¼, ¸â¹öÇÔ¼ö Æ÷ÀÎÅÍ)
-		// Singlecast Delegate : Bind(È£Ãâ½Ã »ç¿ëµÉ °´Ã¼, ¸â¹öÇÔ¼ö Æ÷ÀÎÅÍ)
-		button->OnClicked.AddDynamic(this, &UGameMapWidget::OnGameBoardClicked);
+		buttons.Add(button);
+
+		// OnGameBoardClicked ë©¤ë²„ í•¨ìˆ˜ë¥¼ ë²„íŠ¼ ì´ë²¤íŠ¸ì— ë°”ì¸ë”© í•©ë‹ˆë‹¤.
+		// ëŒ€ë¦¬ìì— í•¨ìˆ˜ë¥¼ ë°”ì¸ë”©ì‹œí‚¤ëŠ” ë°©ë²•
+		// Dynamic Multicast Delegate : AddDynamic(í˜¸ì¶œì‹œ ì‚¬ìš©ë  ê°ì²´, ë©¤ë²„í•¨ìˆ˜ í¬ì¸í„°)
+		// Dynamic Singlecast Delegate : BindDynamic(í˜¸ì¶œì‹œ ì‚¬ìš©ë  ê°ì²´, ë©¤ë²„í•¨ìˆ˜ í¬ì¸í„°)
+		// Multicast Delegate : Add(í˜¸ì¶œì‹œ ì‚¬ìš©ë  ê°ì²´, ë©¤ë²„í•¨ìˆ˜ í¬ì¸í„°)
+		// Singlecast Delegate : Bind(í˜¸ì¶œì‹œ ì‚¬ìš©ë  ê°ì²´, ë©¤ë²„í•¨ìˆ˜ í¬ì¸í„°)
+		//button->OnClicked.AddDynamic(this, &UGameMapWidget::OnGameBoardClicked);
 	}
+
+	buttons[0]->OnClicked.AddDynamic(this, &UGameMapWidget::OnGameBoardClicked00);
+	buttons[1]->OnClicked.AddDynamic(this, &UGameMapWidget::OnGameBoardClicked01);
+	buttons[2]->OnClicked.AddDynamic(this, &UGameMapWidget::OnGameBoardClicked02);
+	
+	buttons[3]->OnClicked.AddDynamic(this, &UGameMapWidget::OnGameBoardClicked10);
+	buttons[4]->OnClicked.AddDynamic(this, &UGameMapWidget::OnGameBoardClicked11);
+	buttons[5]->OnClicked.AddDynamic(this, &UGameMapWidget::OnGameBoardClicked12);
+	
+	buttons[6]->OnClicked.AddDynamic(this, &UGameMapWidget::OnGameBoardClicked20);
+	buttons[7]->OnClicked.AddDynamic(this, &UGameMapWidget::OnGameBoardClicked21);
+	buttons[8]->OnClicked.AddDynamic(this, &UGameMapWidget::OnGameBoardClicked22);
 }
 
-void UGameMapWidget::OnGameBoardClicked()
+void UGameMapWidget::OnGameBoardClicked(int32 x, int32 y)
 {
-	// ·Î±× Ãâ·Â
-	UE_LOG(LogTemp, Warning, TEXT("Button Clicked"));
-	// ¾î¶² ¹öÆ°ÀÌ Å¬¸¯µÇ¾ú´ÂÁö È®ÀÎÇÕ´Ï´Ù.
+	// ë¡œê·¸ ì¶œë ¥
+	UE_LOG(LogTemp, Warning, TEXT("[%d] [%d] í´ë¦­ë¨"), x, y);
 
+	int32 buttonIndex = x + (y * 3);
+	SimbolTexts[buttonIndex]->SetText(FText::FromString(TEXT("X")));
+
+	// ì´ë²¤íŠ¸ë¥¼ ë°œìƒì‹œí‚µë‹ˆë‹¤
+	OnPlayerSimbolUpdated.ExecuteIfBound(x, y);
 }
+
+void UGameMapWidget::OnGameBoardClicked00() { OnGameBoardClicked(0, 0); }
+void UGameMapWidget::OnGameBoardClicked01() { OnGameBoardClicked(1, 0); }
+void UGameMapWidget::OnGameBoardClicked02() { OnGameBoardClicked(2, 0); }
+
+void UGameMapWidget::OnGameBoardClicked10() { OnGameBoardClicked(0, 1); }
+void UGameMapWidget::OnGameBoardClicked11() { OnGameBoardClicked(1, 1); }
+void UGameMapWidget::OnGameBoardClicked12() { OnGameBoardClicked(2, 1); }
+
+void UGameMapWidget::OnGameBoardClicked20() { OnGameBoardClicked(0, 2); }
+void UGameMapWidget::OnGameBoardClicked21() { OnGameBoardClicked(1, 2); }
+void UGameMapWidget::OnGameBoardClicked22() { OnGameBoardClicked(2, 2); }
 
 void UGameMapWidget::SetAISimbol(int x, int y)
 {
-	//XY À§Ä¡ÀÇ TextBlock °´Ã¼¸¦ ¾ò±â À§ÇÑ ÀÎµ¦½º¸¦ °è»êÇÕ´Ï´Ù
-	int32 index = (y * 3) + x;
+	//XY ìœ„ì¹˜ì˜ TextBlock ê°ì²´ë¥¼ ì–»ê¸° ìœ„í•œ ì¸ë±ìŠ¤ë¥¼ ê³„ì‚°í•©ë‹ˆë‹¤
+	int32 index = (x * 3) + y;
 
-	// index À§Ä¡¿¡
+	// index ìœ„ì¹˜ì—
 	UTextBlock* textBlock = SimbolTexts[index];
 	
 	textBlock->SetText(FText::FromString(TEXT("O")));

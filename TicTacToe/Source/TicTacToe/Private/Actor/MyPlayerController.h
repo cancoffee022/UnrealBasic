@@ -54,6 +54,9 @@ private:
 	// out_BoardInfo : 출력용 매게 변수이며, 반환받을 랜덤한 보드 정보 배열 변수를 전달합니다.
 	void GetRandomBoardInfo(FGameBoardInfo& out_BoardInfo) const;
 
-	// x y 좌표의 심볼을 얻습니다.
+	// xy 위치의 심볼을 얻습니다.
 	FGameBoardInfo GetSimbol(int32 x, int32 y);
+
+	// XY 위치에 심볼을 설정합니다.
+	void SetSimbol(int32 x, int32 y, int32 simbol);;
 };

@@ -1,23 +1,23 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "d:\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\gamemode\\mygamemodebase.cpp",
+        "Source": "c:\\users\\user\\desktop\\unrealproject\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\gamemode\\mygamemodebase.cpp",
         "ProvidedModule": "",
-        "PCH": "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\x64\\tictactoeeditor\\development\\engine\\sharedpch.engine.cpp20.h.pch",
+        "PCH": "c:\\users\\user\\desktop\\unrealproject\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\x64\\tictactoeeditor\\development\\engine\\sharedpch.engine.cpp20.h.pch",
         "Includes": [
-            "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\tictactoe\\definitions.tictactoe.h",
-            "d:\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\gamemode\\mygamemodebase.h",
-            "d:\\ue_5.3\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
-            "d:\\ue_5.3\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
-            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\serverstatreplicator.generated.h",
-            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\gamemodebase.generated.h",
-            "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\unrealeditor\\inc\\tictactoe\\uht\\mygamemodebase.generated.h",
-            "d:\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\actor\\myplayercontroller.h",
-            "d:\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\enum\\gameturn.h",
-            "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\unrealeditor\\inc\\tictactoe\\uht\\gameturn.generated.h",
-            "d:\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\struct\\gameboardinfo.h",
-            "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\unrealeditor\\inc\\tictactoe\\uht\\gameboardinfo.generated.h",
-            "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\unrealeditor\\inc\\tictactoe\\uht\\myplayercontroller.generated.h"
+            "c:\\users\\user\\desktop\\unrealproject\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\tictactoe\\definitions.tictactoe.h",
+            "c:\\users\\user\\desktop\\unrealproject\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\gamemode\\mygamemodebase.h",
+            "c:\\program files\\epic games\\ue_5.3\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
+            "c:\\program files\\epic games\\ue_5.3\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
+            "c:\\program files\\epic games\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\serverstatreplicator.generated.h",
+            "c:\\program files\\epic games\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\gamemodebase.generated.h",
+            "c:\\users\\user\\desktop\\unrealproject\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\unrealeditor\\inc\\tictactoe\\uht\\mygamemodebase.generated.h",
+            "c:\\users\\user\\desktop\\unrealproject\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\actor\\myplayercontroller.h",
+            "c:\\users\\user\\desktop\\unrealproject\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\enum\\gameturn.h",
+            "c:\\users\\user\\desktop\\unrealproject\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\unrealeditor\\inc\\tictactoe\\uht\\gameturn.generated.h",
+            "c:\\users\\user\\desktop\\unrealproject\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\struct\\gameboardinfo.h",
+            "c:\\users\\user\\desktop\\unrealproject\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\unrealeditor\\inc\\tictactoe\\uht\\gameboardinfo.generated.h",
+            "c:\\users\\user\\desktop\\unrealproject\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\unrealeditor\\inc\\tictactoe\\uht\\myplayercontroller.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

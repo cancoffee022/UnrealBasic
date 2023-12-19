@@ -37,6 +37,14 @@ void AMyPlayerController::BeginPlay()
 	// 화면에 생성된 Widget을 띄웁니다.
 	GameMapWidgetInstance->AddToViewport();
 
+	OnPlayerSimbolUpdated_Signature onPlayerSimbolUpdated;
+	onPlayerSimbolUpdated.BindLambda(this, [&](int32 x, int32 y)
+		{
+			SetSimbol(x, y, SIMBOL_PLAYER);
+		});
+
+	GameMapWidgetInstance->SetPlayerSimbolUpdatedEvent(onPlayerSimbolUpdated);
+
 	// 커서를 표시합니다
 	bShowMouseCursor = true;
 
@@ -68,6 +76,9 @@ void AMyPlayerController::PlayerTick(float DeltaTime)
 
 		// 랜덤한 위체에 AI 심볼을 설정합니다
 		GameMapWidgetInstance->SetAISimbol(randomBoardInfo.X, randomBoardInfo.Y);
+
+		// AI 심볼을 설정합니다
+		SetSimbol(randomBoardInfo.X, randomBoardInfo.Y, SIMBOL_AI);
 
 		// 턴을 1 증가시킵니다.
 		++GameTurnCount;
@@ -113,4 +124,9 @@ FGameBoardInfo AMyPlayerController::GetSimbol(int32 x, int32 y)
 
 	// index에 해당하는 값을 반환합니다
 	return GameBoard[index];
+}
+
+void AMyPlayerController::SetSimbol(int32 x, int32 y, int32 simbol)
+{
+	UE_LOG(LogTemp, Warning, TEXT("[%d][%d] 위치에 심볼이 활성화되었습니다"), x, y);
 }

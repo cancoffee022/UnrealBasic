@@ -1,11 +1,11 @@
-"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\UnrealEditor\Inc\TicTacToe\UHT\MyPlayerController.gen.cpp"
-/FI"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\TicTacToeEditor\Development\Engine\SharedPCH.Engine.Cpp20.h"
-/FI"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\Definitions.TicTacToe.h"
-/Yu"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\TicTacToeEditor\Development\Engine\SharedPCH.Engine.Cpp20.h"
-/Fp"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\TicTacToeEditor\Development\Engine\SharedPCH.Engine.Cpp20.h.pch"
-/Fo"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\MyPlayerController.gen.cpp.obj"
-/sourceDependencies "D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\MyPlayerController.gen.cpp.dep.json"
-@"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\TicTacToe.Shared.rsp"
+"C:\Users\User\Desktop\UnrealProject\UnrealBasic\TicTacToe\Intermediate\Build\Win64\UnrealEditor\Inc\TicTacToe\UHT\MyPlayerController.gen.cpp"
+/FI"C:\Users\User\Desktop\UnrealProject\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\TicTacToeEditor\Development\Engine\SharedPCH.Engine.Cpp20.h"
+/FI"C:\Users\User\Desktop\UnrealProject\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\Definitions.TicTacToe.h"
+/Yu"C:\Users\User\Desktop\UnrealProject\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\TicTacToeEditor\Development\Engine\SharedPCH.Engine.Cpp20.h"
+/Fp"C:\Users\User\Desktop\UnrealProject\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\TicTacToeEditor\Development\Engine\SharedPCH.Engine.Cpp20.h.pch"
+/Fo"C:\Users\User\Desktop\UnrealProject\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\MyPlayerController.gen.cpp.obj"
+/sourceDependencies "C:\Users\User\Desktop\UnrealProject\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\MyPlayerController.gen.cpp.dep.json"
+@"C:\Users\User\Desktop\UnrealProject\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\TicTacToe.Shared.rsp"
 /Zc:inline
 /nologo
 /Oi

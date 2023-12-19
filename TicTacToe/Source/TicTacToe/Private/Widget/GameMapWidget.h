@@ -6,6 +6,10 @@
 #include "Blueprint/UserWidget.h"
 #include "GameMapWidget.generated.h"
 
+// 플레이어 심볼이 갱신될 경우를 나타내기 위한 대리자 형식
+// int32 x: 심볼이 설정된 X 위치
+// int32 y: 심볼이 설정된 Y 위치
+DECLARE_DELEGATE_TwoParams(OnPlayerSimbolUpdated_Signature, int32 /* x */, int32 /* y */)
 
 /**
  * 
@@ -22,6 +26,9 @@ private:
 	/// TSet : 저장 순서가 유지되며, 중복 저장되지 않습니다
 	/// TMap : 키와 값이 함께 저장되며, 키는 중복 저장되지 않습니다
 
+	// 플레이어 심볼이 갱신되었을 경우 발생하는 이벤트입니다.
+	OnPlayerSimbolUpdated_Signature OnPlayerSimbolUpdated;
+
 protected:
 	virtual void NativeConstruct() override;
 
@@ -32,9 +39,36 @@ private:
 	// 버튼 이벤트를 바인딩 합니다
 	void BindButtonEvents();
 
-	void OnGameBoardClicked();
+	UFUNCTION()
+	void OnGameBoardClicked(int32 x, int32 y);
+
+	UFUNCTION()
+	void OnGameBoardClicked00();
+	UFUNCTION()
+	void OnGameBoardClicked01();
+	UFUNCTION()
+	void OnGameBoardClicked02();
+	UFUNCTION()
+	void OnGameBoardClicked10();
+	UFUNCTION()
+	void OnGameBoardClicked11();
+	UFUNCTION()
+	void OnGameBoardClicked12();
+	UFUNCTION()
+	void OnGameBoardClicked20();
+	UFUNCTION()
+	void OnGameBoardClicked21();
+	UFUNCTION()
+	void OnGameBoardClicked22();
 
 public:
+	// 플레이어 심볼이 갱신되었을 경우 발생시킬 이벤트를 설정합니다
+	FORCEINLINE void SetPlayerSimbolUpdatedEvent(
+		OnPlayerSimbolUpdated_Signature onPlayerSimbolUpdated)
+	{
+		OnPlayerSimbolUpdated = onPlayerSimbolUpdated;
+	}
+
 	// AI 심볼을 XY위치에 설정합니다.
-	void SetAISimbol(int x, int y);
+	void SetAISimbol(int y, int x);
 };

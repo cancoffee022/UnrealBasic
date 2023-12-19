@@ -14,7 +14,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define TICTACTOE_GameBoardInfo_generated_h
 
-#define FID_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Struct_GameBoardInfo_h_14_GENERATED_BODY \
+#define FID_Users_User_Desktop_UnrealProject_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Struct_GameBoardInfo_h_14_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FGameBoardInfo_Statics; \
 	TICTACTOE_API static class UScriptStruct* StaticStruct();
 
@@ -22,7 +22,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 template<> TICTACTOE_API UScriptStruct* StaticStruct<struct FGameBoardInfo>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Struct_GameBoardInfo_h
+#define CURRENT_FILE_ID FID_Users_User_Desktop_UnrealProject_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Struct_GameBoardInfo_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
