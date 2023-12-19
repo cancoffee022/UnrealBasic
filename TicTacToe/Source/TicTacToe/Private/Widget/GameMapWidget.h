@@ -29,6 +29,11 @@ private:
 	// 사용되는 모든 위젯을 찾습니다
 	void FindAllWidgets();
 
+	// 버튼 이벤트를 바인딩 합니다
+	void BindButtonEvents();
+
+	void OnGameBoardClicked();
+
 public:
 	// AI 심볼을 XY위치에 설정합니다.
 	void SetAISimbol(int x, int y);

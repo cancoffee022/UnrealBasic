@@ -15,7 +15,7 @@ UENUM(BlueprintType)
 enum class EGameTurn : uint8
 {
 	Turn_Player		UMETA(DisplayName = "플레이어 턴"),
-	Trun_Ai			UMETA(DisplayName = "AI 턴")
+	Trun_AI			UMETA(DisplayName = "AI 턴")
 };
 
 // UMETA()

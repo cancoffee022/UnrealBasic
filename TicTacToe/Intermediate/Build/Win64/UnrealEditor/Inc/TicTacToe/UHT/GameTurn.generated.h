@@ -21,7 +21,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 #define FOREACH_ENUM_EGAMETURN(op) \
 	op(EGameTurn::Turn_Player) \
-	op(EGameTurn::Trun_Ai) 
+	op(EGameTurn::Trun_AI) 
 
 enum class EGameTurn : uint8;
 template<> struct TIsUEnumClass<EGameTurn> { enum { Value = true }; };

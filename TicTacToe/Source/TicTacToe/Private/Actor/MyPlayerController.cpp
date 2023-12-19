@@ -24,6 +24,9 @@ void AMyPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// 테스트를 위해 AI 턴으로 설정
+	CurrentGameTurn = EGameTurn::Trun_AI;
+
 	// 위젯 객체를 생성합니다
 	GameMapWidgetInstance = CreateWidget<UGameMapWidget>(this, GameMapWidgetClass);
 	// CreateWidget<T>(owningObj, WidgetClass)
@@ -55,7 +58,7 @@ void AMyPlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
 
-	if (CurrentGameTurn == EGameTurn::Trun_Ai)
+	if (CurrentGameTurn == EGameTurn::Trun_AI)
 	{
 		// 심볼이 설정된 요소들을 맨 앞으로 이동시킨 배열을 생성합니다.
 
@@ -68,6 +71,9 @@ void AMyPlayerController::PlayerTick(float DeltaTime)
 
 		// 턴을 1 증가시킵니다.
 		++GameTurnCount;
+
+		// 플레이어 턴으로 교체합니다.
+		CurrentGameTurn = EGameTurn::Turn_Player;
 	}
 }
 
@@ -78,7 +84,6 @@ void AMyPlayerController::GetRandomBoardInfo(FGameBoardInfo& out_BoardInfo) cons
 	// 교환의 첫 번째 대상을 선택할 for 문
 	for (int32 target = 0; target < copiedBoardInfo.Num() - 1; ++target)
 	{
-
 		// 교환의 두번째 대상을 선택할 for 문
 		for (int32 i = target + 1; i < copiedBoardInfo.Num(); i++)
 		{

@@ -7,6 +7,10 @@
         "Includes": [
             "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\tictactoe\\definitions.tictactoe.h",
             "d:\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\actor\\myplayercontroller.h",
+            "d:\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\enum\\gameturn.h",
+            "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\unrealeditor\\inc\\tictactoe\\uht\\gameturn.generated.h",
+            "d:\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\struct\\gameboardinfo.h",
+            "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\unrealeditor\\inc\\tictactoe\\uht\\gameboardinfo.generated.h",
             "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\unrealeditor\\inc\\tictactoe\\uht\\myplayercontroller.generated.h",
             "d:\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\widget\\gamemapwidget.h",
             "d:\\ue_5.3\\engine\\source\\runtime\\umg\\public\\blueprint\\userwidget.h",

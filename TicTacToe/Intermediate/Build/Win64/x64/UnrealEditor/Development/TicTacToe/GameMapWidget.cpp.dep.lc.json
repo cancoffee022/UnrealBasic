@@ -38,7 +38,15 @@
             "d:\\ue_5.3\\engine\\source\\runtime\\umg\\public\\components\\textblock.h",
             "d:\\ue_5.3\\engine\\source\\runtime\\umg\\public\\components\\textwidgettypes.h",
             "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\umg\\uht\\textwidgettypes.generated.h",
-            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\umg\\uht\\textblock.generated.h"
+            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\umg\\uht\\textblock.generated.h",
+            "d:\\ue_5.3\\engine\\source\\runtime\\umg\\public\\components\\button.h",
+            "d:\\ue_5.3\\engine\\source\\runtime\\umg\\public\\components\\contentwidget.h",
+            "d:\\ue_5.3\\engine\\source\\runtime\\umg\\public\\components\\panelwidget.h",
+            "d:\\ue_5.3\\engine\\source\\runtime\\umg\\public\\components\\panelslot.h",
+            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\umg\\uht\\panelslot.generated.h",
+            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\umg\\uht\\panelwidget.generated.h",
+            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\umg\\uht\\contentwidget.generated.h",
+            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\umg\\uht\\button.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []
