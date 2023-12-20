@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Actor/MyPlayerController.h"
@@ -10,12 +10,12 @@ AMyPlayerController::AMyPlayerController()
 	static ConstructorHelpers::FClassFinder<UGameMapWidget> WIDGETBP_GAMEMAP(
 		TEXT("/ Script / UMGEditor.WidgetBlueprint'/Game/Blueprints/Widget/WidgetBP_GameMap.WidgetBP_GameMap_C'"));
 
-	// Å¬·¡½º¸¦ ¾ò¾î¿À´Â °æ·Î¿¡¼­´Â Ç×»ó _C ¸¦ ÀÛ¼ºÇØ¾ß ÇÕ´Ï´Ù.
-	// WIDGETBP_GAMEMAP ºí·ç ÇÁ¸°Æ® Å¬·¡½º¸¦ ¼º°øÀûÀ¸·Î ºÒ·¯¿Ô´ÂÁö È®ÀÎÇÕ´Ï´Ù
+	// í´ë˜ìŠ¤ë¥¼ ì–»ì–´ì˜¤ëŠ” ê²½ë¡œì—ì„œëŠ” í•­ìƒ _C ë¥¼ ì‘ì„±í•´ì•¼ í•©ë‹ˆë‹¤.
+	// WIDGETBP_GAMEMAP ë¸”ë£¨ í”„ë¦°íŠ¸ í´ë˜ìŠ¤ë¥¼ ì„±ê³µì ìœ¼ë¡œ ë¶ˆëŸ¬ì™”ëŠ”ì§€ í™•ì¸í•©ë‹ˆë‹¤
 	if (WIDGETBP_GAMEMAP.Succeeded())
 	{
 		GameMapWidgetClass = WIDGETBP_GAMEMAP.Class;
-		// WIDGET_GAMEMAP.Class : WIDGETBP_GAMEMAP ¿¡ ´ã±ä Å¬·¡½º¸¦ ¾ò½À´Ï´Ù
+		// WIDGET_GAMEMAP.Class : WIDGETBP_GAMEMAP ì— ë‹´ê¸´ í´ë˜ìŠ¤ë¥¼ ì–»ìŠµë‹ˆë‹¤
 	}
 
 }
@@ -24,34 +24,43 @@ void AMyPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// Å×½ºÆ®¸¦ À§ÇØ AI ÅÏÀ¸·Î ¼³Á¤
-	CurrentGameTurn = EGameTurn::Trun_AI;
+	// í…ŒìŠ¤íŠ¸ë¥¼ ìœ„í•´ AI í„´ìœ¼ë¡œ ì„¤ì •
+	CurrentGameTurn = EGameTurn::Turn_AI;
 
-	// À§Á¬ °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù
+	// ìœ„ì ¯ ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤
 	GameMapWidgetInstance = CreateWidget<UGameMapWidget>(this, GameMapWidgetClass);
 	// CreateWidget<T>(owningObj, WidgetClass)
-	// T : »ı¼ºµÈ °´Ã¼ÀÇ Çü½ÄÀ» ÁöÁ¤ÇÕ´Ï´Ù.
-	// owningObj : »ı¼ºµÈ À§Á¬ ÀèÃ¼¸¦ ¼ÒÀ¯ÇÒ °´Ã¼¸¦ Àü´ŞÇÕ´Ï´Ù
-	// widgetClass : »ı¼ºÇÒ À§Á¬ Å¬·¡½º¸¦ Àü´ŞÇÕ´Ï´Ù.
+	// T : ìƒì„±ëœ ê°ì²´ì˜ í˜•ì‹ì„ ì§€ì •í•©ë‹ˆë‹¤.
+	// owningObj : ìƒì„±ëœ ìœ„ì ¯ ì­ì²´ë¥¼ ì†Œìœ í•  ê°ì²´ë¥¼ ì „ë‹¬í•©ë‹ˆë‹¤
+	// widgetClass : ìƒì„±í•  ìœ„ì ¯ í´ë˜ìŠ¤ë¥¼ ì „ë‹¬í•©ë‹ˆë‹¤.
 
-	// È­¸é¿¡ »ı¼ºµÈ WidgetÀ» ¶ç¿ó´Ï´Ù.
+	// í™”ë©´ì— ìƒì„±ëœ Widgetì„ ë„ì›ë‹ˆë‹¤.
 	GameMapWidgetInstance->AddToViewport();
 
 	OnPlayerSimbolUpdated_Signature onPlayerSimbolUpdated;
-	onPlayerSimbolUpdated.BindLambda(this, [&](int32 x, int32 y)
+	onPlayerSimbolUpdated.BindLambda([&](int32 x, int32 y)
 		{
+			// ì‹¬ë³¼ ì¡´ì¬ì—¬ë¶€ ê²€ì‚¬ ì§„í–‰í›„ ì²˜ë¦¬
+
+			// í”Œë ˆì´ì–´ ì‹¬ë³¼ì„ ì„¤ì •í•©ë‹ˆë‹¤
 			SetSimbol(x, y, SIMBOL_PLAYER);
+
+			// AIí„´ìœ¼ë¡œ ë„˜ê¹ë‹ˆë‹¤
+			CurrentGameTurn = EGameTurn::Turn_AI;
+
+			// í„´ì„ 1ã…ˆì¦ê°€ì‹œí‚µë‹ˆë‹¤
+			++GameTurnCount;
 		});
 
 	GameMapWidgetInstance->SetPlayerSimbolUpdatedEvent(onPlayerSimbolUpdated);
 
-	// Ä¿¼­¸¦ Ç¥½ÃÇÕ´Ï´Ù
+	// ì»¤ì„œë¥¼ í‘œì‹œí•©ë‹ˆë‹¤
 	bShowMouseCursor = true;
 
-	// °ÔÀÓ Ä­À» ÃÊ±âÈ­ ÇÕ´Ï´Ù
+	// ê²Œì„ ì¹¸ì„ ì´ˆê¸°í™” í•©ë‹ˆë‹¤
 	for (int i = 0; i < 9; i++)
 	{
-		// º¸µå Á¤º¸¸¦ »ı¼ºÇÕ´Ï´Ù
+		// ë³´ë“œ ì •ë³´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤
 		FGameBoardInfo boardInfo;
 		boardInfo.Simbol = SIMBOL_EMPTY;
 		boardInfo.ArrayIndex = i;
@@ -66,24 +75,24 @@ void AMyPlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
 
-	if (CurrentGameTurn == EGameTurn::Trun_AI)
+	if (CurrentGameTurn == EGameTurn::Turn_AI)
 	{
-		// ½Éº¼ÀÌ ¼³Á¤µÈ ¿ä¼ÒµéÀ» ¸Ç ¾ÕÀ¸·Î ÀÌµ¿½ÃÅ² ¹è¿­À» »ı¼ºÇÕ´Ï´Ù.
+		// ì‹¬ë³¼ì´ ì„¤ì •ëœ ìš”ì†Œë“¤ì„ ë§¨ ì•ìœ¼ë¡œ ì´ë™ì‹œí‚¨ ë°°ì—´ì„ ìƒì„±í•©ë‹ˆë‹¤.
 
-		// ³²Àº Ä­ Áß¿¡¼­ ÇÏ³ª¸¦ »Ì½À´Ï´Ù.
+		// ë‚¨ì€ ì¹¸ ì¤‘ì—ì„œ í•˜ë‚˜ë¥¼ ë½‘ìŠµë‹ˆë‹¤.
 		FGameBoardInfo randomBoardInfo;
 		GetRandomBoardInfo(randomBoardInfo);
 
-		// ·£´ıÇÑ À§Ã¼¿¡ AI ½Éº¼À» ¼³Á¤ÇÕ´Ï´Ù
+		// ëœë¤í•œ ìœ„ì²´ì— AI ì‹¬ë³¼ì„ ì„¤ì •í•©ë‹ˆë‹¤
 		GameMapWidgetInstance->SetAISimbol(randomBoardInfo.X, randomBoardInfo.Y);
 
-		// AI ½Éº¼À» ¼³Á¤ÇÕ´Ï´Ù
+		// AI ì‹¬ë³¼ì„ ì„¤ì •í•©ë‹ˆë‹¤
 		SetSimbol(randomBoardInfo.X, randomBoardInfo.Y, SIMBOL_AI);
 
-		// ÅÏÀ» 1 Áõ°¡½ÃÅµ´Ï´Ù.
+		// í„´ì„ 1 ì¦ê°€ì‹œí‚µë‹ˆë‹¤.
 		++GameTurnCount;
 
-		// ÇÃ·¹ÀÌ¾î ÅÏÀ¸·Î ±³Ã¼ÇÕ´Ï´Ù.
+		// í”Œë ˆì´ì–´ í„´ìœ¼ë¡œ êµì²´í•©ë‹ˆë‹¤.
 		CurrentGameTurn = EGameTurn::Turn_Player;
 	}
 }
@@ -92,16 +101,16 @@ void AMyPlayerController::GetRandomBoardInfo(FGameBoardInfo& out_BoardInfo) cons
 {
 	TArray<FGameBoardInfo> copiedBoardInfo = GameBoard;
 
-	// ±³È¯ÀÇ Ã¹ ¹øÂ° ´ë»óÀ» ¼±ÅÃÇÒ for ¹®
+	// êµí™˜ì˜ ì²« ë²ˆì§¸ ëŒ€ìƒì„ ì„ íƒí•  for ë¬¸
 	for (int32 target = 0; target < copiedBoardInfo.Num() - 1; ++target)
 	{
-		// ±³È¯ÀÇ µÎ¹øÂ° ´ë»óÀ» ¼±ÅÃÇÒ for ¹®
+		// êµí™˜ì˜ ë‘ë²ˆì§¸ ëŒ€ìƒì„ ì„ íƒí•  for ë¬¸
 		for (int32 i = target + 1; i < copiedBoardInfo.Num(); i++)
 		{
-			// ½Éº¼ÀÌ ¼³Á¤µÈ ¿ä¼ÒÀÎ °æ¿ì ¾ÕÀ¸·Î ÀÌµ¿½ÃÅµ´Ï´Ù
+			// ì‹¬ë³¼ì´ ì„¤ì •ëœ ìš”ì†Œì¸ ê²½ìš° ì•ìœ¼ë¡œ ì´ë™ì‹œí‚µë‹ˆë‹¤
 			if (copiedBoardInfo[i].Simbol != SIMBOL_EMPTY)
 			{
-				// ±³È¯À» À§ÇØ ÀÓ½Ã ÀúÀå
+				// êµí™˜ì„ ìœ„í•´ ì„ì‹œ ì €ì¥
 				FGameBoardInfo temp = copiedBoardInfo[i];
 				copiedBoardInfo[i] = copiedBoardInfo[target];
 				copiedBoardInfo[target] = temp;
@@ -109,24 +118,96 @@ void AMyPlayerController::GetRandomBoardInfo(FGameBoardInfo& out_BoardInfo) cons
 		}
 	}
 
-	// ·£´ıÇÑ ºñ¾îÀÖ´Â º¸µå Á¤º¸¸¦ ¾ò½À´Ï´Ù.
+	// ëœë¤í•œ ë¹„ì–´ìˆëŠ” ë³´ë“œ ì •ë³´ë¥¼ ì–»ìŠµë‹ˆë‹¤.
 	int32 randomIndex = FMath::RandRange(GameTurnCount, copiedBoardInfo.Num() - 1);
+
 	
-	// Ãâ·Â¿ë ¸Å°³ º´¼ö¿¡ °ªÀ» ¼³Á¤ÇÕ´Ï´Ù.
+	// ì¶œë ¥ìš© ë§¤ê°œ ë³‘ìˆ˜ì— ê°’ì„ ì„¤ì •í•©ë‹ˆë‹¤.
 	out_BoardInfo = copiedBoardInfo[randomIndex];
 	
 }
 
-FGameBoardInfo AMyPlayerController::GetSimbol(int32 x, int32 y)
+FGameBoardInfo& AMyPlayerController::GetSimbol(int32 x, int32 y)
 {
-	// ¹è¿­ ¿ä¼Ò¿¡ Á¢±Ù½ÃÅ³ ÀÎµ¦½º¸¦ °è»êÇÕ´Ï´Ù
+	// ë°°ì—´ ìš”ì†Œì— ì ‘ê·¼ì‹œí‚¬ ì¸ë±ìŠ¤ë¥¼ ê³„ì‚°í•©ë‹ˆë‹¤
 	int32 index = x + y * 3;
 
-	// index¿¡ ÇØ´çÇÏ´Â °ªÀ» ¹İÈ¯ÇÕ´Ï´Ù
+	// indexì— í•´ë‹¹í•˜ëŠ” ê°’ì„ ë°˜í™˜í•©ë‹ˆë‹¤
 	return GameBoard[index];
 }
 
 void AMyPlayerController::SetSimbol(int32 x, int32 y, int32 simbol)
 {
-	UE_LOG(LogTemp, Warning, TEXT("[%d][%d] À§Ä¡¿¡ ½Éº¼ÀÌ È°¼ºÈ­µÇ¾ú½À´Ï´Ù"), x, y);
+	UE_LOG(LogTemp, Warning, TEXT("[%d][%d] ìœ„ì¹˜ì— ì‹¬ë³¼ì´ í™œì„±í™”ë˜ì—ˆìŠµë‹ˆë‹¤"), x, y);
+
+	// x, y ìœ„ì¹˜ì˜ ì‹¬ë³¼ ë°ì´í„°ë¥¼ ì–»ìŠµë‹ˆë‹¤
+	FGameBoardInfo& gameBoardInfo = GetSimbol(x, y);
+
+	// ì‹¬ë³¼ì„ ì„¤ì •í•©ë‹ˆë‹¤.
+	gameBoardInfo.Simbol = simbol;
+
+	// ë¹™ê³  ê²€ì‚¬
+	if (CheckBingo(x, y))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s ë¹™ê³ !"),
+			simbol == SIMBOL_AI ? TEXT("AI") : TEXT("PLAYER"));
+	}
+
+	// ë¬´ìŠ¹ë¶€ ê²€ì‚¬
+	else if (GameTurnCount == 8)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Draw"));
+	}
+	
+}
+
+bool AMyPlayerController::CheckBingo(int32 x, int32 y)
+{
+	// X, Y ìœ„ì²´ì´ëŒ€í•œ ì‹¬ë³¼ ì •ë³´ë¥¼ ì–»ìŠµë‹ˆë‹¤
+	FGameBoardInfo& gameBoardInfo = GetSimbol(x, y);
+
+	// ë¹„êµí•  ì‹¬ë³¼ì„ ì–»ìŠµë‹ˆë‹¤
+	int32 simbol = gameBoardInfo.Simbol;
+
+	// ë¹™ê³  ì—¬ë¶€ë¥¼ ë‚˜íƒ€ë‚´ê¸° ìœ„í•œ ë³€ìˆ˜
+	bool isBingo = false;
+
+	// ê°€ë¡œ ë¹™ê³  ì²´í¬
+	if (GetSimbol(0, y).Simbol == simbol &&
+		GetSimbol(1, y).Simbol == simbol &&
+		GetSimbol(2, y).Simbol == simbol
+		)
+	{
+		return true;
+	}
+	
+	// ì„¸ë¡œ ë¹™ê³  ì²´í¬
+	if (GetSimbol(x, 0).Simbol == simbol &&
+		GetSimbol(x, 1).Simbol == simbol &&
+		GetSimbol(x, 2).Simbol == simbol
+		)
+	{
+		return true;
+	}
+	
+	// ëŒ€ê°ì„  ë¹™ê³  ì²´í¬ (ìš°í•˜ì–‘)
+	if (GetSimbol(0, 0).Simbol == simbol &&
+		GetSimbol(1, 1).Simbol == simbol &&
+		GetSimbol(2, 2).Simbol == simbol
+		)
+	{
+		return true;
+	}
+	
+	// ëŒ€ê°ì„  ë¹™ê³  ì²´í¬ (ìš°í•˜ì–‘)
+	if (GetSimbol(2, 0).Simbol == simbol &&
+		GetSimbol(1, 1).Simbol == simbol &&
+		GetSimbol(0, 2).Simbol == simbol
+		)
+	{
+		return true;
+	}
+	
+	
+	return false;
 }

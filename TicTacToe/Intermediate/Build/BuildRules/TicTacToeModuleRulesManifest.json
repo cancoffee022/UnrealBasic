@@ -1,8 +1,8 @@
 {
 	"SourceFiles": [
-		"C:\\Users\\User\\Desktop\\UnrealProject\\UnrealBasic\\TicTacToe\\Source\\TicTacToe\\TicTacToe.Build.cs",
-		"C:\\Users\\User\\Desktop\\UnrealProject\\UnrealBasic\\TicTacToe\\Source\\TicTacToe.Target.cs",
-		"C:\\Users\\User\\Desktop\\UnrealProject\\UnrealBasic\\TicTacToe\\Source\\TicTacToeEditor.Target.cs"
+		"D:\\UnrealBasic\\UnrealBasic\\TicTacToe\\Source\\TicTacToe\\TicTacToe.Build.cs",
+		"D:\\UnrealBasic\\UnrealBasic\\TicTacToe\\Source\\TicTacToe.Target.cs",
+		"D:\\UnrealBasic\\UnrealBasic\\TicTacToe\\Source\\TicTacToeEditor.Target.cs"
 	],
 	"EngineVersion": "5.3.2"
 }

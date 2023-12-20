@@ -16,12 +16,12 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define TICTACTOE_GameTurn_generated_h
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Users_User_Desktop_UnrealProject_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h
+#define CURRENT_FILE_ID FID_UnrealBasic_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h
 
 
 #define FOREACH_ENUM_EGAMETURN(op) \
 	op(EGameTurn::Turn_Player) \
-	op(EGameTurn::Trun_AI) 
+	op(EGameTurn::Turn_AI) 
 
 enum class EGameTurn : uint8;
 template<> struct TIsUEnumClass<EGameTurn> { enum { Value = true }; };

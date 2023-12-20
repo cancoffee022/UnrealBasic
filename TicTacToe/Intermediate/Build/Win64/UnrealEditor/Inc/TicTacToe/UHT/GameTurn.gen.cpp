@@ -35,7 +35,7 @@ void EmptyLinkFunctionForGeneratedCodeGameTurn() {}
 	};
 	const UECodeGen_Private::FEnumeratorParam Z_Construct_UEnum_TicTacToe_EGameTurn_Statics::Enumerators[] = {
 		{ "EGameTurn::Turn_Player", (int64)EGameTurn::Turn_Player },
-		{ "EGameTurn::Trun_AI", (int64)EGameTurn::Trun_AI },
+		{ "EGameTurn::Turn_AI", (int64)EGameTurn::Turn_AI },
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UEnum_TicTacToe_EGameTurn_Statics::Enum_MetaDataParams[] = {
@@ -47,8 +47,8 @@ void EmptyLinkFunctionForGeneratedCodeGameTurn() {}
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "// \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xd5\xb4\xcf\xb4\xef\xbf\xbd.\n// BlueprintType : \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xc6\xae\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xcf\xb5\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xd5\xb4\xcf\xb4\xef\xbf\xbd.\n// \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xc6\xae\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xcc\xb6\xef\xbf\xbd\xef\xbf\xbd, BlueprintType \xef\xbf\xbd\xdb\xbc\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xd4\xb2\xef\xbf\xbd\n// \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xc5\xb8\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd uint8 \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xd8\xbe\xef\xbf\xbd \xef\xbf\xbd\xd5\xb4\xcf\xb4\xef\xbf\xbd." },
 #endif
-		{ "Trun_AI.DisplayName", "AI \xef\xbf\xbd\xef\xbf\xbd" },
-		{ "Trun_AI.Name", "EGameTurn::Trun_AI" },
+		{ "Turn_AI.DisplayName", "AI \xef\xbf\xbd\xef\xbf\xbd" },
+		{ "Turn_AI.Name", "EGameTurn::Turn_AI" },
 		{ "Turn_Player.DisplayName", "\xef\xbf\xbd\xc3\xb7\xef\xbf\xbd\xef\xbf\xbd\xcc\xbe\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd" },
 		{ "Turn_Player.Name", "EGameTurn::Turn_Player" },
 	};
@@ -73,15 +73,15 @@ void EmptyLinkFunctionForGeneratedCodeGameTurn() {}
 		}
 		return Z_Registration_Info_UEnum_EGameTurn.InnerSingleton;
 	}
-	struct Z_CompiledInDeferFile_FID_Users_User_Desktop_UnrealProject_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics
+	struct Z_CompiledInDeferFile_FID_UnrealBasic_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics
 	{
 		static const FEnumRegisterCompiledInInfo EnumInfo[];
 	};
-	const FEnumRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_User_Desktop_UnrealProject_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics::EnumInfo[] = {
-		{ EGameTurn_StaticEnum, TEXT("EGameTurn"), &Z_Registration_Info_UEnum_EGameTurn, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 1238049704U) },
+	const FEnumRegisterCompiledInInfo Z_CompiledInDeferFile_FID_UnrealBasic_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics::EnumInfo[] = {
+		{ EGameTurn_StaticEnum, TEXT("EGameTurn"), &Z_Registration_Info_UEnum_EGameTurn, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 2125911299U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_User_Desktop_UnrealProject_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_2510034524(TEXT("/Script/TicTacToe"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_UnrealBasic_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_2448536418(TEXT("/Script/TicTacToe"),
 		nullptr, 0,
 		nullptr, 0,
-		Z_CompiledInDeferFile_FID_Users_User_Desktop_UnrealProject_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_User_Desktop_UnrealProject_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics::EnumInfo));
+		Z_CompiledInDeferFile_FID_UnrealBasic_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_UnrealBasic_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics::EnumInfo));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

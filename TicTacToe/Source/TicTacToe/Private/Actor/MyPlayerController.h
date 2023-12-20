@@ -55,8 +55,11 @@ private:
 	void GetRandomBoardInfo(FGameBoardInfo& out_BoardInfo) const;
 
 	// xy 위치의 심볼을 얻습니다.
-	FGameBoardInfo GetSimbol(int32 x, int32 y);
+	FGameBoardInfo& GetSimbol(int32 x, int32 y);
 
 	// XY 위치에 심볼을 설정합니다.
-	void SetSimbol(int32 x, int32 y, int32 simbol);;
+	void SetSimbol(int32 x, int32 y, int32 simbol);
+
+	// 빙고를 검사합니다
+	bool CheckBingo(int32 x, int32 y);
 };
