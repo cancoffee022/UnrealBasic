@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\JumpProject.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\JumpProject.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\JumpProjectEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\.vsconfig" />
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\JumpProject">
+      <UniqueIdentifier>{DE969324-6013-3202-8254-28E160CCEFF7}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\JumpProject\JumpProject.Build.cs">
+      <Filter>Source\JumpProject</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\JumpProject\JumpProject.cpp">
+      <Filter>Source\JumpProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\JumpProject\JumpProject.h">
+      <Filter>Source\JumpProject</Filter>
+    </ClInclude>
+    <Filter Include="Source\JumpProject\Private">
+      <UniqueIdentifier>{C4CAEC4F-AE9F-3FEE-B11E-C6ACA524B1FE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\JumpProject\Private\Actor">
+      <UniqueIdentifier>{75ED2672-AF1C-3313-8064-1366509487A2}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\JumpProject\Private\Actor\PlayerPawn.cpp">
+      <Filter>Source\JumpProject\Private\Actor</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\JumpProject\Private\Actor\PlayerPawn.h">
+      <Filter>Source\JumpProject\Private\Actor</Filter>
+    </ClInclude>
+    <Filter Include="Source\JumpProject\Private\PlayerController">
+      <UniqueIdentifier>{80A22B49-3A48-3D67-8823-B398614F0092}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\JumpProject\Private\PlayerController\GamePlayerController.cpp">
+      <Filter>Source\JumpProject\Private\PlayerController</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\JumpProject\Private\PlayerController\GamePlayerController.h">
+      <Filter>Source\JumpProject\Private\PlayerController</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

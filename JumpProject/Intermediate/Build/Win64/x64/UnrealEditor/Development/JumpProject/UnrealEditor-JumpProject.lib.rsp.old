@@ -1,0 +1,15 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-JumpProject.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\UnrealBasic\JumpProject\Intermediate\Build\Win64\x64\JumpProjectEditor\Development\Engine\SharedPCH.Engine.Cpp20.h.obj"
+"D:\UnrealBasic\JumpProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\JumpProject\JumpProject.init.gen.cpp.obj"
+"D:\UnrealBasic\JumpProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\JumpProject\PlayerPawn.gen.cpp.obj"
+"D:\UnrealBasic\JumpProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\JumpProject\JumpProject.cpp.obj"
+"D:\UnrealBasic\JumpProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\JumpProject\PlayerPawn.cpp.obj"
+"D:\UnrealBasic\JumpProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\JumpProject\Default.rc2.res"
+/OUT:"D:\UnrealBasic\JumpProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\JumpProject\UnrealEditor-JumpProject.lib"
