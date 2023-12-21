@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "D:\\UnrealBasic\\UnrealBasic\\TicTacToe\\Intermediate\\Build\\BuildRulesProjects\\TicTacToeModuleRules\\TicTacToeModuleRules.csproj": {}
+    "D:\\UnrealBasic\\TicTacToe\\Intermediate\\Build\\BuildRulesProjects\\TicTacToeModuleRules\\TicTacToeModuleRules.csproj": {}
   },
   "projects": {
     "D:\\UE_5.3\\Engine\\Intermediate\\Build\\BuildRulesProjects\\UE5ProgramRules\\UE5ProgramRules.csproj": {
@@ -953,14 +953,14 @@
         }
       }
     },
-    "D:\\UnrealBasic\\UnrealBasic\\TicTacToe\\Intermediate\\Build\\BuildRulesProjects\\TicTacToeModuleRules\\TicTacToeModuleRules.csproj": {
+    "D:\\UnrealBasic\\TicTacToe\\Intermediate\\Build\\BuildRulesProjects\\TicTacToeModuleRules\\TicTacToeModuleRules.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\UnrealBasic\\UnrealBasic\\TicTacToe\\Intermediate\\Build\\BuildRulesProjects\\TicTacToeModuleRules\\TicTacToeModuleRules.csproj",
+        "projectUniqueName": "D:\\UnrealBasic\\TicTacToe\\Intermediate\\Build\\BuildRulesProjects\\TicTacToeModuleRules\\TicTacToeModuleRules.csproj",
         "projectName": "TicTacToeModuleRules",
-        "projectPath": "D:\\UnrealBasic\\UnrealBasic\\TicTacToe\\Intermediate\\Build\\BuildRulesProjects\\TicTacToeModuleRules\\TicTacToeModuleRules.csproj",
+        "projectPath": "D:\\UnrealBasic\\TicTacToe\\Intermediate\\Build\\BuildRulesProjects\\TicTacToeModuleRules\\TicTacToeModuleRules.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\UnrealBasic\\UnrealBasic\\TicTacToe\\Intermediate\\Build\\BuildRulesProjects\\TicTacToeModuleRules\\obj\\",
+        "outputPath": "D:\\UnrealBasic\\TicTacToe\\Intermediate\\Build\\BuildRulesProjects\\TicTacToeModuleRules\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",

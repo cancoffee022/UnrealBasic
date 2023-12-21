@@ -1,5 +1,5 @@
 /I "."
-/I "D:\UnrealBasic\UnrealBasic\TicTacToe\Source\TicTacToe\Private"
+/I "D:\UnrealBasic\TicTacToe\Source\TicTacToe\Private"
 /I "..\Intermediate\Build\Win64\UnrealEditor\Inc\Engine\UHT"
 /I "..\Shaders\Shared"
 /I "Runtime\Engine\Classes"
@@ -257,8 +257,8 @@
 /I "Developer\PhysicsUtilities\Public"
 /I "..\Intermediate\Build\Win64\UnrealEditor\Inc\WidgetRegistration\UHT"
 /I "Developer\WidgetRegistration\Public"
-/I "D:\UnrealBasic\UnrealBasic\TicTacToe\Intermediate\Build\Win64\UnrealEditor\Inc\TicTacToe\UHT"
-/I "D:\UnrealBasic\UnrealBasic\TicTacToe\Source"
+/I "D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\UnrealEditor\Inc\TicTacToe\UHT"
+/I "D:\UnrealBasic\TicTacToe\Source"
 /external:W0
 /external:I "ThirdParty\mimalloc\include"
 /external:I "ThirdParty\LibTiff\Source\Win64"

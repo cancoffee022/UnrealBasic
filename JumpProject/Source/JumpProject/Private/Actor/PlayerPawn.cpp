@@ -10,9 +10,13 @@ APlayerPawn::APlayerPawn()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	// Sphere
+	// Sphere Static Mesh 에셋을 로드합니다
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_SPHERE(
-		TEXT("/Script/Engine.StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
+		TEXT("/Script/Engine.StaticMesh'/Game/Resources/Sphere.Sphere'"));
+
+	// Material 에셋을 로드합니다
+	static ConstructorHelpers::FObjectFinder<UMaterial> MASTER_COLOR(
+		TEXT("/Script/Engine.Material'/Game/Resources/Master_Color.Master_Color'"));
 
 	// StaticMeshComponent를 생성합니다
 	PlayerMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PLAYER_MESH"));
@@ -26,6 +30,9 @@ APlayerPawn::APlayerPawn()
 	// 루트 컴포넌트 : 액터를 대표하는 컴포넌트
 	// 단 하나만 존재할 수 있습니다.
 	
+	// 크기를 0.2배로 설정합니다
+	PlayerMesh->SetRelativeScale3D(FVector(.2f, .2f, .2f));
+
 	// 로드에 성공 했다면
 	if (SM_SPHERE.Succeeded())
 	{
@@ -34,8 +41,13 @@ APlayerPawn::APlayerPawn()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT(" "));
+		UE_LOG(LogTemp, Error, TEXT("SM_SPHERE not loaded!"));
 	}
+
+	if (MASTER_COLOR.Succeeded())
+		PlayerMesh->SetMaterial(0, MASTER_COLOR.Object);
+	else
+		UE_LOG(LogTemp, Error, TEXT("MASTER_COLOR not loaded!"));
 }
 
 // Called when the game starts or when spawned
@@ -58,4 +70,5 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
+
 

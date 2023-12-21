@@ -1,11 +1,11 @@
-"D:\UnrealBasic\UnrealBasic\TicTacToe\Intermediate\Build\Win64\UnrealEditor\Inc\TicTacToe\UHT\GameTurn.gen.cpp"
-/FI"D:\UnrealBasic\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\TicTacToeEditor\Development\Engine\SharedPCH.Engine.Cpp20.h"
-/FI"D:\UnrealBasic\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\Definitions.TicTacToe.h"
-/Yu"D:\UnrealBasic\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\TicTacToeEditor\Development\Engine\SharedPCH.Engine.Cpp20.h"
-/Fp"D:\UnrealBasic\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\TicTacToeEditor\Development\Engine\SharedPCH.Engine.Cpp20.h.pch"
-/Fo"D:\UnrealBasic\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\GameTurn.gen.cpp.obj"
-/sourceDependencies "D:\UnrealBasic\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\GameTurn.gen.cpp.dep.json"
-@"D:\UnrealBasic\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\TicTacToe.Shared.rsp"
+"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\UnrealEditor\Inc\TicTacToe\UHT\GameTurn.gen.cpp"
+/FI"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\TicTacToeEditor\Development\Engine\SharedPCH.Engine.Cpp20.h"
+/FI"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\Definitions.TicTacToe.h"
+/Yu"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\TicTacToeEditor\Development\Engine\SharedPCH.Engine.Cpp20.h"
+/Fp"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\TicTacToeEditor\Development\Engine\SharedPCH.Engine.Cpp20.h.pch"
+/Fo"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\GameTurn.gen.cpp.obj"
+/sourceDependencies "D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\GameTurn.gen.cpp.dep.json"
+@"D:\UnrealBasic\TicTacToe\Intermediate\Build\Win64\x64\UnrealEditor\Development\TicTacToe\TicTacToe.Shared.rsp"
 /Zc:inline
 /nologo
 /Oi

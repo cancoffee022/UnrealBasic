@@ -73,15 +73,15 @@ void EmptyLinkFunctionForGeneratedCodeGameTurn() {}
 		}
 		return Z_Registration_Info_UEnum_EGameTurn.InnerSingleton;
 	}
-	struct Z_CompiledInDeferFile_FID_UnrealBasic_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics
+	struct Z_CompiledInDeferFile_FID_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics
 	{
 		static const FEnumRegisterCompiledInInfo EnumInfo[];
 	};
-	const FEnumRegisterCompiledInInfo Z_CompiledInDeferFile_FID_UnrealBasic_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics::EnumInfo[] = {
+	const FEnumRegisterCompiledInInfo Z_CompiledInDeferFile_FID_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics::EnumInfo[] = {
 		{ EGameTurn_StaticEnum, TEXT("EGameTurn"), &Z_Registration_Info_UEnum_EGameTurn, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 2125911299U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_UnrealBasic_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_2448536418(TEXT("/Script/TicTacToe"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_2448536418(TEXT("/Script/TicTacToe"),
 		nullptr, 0,
 		nullptr, 0,
-		Z_CompiledInDeferFile_FID_UnrealBasic_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_UnrealBasic_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics::EnumInfo));
+		Z_CompiledInDeferFile_FID_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_UnrealBasic_TicTacToe_Source_TicTacToe_Private_Enum_GameTurn_h_Statics::EnumInfo));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

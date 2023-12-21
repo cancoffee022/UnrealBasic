@@ -1,13 +1,13 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "d:\\unrealbasic\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\struct\\gameboardinfo.cpp",
+        "Source": "d:\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\struct\\gameboardinfo.cpp",
         "ProvidedModule": "",
-        "PCH": "d:\\unrealbasic\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\x64\\tictactoeeditor\\development\\engine\\sharedpch.engine.cpp20.h.pch",
+        "PCH": "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\x64\\tictactoeeditor\\development\\engine\\sharedpch.engine.cpp20.h.pch",
         "Includes": [
-            "d:\\unrealbasic\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\tictactoe\\definitions.tictactoe.h",
-            "d:\\unrealbasic\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\struct\\gameboardinfo.h",
-            "d:\\unrealbasic\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\unrealeditor\\inc\\tictactoe\\uht\\gameboardinfo.generated.h"
+            "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\tictactoe\\definitions.tictactoe.h",
+            "d:\\unrealbasic\\tictactoe\\source\\tictactoe\\private\\struct\\gameboardinfo.h",
+            "d:\\unrealbasic\\tictactoe\\intermediate\\build\\win64\\unrealeditor\\inc\\tictactoe\\uht\\gameboardinfo.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

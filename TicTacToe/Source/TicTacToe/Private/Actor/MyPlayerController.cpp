@@ -48,7 +48,7 @@ void AMyPlayerController::BeginPlay()
 			// AI턴으로 넘깁니다
 			CurrentGameTurn = EGameTurn::Turn_AI;
 
-			// 턴을 1ㅈ증가시킵니다
+			// 턴을 1증가시킵니다
 			++GameTurnCount;
 		});
 
@@ -199,7 +199,7 @@ bool AMyPlayerController::CheckBingo(int32 x, int32 y)
 		return true;
 	}
 	
-	// 대각선 빙고 체크 (우하양)
+	// 대각선 빙고 체크 (우상향)
 	if (GetSimbol(2, 0).Simbol == simbol &&
 		GetSimbol(1, 1).Simbol == simbol &&
 		GetSimbol(0, 2).Simbol == simbol
