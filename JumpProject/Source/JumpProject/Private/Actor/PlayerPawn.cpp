@@ -3,11 +3,11 @@
 
 #include "Actor/PlayerPawn.h"
 #include "Components/StaticMeshComponent.h"
+#include "Component/PlayerMovementComponent.h"
 
 // Sets default values
 APlayerPawn::APlayerPawn()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Sphere Static Mesh 에셋을 로드합니다
@@ -24,6 +24,8 @@ APlayerPawn::APlayerPawn()
 	// 무조건 생성자에서만 사용가능 합니다.
 	// stringData : 이 객체를 참조하는 변수가 없다며느 해당이름으로 표시됩니다.
 	// 이 객체를 참조하는 변수가 있다면, 변수의 이름으로 표시됩니다.
+
+	PlayerMovement = CreateDefaultSubobject<UPlayerMovementComponent>(TEXT("PLAYER_MOVEMENT"));
 
 	// PlayerMesh 컴포넌트를 이 액터의 루트 컴포넌트로 지정합니다.
 	SetRootComponent(PlayerMesh);
@@ -71,4 +73,7 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 }
 
-
+void APlayerPawn::OnJump()
+{
+	PlayerMovement->Jump();
+}

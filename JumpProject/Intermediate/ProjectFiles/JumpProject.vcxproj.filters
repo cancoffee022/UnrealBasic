@@ -42,14 +42,44 @@
     <Filter Include="Source\JumpProject\Private">
       <UniqueIdentifier>{C4CAEC4F-AE9F-3FEE-B11E-C6ACA524B1FE}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\JumpProject\Private\GameConstants.cpp">
+      <Filter>Source\JumpProject\Private</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\JumpProject\Private\GameConstants.h">
+      <Filter>Source\JumpProject\Private</Filter>
+    </ClInclude>
     <Filter Include="Source\JumpProject\Private\Actor">
       <UniqueIdentifier>{75ED2672-AF1C-3313-8064-1366509487A2}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\JumpProject\Private\Actor\LineGroupActor.cpp">
+      <Filter>Source\JumpProject\Private\Actor</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\JumpProject\Private\Actor\LineGroupActor.h">
+      <Filter>Source\JumpProject\Private\Actor</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\JumpProject\Private\Actor\PlayerPawn.cpp">
       <Filter>Source\JumpProject\Private\Actor</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\JumpProject\Private\Actor\PlayerPawn.h">
       <Filter>Source\JumpProject\Private\Actor</Filter>
+    </ClInclude>
+    <Filter Include="Source\JumpProject\Private\Component">
+      <UniqueIdentifier>{A2584A15-7FB8-3469-8355-927FBBC7E448}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\JumpProject\Private\Component\PlayerMovementComponent.cpp">
+      <Filter>Source\JumpProject\Private\Component</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\JumpProject\Private\Component\PlayerMovementComponent.h">
+      <Filter>Source\JumpProject\Private\Component</Filter>
+    </ClInclude>
+    <Filter Include="Source\JumpProject\Private\LevelScriptActor">
+      <UniqueIdentifier>{ED4EBBE8-E56A-3FF3-A183-81D1B7C6EE81}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\JumpProject\Private\LevelScriptActor\GameLevelScriptActor.cpp">
+      <Filter>Source\JumpProject\Private\LevelScriptActor</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\JumpProject\Private\LevelScriptActor\GameLevelScriptActor.h">
+      <Filter>Source\JumpProject\Private\LevelScriptActor</Filter>
     </ClInclude>
     <Filter Include="Source\JumpProject\Private\PlayerController">
       <UniqueIdentifier>{80A22B49-3A48-3D67-8823-B398614F0092}</UniqueIdentifier>

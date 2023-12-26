@@ -1,6 +1,7 @@
 #include "PlayerController/GamePlayerController.h"
 
 #include "Kismet/GameplayStatics.h"
+#include "Actor/PlayerPawn.h"
 
 // 카메라 엑터 태그
 #define TAG_CAMERA		TEXT("Camera")
@@ -48,5 +49,6 @@ void AGamePlayerController::FindCameraComponent()
 
 void AGamePlayerController::OnJumpKeyPressed()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Jump!"));
+	// 조종중인 Pawn 객체를 얻습니다
+	Cast<APlayerPawn>(GetPawn())->OnJump();
 }

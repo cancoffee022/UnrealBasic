@@ -18,6 +18,10 @@ private:
 	class UStaticMeshComponent* PlayerMesh;
 	// VisibleAnyWhere : 프로퍼티 창에 보이지만, 편집할 수 없음을 나타냅니다.
 
+	// 플레이어 이동을 담당하는 컴포넌트
+	UPROPERTY(VisibleAnywhere)
+	class UPlayerMovementComponent* PlayerMovement;
+
 public:
 	APlayerPawn();
 
@@ -28,5 +32,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	// 점프되는 경우 호출됩니다.
+	void OnJump();
 
 };

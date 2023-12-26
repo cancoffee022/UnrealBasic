@@ -1,0 +1,17 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\unrealeditor\\inc\\jumpproject\\uht\\gamelevelscriptactor.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\x64\\jumpprojecteditor\\development\\engine\\sharedpch.engine.cpp20.h.pch",
+        "Includes": [
+            "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\jumpproject\\definitions.jumpproject.h",
+            "d:\\unrealbasic\\jumpproject\\source\\jumpproject\\private\\levelscriptactor\\gamelevelscriptactor.h",
+            "d:\\ue_5.3\\engine\\source\\runtime\\engine\\classes\\engine\\levelscriptactor.h",
+            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\levelscriptactor.generated.h",
+            "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\unrealeditor\\inc\\jumpproject\\uht\\gamelevelscriptactor.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
