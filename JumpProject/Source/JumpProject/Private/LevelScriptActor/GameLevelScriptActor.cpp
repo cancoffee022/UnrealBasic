@@ -29,5 +29,8 @@ ALineGroupActor* AGameLevelScriptActor::GenerateLineGroup(int32 lineGroupIndex)
 	ALineGroupActor* newLineGroup = 
 		GetWorld()->SpawnActor<ALineGroupActor>(BP_LineGroupActorClass);
 
+	// 생성된 LineGroupActor를 초기화 합니다.
+	newLineGroup->InitializeLineGroup(lineGroupIndex);
+
 	return newLineGroup;
 }
