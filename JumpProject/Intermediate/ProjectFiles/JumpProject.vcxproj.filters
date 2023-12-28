@@ -72,6 +72,15 @@
     <ClInclude Include="..\..\Source\JumpProject\Private\Component\PlayerMovementComponent.h">
       <Filter>Source\JumpProject\Private\Component</Filter>
     </ClInclude>
+    <Filter Include="Source\JumpProject\Private\Enum">
+      <UniqueIdentifier>{DF9662E7-77D3-3B95-833B-00021B57FA33}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\JumpProject\Private\Enum\ColorType.cpp">
+      <Filter>Source\JumpProject\Private\Enum</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\JumpProject\Private\Enum\ColorType.h">
+      <Filter>Source\JumpProject\Private\Enum</Filter>
+    </ClInclude>
     <Filter Include="Source\JumpProject\Private\LevelScriptActor">
       <UniqueIdentifier>{ED4EBBE8-E56A-3FF3-A183-81D1B7C6EE81}</UniqueIdentifier>
     </Filter>
@@ -89,6 +98,15 @@
     </ClCompile>
     <ClInclude Include="..\..\Source\JumpProject\Private\PlayerController\GamePlayerController.h">
       <Filter>Source\JumpProject\Private\PlayerController</Filter>
+    </ClInclude>
+    <Filter Include="Source\JumpProject\Private\Structure">
+      <UniqueIdentifier>{EEE4EB0B-4F27-3BF2-8F6A-759EF750BB52}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\JumpProject\Private\Structure\ColorData.cpp">
+      <Filter>Source\JumpProject\Private\Structure</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\JumpProject\Private\Structure\ColorData.h">
+      <Filter>Source\JumpProject\Private\Structure</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

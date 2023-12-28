@@ -49,6 +49,9 @@ public:
 private:
 	// 중력을 적용시킵니다
 	void ApplyGravity();
+
+	// 다음 위치의 충돌체를 확인합니다
+	void CheckCollision();
 	
 	// 속도에 따라 캐릭터를 이동시킵니다
 	void Move();

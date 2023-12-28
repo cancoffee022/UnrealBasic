@@ -1,7 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+#include "Component/PlayerMovementComponent.h"
 
-
-#include "PlayerMovementComponent.h"
+#include "../GameConstants.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "Engine/World.h"
 
 // Sets default values for this component's properties
 UPlayerMovementComponent::UPlayerMovementComponent()
@@ -32,6 +33,9 @@ void UPlayerMovementComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 	// 중력을 적용시킵니다
 	ApplyGravity();
 
+	// 충돌체 검사
+	CheckCollision();
+
 	// 이동시킵니다
 	Move();
 }
@@ -50,6 +54,50 @@ void UPlayerMovementComponent::ApplyGravity()
 	Velocity.Z -= FMath::Abs(GetWorld()->GetGravityZ()) * GravityMultiplier;
 }
 
+void UPlayerMovementComponent::CheckCollision()
+{
+	// 구(sphere) 트레이싱 발사 위치를 계산합니다
+	FVector startLocation = GetOwner()->GetActorLocation() + FGameConstants::GetPlayerSphereRadius();
+
+	// 구 트레이싱 발사 끝 위치를 계산합니다
+	FVector endLocation = startLocation + (FVector::DownVector * Velocity.Z);
+
+	// 구 트레이싱 감지에서 제외시킬 엑터
+	TArray<AActor*> actorsToIgnore = { GetOwner() };
+
+	// 감지 결과
+	FHitResult hitResult;
+
+	bool isHit = UKismetSystemLibrary::SphereTraceSingleByProfile(
+		GetWorld(),
+		startLocation,
+		endLocation,
+		FGameConstants::GetPlayerSphereRadius(),
+		FName(TEXT("BlockAll")),
+		false,
+		actorsToIgnore,
+		EDrawDebugTrace::Type::ForDuration,
+		hitResult,
+		true);
+
+	if (isHit)
+	{
+		// 감지된 위치
+		FVector hitLocation = hitResult.Location;
+
+		//GetOwner()->SetActorLocation(hitLocation);
+
+		/*Velocity = FVector::Zero();
+
+		GetWorld()->GetWorldSettings()->SetTimeDilation(0);*/
+
+		Jump();
+
+		UE_LOG(LogTemp, Warning, TEXT("is hit!"));
+		
+	}
+}
+
 void UPlayerMovementComponent::Move()
 {
 	// 현재 액터의 위치를 얻습니다.
@@ -58,6 +106,7 @@ void UPlayerMovementComponent::Move()
 	
 	// 액터에 설정시킬 위치를 계산합니다.
 	FVector nextLocation = currentLocation + Velocity;
+
 
 	// 액터의 위치를 설정합니다
 	GetOwner()->SetActorLocation(nextLocation);

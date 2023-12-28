@@ -76,7 +76,7 @@ void ALineGroupActor::InitializeLineObjects(UStaticMesh* lineObjectStaticMesh,
 
 	// 라인 오븢젝트 배치 시작 위치
 	FVector lineObjectStartLocation =
-		((lineObjectTerm * numberOfLineObject * .5f) + (lineObjectTerm * .5f)) * FVector::LeftVector;
+		((lineObjectTerm * numberOfLineObject * .5f) - (lineObjectTerm * .5f)) * FVector::LeftVector;
 
 	for (int32 i = 0; i < FGameConstants::NUMBER_OF_LINEOBJECT; ++i)
 	{

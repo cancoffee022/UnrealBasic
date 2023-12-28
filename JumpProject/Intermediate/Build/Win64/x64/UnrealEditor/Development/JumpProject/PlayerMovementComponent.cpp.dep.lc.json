@@ -7,7 +7,12 @@
         "Includes": [
             "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\jumpproject\\definitions.jumpproject.h",
             "d:\\unrealbasic\\jumpproject\\source\\jumpproject\\private\\component\\playermovementcomponent.h",
-            "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\unrealeditor\\inc\\jumpproject\\uht\\playermovementcomponent.generated.h"
+            "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\unrealeditor\\inc\\jumpproject\\uht\\playermovementcomponent.generated.h",
+            "d:\\unrealbasic\\jumpproject\\source\\jumpproject\\private\\gameconstants.h",
+            "d:\\ue_5.3\\engine\\source\\runtime\\engine\\classes\\kismet\\kismetsystemlibrary.h",
+            "d:\\ue_5.3\\engine\\source\\runtime\\coreuobject\\public\\uobject\\propertyaccessutil.h",
+            "d:\\ue_5.3\\engine\\source\\runtime\\coreuobject\\public\\assetregistry\\arfilter.h",
+            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\kismetsystemlibrary.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []
