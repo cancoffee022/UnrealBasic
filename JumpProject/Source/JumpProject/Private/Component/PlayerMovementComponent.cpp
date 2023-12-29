@@ -57,10 +57,13 @@ void UPlayerMovementComponent::ApplyGravity()
 void UPlayerMovementComponent::CheckCollision()
 {
 	// 구(sphere) 트레이싱 발사 위치를 계산합니다
-	FVector startLocation = GetOwner()->GetActorLocation() + FGameConstants::GetPlayerSphereRadius();
+	FVector startLocation = GetOwner()->GetActorLocation();
+		
 
 	// 구 트레이싱 발사 끝 위치를 계산합니다
-	FVector endLocation = startLocation + (FVector::DownVector * Velocity.Z);
+	FVector endLocation = startLocation + 
+		// 속도 연산 + 구 크기 연산
+		(FVector(0, 0, FMath::Sign(Velocity.Z)) * (FMath::Abs(Velocity.Z) + FGameConstants::GetPlayerSphereRadius()));
 
 	// 구 트레이싱 감지에서 제외시킬 엑터
 	TArray<AActor*> actorsToIgnore = { GetOwner() };
@@ -76,7 +79,7 @@ void UPlayerMovementComponent::CheckCollision()
 		FName(TEXT("BlockAll")),
 		false,
 		actorsToIgnore,
-		EDrawDebugTrace::Type::ForDuration,
+		EDrawDebugTrace::Type::None,
 		hitResult,
 		true);
 
@@ -106,7 +109,6 @@ void UPlayerMovementComponent::Move()
 	
 	// 액터에 설정시킬 위치를 계산합니다.
 	FVector nextLocation = currentLocation + Velocity;
-
 
 	// 액터의 위치를 설정합니다
 	GetOwner()->SetActorLocation(nextLocation);

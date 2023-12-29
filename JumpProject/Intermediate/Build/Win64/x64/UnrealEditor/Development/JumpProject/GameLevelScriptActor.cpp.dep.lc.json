@@ -9,9 +9,14 @@
             "d:\\unrealbasic\\jumpproject\\source\\jumpproject\\private\\levelscriptactor\\gamelevelscriptactor.h",
             "d:\\ue_5.3\\engine\\source\\runtime\\engine\\classes\\engine\\levelscriptactor.h",
             "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\levelscriptactor.generated.h",
+            "d:\\unrealbasic\\jumpproject\\source\\jumpproject\\private\\enum\\colortype.h",
+            "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\unrealeditor\\inc\\jumpproject\\uht\\colortype.generated.h",
             "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\unrealeditor\\inc\\jumpproject\\uht\\gamelevelscriptactor.generated.h",
             "d:\\unrealbasic\\jumpproject\\source\\jumpproject\\private\\actor\\linegroupactor.h",
-            "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\unrealeditor\\inc\\jumpproject\\uht\\linegroupactor.generated.h"
+            "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\unrealeditor\\inc\\jumpproject\\uht\\linegroupactor.generated.h",
+            "d:\\unrealbasic\\jumpproject\\source\\jumpproject\\private\\structure\\colordata.h",
+            "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\unrealeditor\\inc\\jumpproject\\uht\\colordata.generated.h",
+            "d:\\unrealbasic\\jumpproject\\source\\jumpproject\\private\\gameconstants.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

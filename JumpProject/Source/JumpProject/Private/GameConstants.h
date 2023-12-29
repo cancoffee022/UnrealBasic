@@ -28,6 +28,6 @@ public:
 	FORCEINLINE static FVector GetLineObjectSize() { return FVector(1.0f, 4.0f, 0.25f); }
 
 	// 플레이어 구체의 반지름
-	FORCEINLINE static float GetPlayerSphereRadius() { return -10.f; }
+	FORCEINLINE static float GetPlayerSphereRadius() { return 10.f; }
 
 };
