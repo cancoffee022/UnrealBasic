@@ -12,7 +12,11 @@
             "d:\\ue_5.3\\engine\\source\\runtime\\engine\\classes\\kismet\\kismetsystemlibrary.h",
             "d:\\ue_5.3\\engine\\source\\runtime\\coreuobject\\public\\uobject\\propertyaccessutil.h",
             "d:\\ue_5.3\\engine\\source\\runtime\\coreuobject\\public\\assetregistry\\arfilter.h",
-            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\kismetsystemlibrary.generated.h"
+            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\kismetsystemlibrary.generated.h",
+            "d:\\unrealbasic\\jumpproject\\source\\jumpproject\\private\\actor\\linegroupactor.h",
+            "d:\\unrealbasic\\jumpproject\\source\\jumpproject\\private\\enum\\colortype.h",
+            "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\unrealeditor\\inc\\jumpproject\\uht\\colortype.generated.h",
+            "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\unrealeditor\\inc\\jumpproject\\uht\\linegroupactor.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

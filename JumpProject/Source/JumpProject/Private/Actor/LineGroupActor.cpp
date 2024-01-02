@@ -31,22 +31,6 @@ void ALineGroupActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	for (UStaticMeshComponent* lineObj : LineObjects)
-	{
-		UMaterialInterface* lineObjMaterial = lineObj->GetMaterial(0);
-
-		// 매터리얼 파라미터들이 다른 값을 갖도록 하기위하여 매터리얼을 복사 생성합니다
-		UMaterialInstanceDynamic* materialDynamicInstance = UMaterialInstanceDynamic::Create(lineObjMaterial, this);
-
-		materialDynamicInstance->SetVectorParameterValue(
-			TEXT("_Color"),
-			FLinearColor(
-				FMath::FRandRange(0.1f, 1.0f), // R
-				FMath::FRandRange(0.1f, 1.0f), // G
-				FMath::FRandRange(0.1f, 1.0f), // B
-				1.0f));						   // A
-		lineObj->SetMaterial(0, materialDynamicInstance);
-	}
 }
 
 // Called every frame
@@ -114,6 +98,42 @@ void ALineGroupActor::InitializeLineObjects(UStaticMesh* lineObjectStaticMesh,
 	}
 }
 
+void ALineGroupActor::SetLineObjectColors(
+	TArray<FLinearColor> colors,
+	TArray<EColorType> colorTypes)
+{
+	for (int32 i = 0; i < LineObjects.Num(); ++i)
+	{
+		// i번째 LineObject를 얻습니다.
+		UStaticMeshComponent* lineObject = LineObjects[i];
+
+		// 라인 오브젝트의 색상을 설정합니다
+		EColorType colorType = colorTypes[i];
+		FLinearColor lineColor = colors[(int32)colorType];
+
+		// 통과 가능한 색상 타입이라면 
+		if (PassableColorType == colorType)
+		{
+			//통과 가능 LineObject 인덱스를 설정합니다
+			PassableLineObjectIndex = i;
+
+			// 통과 가능한 색상을 저장합니다
+			NextColor = lineColor;
+		}
+
+		// 라인 오브젝트에 색상을 설정합니다
+		// 매터리얼 파라미터들이 다른 값을 갖도록 하기위하여 매터리얼을 복사 생성합니다
+		UMaterialInstanceDynamic* materialDynamicInstance =
+			UMaterialInstanceDynamic::Create(lineObject->GetMaterial(0), this);
+
+		// 매터리얼 파라미터를 변경합니다
+		materialDynamicInstance->SetVectorParameterValue(
+			TEXT("_Color"), lineColor);
+
+		lineObject->SetMaterial(0, materialDynamicInstance);
+	}
+}
+
 void ALineGroupActor::MoveLineGroup(float deltaTime)
 {
 	// 라인 그룹을 이동시킬 목표위치를 계산합니다
@@ -163,8 +183,31 @@ void ALineGroupActor::ScrollingLineObject(float deltaTime)
 	}
 }
 
-void ALineGroupActor::InitializeLineGroup(int32 index)
+void ALineGroupActor::InitializeLineGroup(
+	int32 index,
+	TArray<FLinearColor> colors,
+	TArray<EColorType> colorTypes,
+	EColorType passableColor,
+	EColorType nextColor)
 {
+	PassableColorType = passableColor;
+	NextColorType = nextColor;
 	// 라인 인덱스를 설정합니다
 	SetLineGroupIndex(index);
+
+	// 라인 오브젝트 색상들을 모두 설정합니다
+	SetLineObjectColors(colors, colorTypes);
+}
+
+bool ALineGroupActor::IsPassableLineObject(UStaticMeshComponent* lineObject)
+{
+	// 라인 오브젝트에 해당하는 요소 인덱스를 얻습니다
+	int32 index = LineObjects.Find(lineObject);
+
+	// 통과 가능여부를 반환합니다
+	return index == PassableLineObjectIndex;
+}
+
+void ALineGroupActor::OnLineGroupPassed(FLinearColor& out_NextColor)
+{
 }

@@ -22,6 +22,9 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class UPlayerMovementComponent* PlayerMovement;
 
+	// 파라미터를 변경할 수 있는 복사된 다이나믹 매터리얼 객체를 나타냅니다
+	class UMaterialInstanceDynamic* PlayerMaterial;
+
 public:
 	APlayerPawn();
 
@@ -33,6 +36,16 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+private:
+	// 라인 통과시 호출되는 함수입니다.
+	// passedLineGroupActor : 통과한 라인 그룹 액터가 전달됩니다
+	void OnLinePassed(class ALineGroupActor* passedLineGroupActor);
+
+	// 캐릭터에게 색상을 설정시킵니다.
+	// newColor : 설정 시킬 색상을 전달합니다
+	void SetColor(FLinearColor newColor);
+
+public:
 	// 점프되는 경우 호출됩니다.
 	void OnJump();
 

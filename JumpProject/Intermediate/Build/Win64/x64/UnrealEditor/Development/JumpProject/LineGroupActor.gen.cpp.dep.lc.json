@@ -7,6 +7,8 @@
         "Includes": [
             "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\jumpproject\\definitions.jumpproject.h",
             "d:\\unrealbasic\\jumpproject\\source\\jumpproject\\private\\actor\\linegroupactor.h",
+            "d:\\unrealbasic\\jumpproject\\source\\jumpproject\\private\\enum\\colortype.h",
+            "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\unrealeditor\\inc\\jumpproject\\uht\\colortype.generated.h",
             "d:\\unrealbasic\\jumpproject\\intermediate\\build\\win64\\unrealeditor\\inc\\jumpproject\\uht\\linegroupactor.generated.h"
         ],
         "ImportedModules": [],

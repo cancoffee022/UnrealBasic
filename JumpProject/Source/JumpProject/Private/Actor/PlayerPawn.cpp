@@ -4,6 +4,7 @@
 #include "Actor/PlayerPawn.h"
 #include "Components/StaticMeshComponent.h"
 #include "Component/PlayerMovementComponent.h"
+#include "LineGroupActor.h"
 
 // Sets default values
 APlayerPawn::APlayerPawn()
@@ -57,6 +58,19 @@ void APlayerPawn::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// 라인 통과 이벤트를 바인딩 합니다.
+	FOnLinePassedEventSignature linePassedEvent; 
+	linePassedEvent.BindUObject(this, &ThisClass::OnLinePassed);
+	PlayerMovement->SetLinePassedEvent(linePassedEvent);
+
+	// 파라미터를 설정하기 위해 사용중인 매터리얼을 복사 생성합니다
+	UMaterialInstanceDynamic* copiedMaterial =UMaterialInstanceDynamic::Create(PlayerMesh->GetMaterial(0), this);
+
+	// 다른 함수에서 사용할 수 있도록 저장합니다
+	PlayerMaterial = copiedMaterial;
+
+	// 복사 생성된 매터리얼을 설정합니다
+	PlayerMesh->SetMaterial(0, copiedMaterial);
 }
 
 // Called every frame
@@ -71,6 +85,20 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void APlayerPawn::OnLinePassed(ALineGroupActor* passedLineGroupActor)
+{
+	// 색상을 설정합니다
+	FLinearColor nextColor = passedLineGroupActor->GetNextColor();
+	SetColor(nextColor);
+
+	UE_LOG(LogTemp, Warning, TEXT("Passed"));
+}
+
+void APlayerPawn::SetColor(FLinearColor newColor)
+{
+	PlayerMaterial->SetVectorParameterValue(TEXT("_Color"), newColor);
 }
 
 void APlayerPawn::OnJump()

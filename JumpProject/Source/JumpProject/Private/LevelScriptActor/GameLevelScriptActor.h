@@ -27,6 +27,9 @@ private:
 	// 색상 정보들을 가지고 있는 맵
 	TMap<EColorType, FLinearColor> ColorDatas;
 
+	// 사용 가능한 색상들을 가지는 배열
+	TArray<FLinearColor> Colors;
+
 	// 생성시킬 라인 그룹 액터 클래스입니다.
 	TSubclassOf<class ALineGroupActor> BP_LineGroupActorClass;
 

@@ -5,6 +5,9 @@
 #include "Components/ActorComponent.h"
 #include "PlayerMovementComponent.generated.h"
 
+// 라인을 통과할 경우를 나타내기 위한 대리자 형식
+DECLARE_DELEGATE_OneParam(FOnLinePassedEventSignature, class ALineGroupActor*);
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UPlayerMovementComponent : public UActorComponent
@@ -12,6 +15,9 @@ class UPlayerMovementComponent : public UActorComponent
 	GENERATED_BODY()
 
 private:
+	// 라인 통과 이벤트
+	FOnLinePassedEventSignature OnLinePassedEvent;
+
 	// 캐릭터에 적용된 선수
 	FVector Velocity;
 
@@ -55,5 +61,9 @@ private:
 	
 	// 속도에 따라 캐릭터를 이동시킵니다
 	void Move();
+
+public:
+	// 라인 통과 이벤트를 설정합니다.
+	void SetLinePassedEvent(FOnLinePassedEventSignature onLinePassedEvent);
 		
 };

@@ -2,6 +2,9 @@
 
 #include "../GameConstants.h"
 #include "Kismet/KismetSystemLibrary.h"
+
+#include "../Actor/LineGroupActor.h"
+
 #include "Engine/World.h"
 
 // Sets default values for this component's properties
@@ -85,19 +88,27 @@ void UPlayerMovementComponent::CheckCollision()
 
 	if (isHit)
 	{
-		// 감지된 위치
-		FVector hitLocation = hitResult.Location;
-
-		//GetOwner()->SetActorLocation(hitLocation);
-
-		/*Velocity = FVector::Zero();
-
-		GetWorld()->GetWorldSettings()->SetTimeDilation(0);*/
-
-		Jump();
-
-		UE_LOG(LogTemp, Warning, TEXT("is hit!"));
+		// 플레이어와 충돌한 컴포넌트를 얻습니ㅣㅣ다
+		UStaticMeshComponent* lineObject = Cast<UStaticMeshComponent>(hitResult.GetComponent());
 		
+		// LineObject 와 충돌한 경우
+		if (lineObject != nullptr)
+		{
+			// 충돌한 LineGroupActor를 얻습니다
+			ALineGroupActor* lineGroup = Cast<ALineGroupActor>(hitResult.GetActor());
+
+			// 통과 가능한 lineObject인지 확인합니다
+			if (lineGroup->IsPassableLineObject(lineObject))
+			{
+				// 라인 통과 이벤트를 발생시킵니다
+				OnLinePassedEvent.ExecuteIfBound(lineGroup);
+
+				Jump();
+			}
+		}
+
+		// 감지된 위치
+		//FVector hitLocation = hitResult.Location;
 	}
 }
 
@@ -112,5 +123,10 @@ void UPlayerMovementComponent::Move()
 
 	// 액터의 위치를 설정합니다
 	GetOwner()->SetActorLocation(nextLocation);
+}
+
+void UPlayerMovementComponent::SetLinePassedEvent(FOnLinePassedEventSignature onLinePassedEvent)
+{
+	OnLinePassedEvent = onLinePassedEvent;
 }
 

@@ -38,6 +38,9 @@ AGameLevelScriptActor::AGameLevelScriptActor()
 
 		// Map 에 찾은 데이터를 기록합니다
 		ColorDatas.Add(colorData->ColorType, colorData->Color);
+
+		// 색상을 저장합니다.
+		Colors.Add(colorData->Color);
 	}
 }
 
@@ -74,8 +77,14 @@ ALineGroupActor* AGameLevelScriptActor::GenerateLineGroup(int32 lineGroupIndex)
 		GetWorld()->SpawnActor<ALineGroupActor>(BP_LineGroupActorClass);
 
 	// 생성된 LineGroupActor를 초기화 합니다.
-	newLineGroup->InitializeLineGroup(lineGroupIndex);
+	newLineGroup->InitializeLineGroup(
+		lineGroupIndex,
+		Colors,
+		GetSuffledColorTypeArray(inclusiveColor),
+		inclusiveColor,
+		NextPassableColor);
 
+	// 생성된 LineGroupActor를 반환합니다
 	return newLineGroup;
 }
 
@@ -124,6 +133,7 @@ TArray<EColorType> AGameLevelScriptActor::GetSuffledColorTypeArray(EColorType in
 			break;
 		}
 	}
+	
 
 	// 포함되어야 하는 색상을 반환시킬 배열 범위내에 포함시킵니다.
 	// 만약 포함 시킬 색상 요소가 반환될 배열 범위를 벗어난 경우
