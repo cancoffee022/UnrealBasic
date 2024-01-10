@@ -1,8 +1,0 @@
-{
-	"SourceFiles": [
-		"D:\\UnrealBasic\\JumpProject\\Source\\JumpProject\\JumpProject.Build.cs",
-		"D:\\UnrealBasic\\JumpProject\\Source\\JumpProject.Target.cs",
-		"D:\\UnrealBasic\\JumpProject\\Source\\JumpProjectEditor.Target.cs"
-	],
-	"EngineVersion": "5.3.2"
-}
