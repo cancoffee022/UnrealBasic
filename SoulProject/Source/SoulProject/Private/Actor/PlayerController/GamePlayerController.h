@@ -23,5 +23,10 @@ private:
 
 	// 수평 축 입력시 호출
 	void OnHorizontalMovementInput(float axis);
+
+	// 마우스 수평 축 입력시 호출됩니다
+	void OnMouseXInput(float axis);
+	// 마우스 수직 축 입력시 호출됩니다
+	void OnMouseYInput(float axis);
 	
 };

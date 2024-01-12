@@ -27,49 +27,32 @@ void UPlayerCharacterMovementComponent::TickComponent(float DeltaTime, ELevelTic
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	Movement();
 }
 
-void UPlayerCharacterMovementComponent::OnMovementInput(FVector2D inputVector)
+void UPlayerCharacterMovementComponent::HorizontalMove(float axis)
 {
-	InputVelocity = FVector(inputVector.Y, inputVector.X , 0);
-}
+	// 컨트롤러 회전중 Yaw 회전만을 얻습니다
+	AGameCharacter* gameCharacter = Cast<AGameCharacter>(GetOwner());
+	FRotator yawRotation = FRotator(0.f, gameCharacter->GetControlRotation().Yaw, 0.f);
 
-void UPlayerCharacterMovementComponent::Movement()
-{
-	// 컨트롤러 방향을 이동에 사용되는 InputVelocity에 연산한다
-
-	AGameCharacter* playerCharacterActor = Cast<AGameCharacter>(GetOwner());
-
-	// 플레이어 컨트롤러의 회전을 얻습니다.
-	FRotator controlRotation = Cast<AGameCharacter>(GetOwner())->GetControlRotation();
-
-	// 수평 축 이동 처리
-	FRotator yawRotation = FRotator(0, controlRotation.Yaw, 0);
-
-	// 오른쪽 방향
 	FVector rightVector = FRotationMatrix(yawRotation).GetUnitAxis(EAxis::Y);
-	rightVector *= InputVelocity.Y;
-	// FRotationMatrix : 회전된 좌표계 정보를 저장하는 행렬을 나타냅니다
-	// GetUnitAxis(EAxis) : EAxis 축으로의 방향을 반환합니다
-	
-	// 앞쪽 방향
-	FVector forwardVector = FRotationMatrix(yawRotation).GetUnitAxis(EAxis::X);
-	forwardVector *= InputVelocity.X;
 
-	// 두 방향을 연산하여 단위 벡터를 얻습니다.
-	FVector direction = (rightVector + forwardVector).GetSafeNormal();
+	//rightVector = Cast<AActor>(gameCharacter->GetController())->GetActorRightVector();
+	gameCharacter->AddMovementInput(rightVector, axis);
 
-	playerCharacterActor->AddMovementInput(direction, 1.0f);
-
-	//FVector controlForward = Cast<AActor>(playerCharacterActor->GetController())->
-	//	GetActorForwardVector();
-	//controlForward.Y = 0;
-	//controlForward = controlForward.GetSafeNormal();
-
-	//FVector controlRight = Cast<AActor>(playerCharacterActor->GetController())->
-	//	GetActorRightVector();
-
-	//direction = (rightVector + forwardVector).GetSafeNormal();
 }
 
+void UPlayerCharacterMovementComponent::VerticalMove(float axis)
+{
+	// 컨트롤러 회전중 Yaw 회전만을 얻습니다
+	AGameCharacter* gameCharacter = Cast<AGameCharacter>(GetOwner());
+	FRotator yawRotation = FRotator(0.f, gameCharacter->GetControlRotation().Yaw, 0.f);
+
+	FVector forwardVector = FRotationMatrix(yawRotation).GetUnitAxis(EAxis::X);
+	
+	// FVector controllerForward = Cast<AActor>(gameCharacter->GetController())->GetActorRightVector();
+	// controllerForward.Y = 0.0f;
+	// forwardVecotr = controllerForward.GetUnsafeNormal();
+
+	gameCharacter->AddMovementInput(forwardVector, axis);
+}

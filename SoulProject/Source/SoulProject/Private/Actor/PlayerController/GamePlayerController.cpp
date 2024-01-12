@@ -11,20 +11,35 @@ void AGamePlayerController::SetupInputComponent()
 	// 수평 축 입력 이벤트 바인딩
 	InputComponent->BindAxis(TEXT("HorizontalMove"), this,
 		&ThisClass::OnHorizontalMovementInput);
+
+	InputComponent->BindAxis(TEXT("MouseX"), this,
+		&ThisClass::OnMouseXInput);
+	
+	InputComponent->BindAxis(TEXT("MouseY"), this,
+		&ThisClass::OnMouseYInput);
 }
 
 void AGamePlayerController::OnVerticalMovementInput(float axis)
 {
 	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
-	FVector2D inputVector = playerCharacter->GetInputVector();
-	inputVector.Y = axis;
-	playerCharacter->UpdateInputVector(inputVector);
+	
+	playerCharacter->OnVerticalInput(axis);
 }
 
 void AGamePlayerController::OnHorizontalMovementInput(float axis)
 {
 	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
-	FVector2D inputVector = playerCharacter->GetInputVector();
-	inputVector.X = axis;
-	playerCharacter->UpdateInputVector(inputVector);
+	playerCharacter->OnHorizontalInput(axis);
+}
+
+void AGamePlayerController::OnMouseXInput(float axis)
+{
+	// 컨트롤러 Yaw 회전값에 axis 값을 더합니다.
+	AddYawInput(axis);
+}
+
+void AGamePlayerController::OnMouseYInput(float axis)
+{
+	// 컨트롤러 Pitch 회전값에 axis 값을 더합니다.
+	AddPitchInput(-axis);
 }
