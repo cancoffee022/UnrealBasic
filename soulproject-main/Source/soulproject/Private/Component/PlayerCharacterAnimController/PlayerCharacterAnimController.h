@@ -4,29 +4,29 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "PlayerCharacterMovementComponent.generated.h"
+#include "PlayerCharacterAnimController.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class UPlayerCharacterMovementComponent : public UActorComponent
+class UPlayerCharacterAnimController : public UActorComponent
 {
 	GENERATED_BODY()
 
-private :
+private:
+	// 이 컴포넌트가 제어할 애님 인스턴스입니다.
+	class UPlayerCharacterAnimInstance* ControlledAnimInstance;
 
 public:	
-	UPlayerCharacterMovementComponent();
+	// Sets default values for this component's properties
+	UPlayerCharacterAnimController();
 
 protected:
+	// Called when the game starts
 	virtual void BeginPlay() override;
 
 public:	
+	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	void HorizontalMove(float axis);
-	void VerticalMove(float axis);
-	void OnJump();
-
 
 		
 };

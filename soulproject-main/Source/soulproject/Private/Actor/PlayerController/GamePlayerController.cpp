@@ -18,6 +18,14 @@ void AGamePlayerController::SetupInputComponent()
 
 	InputComponent->BindAxis(TEXT("MouseY"), this,
 		&ThisClass::OnMouseYInput);
+
+	InputComponent->BindAxis(TEXT("MouseWheel"), this,
+		&ThisClass::OnZoomInput);
+	
+	InputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed,
+		this, &ThisClass::OnJumpInput);
+
+
 }
 
 void AGamePlayerController::OnVerticalMovementInput(float axis)
@@ -42,4 +50,17 @@ void AGamePlayerController::OnMouseYInput(float axis)
 {
 	// 컨트롤러 Pitch 회전값에 axis 값을 더합니다.
 	AddPitchInput(-axis);
+}
+
+void AGamePlayerController::OnZoomInput(float axis)
+{
+	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
+	playerCharacter->OnZoomInput(axis);
+}
+
+void AGamePlayerController::OnJumpInput()
+{
+	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
+	playerCharacter->OnJumpInput();
+
 }

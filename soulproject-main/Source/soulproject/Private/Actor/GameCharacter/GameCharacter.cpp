@@ -2,6 +2,8 @@
 
 #include "../../Component/PlayerCharacterMovementComponent/PlayerCharacterMovementComponent.h"
 #include "../../Component/ZoomableSpringArmComponent/ZoomableSpringArmComponent.h"
+#include "../../Component/PlayerCharacterAnimController/PlayerCharacterAnimController.h"
+#include "../../AnimInstance/PlayerCharacter/PlayerCharacterAnimInstance.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -9,6 +11,9 @@ AGameCharacter::AGameCharacter()
 {
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_CHARACTER_MESH(
 		TEXT("/Script/Engine.SkeletalMesh'/Game/Resources/GirlKnight1/Mesh/SK_GirlKnight1.SK_GirlKnight1'"));
+
+	static ConstructorHelpers::FClassFinder<UPlayerCharacterAnimInstance> ANIMBP_PLAYER_CHARACTER(
+		TEXT("/Script/Engine.AnimBlueprint'/Game/Blueprints/AnimInstance/AnimBP_PlayerCharacter.AnimBP_PlayerCharacter_C'"));
 
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -21,7 +26,9 @@ AGameCharacter::AGameCharacter()
 		CreateDefaultSubobject<UPlayerCharacterMovementComponent>(
 			TEXT("MOVEMENT_COMPONENT"));
 
-
+	PlayerCharacterAnimController =
+		CreateDefaultSubobject<UPlayerCharacterAnimController>(
+			TEXT("PLAYER_CHARACTER_ANIM_CONTROLLER"));
 
 	// SpringArm 컴포넌트를 루트 컴포넌트에 추가합니다.
 	SpringArmComponent->SetupAttachment(GetRootComponent());
@@ -39,7 +46,7 @@ AGameCharacter::AGameCharacter()
 	// 스프링암의 회전을 컨트롤러의 회전으로 일치시킵니다.
 	SpringArmComponent->bUsePawnControlRotation = true;
 
-
+	// 캐릭터 SkeletalMesh
 	if (SK_CHARACTER_MESH.Succeeded())
 	{
 		GetMesh()->SetSkeletalMesh(SK_CHARACTER_MESH.Object);
@@ -48,6 +55,15 @@ AGameCharacter::AGameCharacter()
 			FRotator(0.0f, -90.0f, 0.0f));
 	}
 	
+	// 애니메이션 블루프린트 설정
+	if (ANIMBP_PLAYER_CHARACTER.Succeeded())
+	{
+		GetMesh()->SetAnimClass(ANIMBP_PLAYER_CHARACTER.Class);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("ANIMBP_PLAYER_CHARACTER not loaded"))
+	}
 
 }
 
@@ -80,4 +96,14 @@ void AGameCharacter::OnHorizontalInput(float axis)
 void AGameCharacter::OnVerticalInput(float axis)
 {
 	PlayerCharacterMovementComponent->VerticalMove(axis);
+}
+
+void AGameCharacter::OnZoomInput(float axis)
+{
+	SpringArmComponent->ZoomCamera(axis);
+}
+
+void AGameCharacter::OnJumpInput()
+{
+	PlayerCharacterMovementComponent->OnJump();
 }

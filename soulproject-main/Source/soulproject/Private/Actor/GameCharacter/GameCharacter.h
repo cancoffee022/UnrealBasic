@@ -19,7 +19,8 @@ private :
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UPlayerCharacterMovementComponent* PlayerCharacterMovementComponent;
 
-
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+	class UPlayerCharacterAnimController* PlayerCharacterAnimController;
 
 public:
 	AGameCharacter();
@@ -35,6 +36,7 @@ public:
 
 	void OnHorizontalInput(float axis);
 	void OnVerticalInput(float axis);
-
+	void OnZoomInput(float axis);
+	void OnJumpInput();
 
 };

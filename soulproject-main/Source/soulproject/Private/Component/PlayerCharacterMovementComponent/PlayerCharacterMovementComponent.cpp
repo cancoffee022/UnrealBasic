@@ -53,4 +53,10 @@ void UPlayerCharacterMovementComponent::VerticalMove(float axis)
 	gameCharacter->AddMovementInput(forwardVector, axis);
 }
 
+void UPlayerCharacterMovementComponent::OnJump()
+{
+	AGameCharacter* gameCharacter = Cast<AGameCharacter>(GetOwner());
+	gameCharacter->Jump();
+}
+
 

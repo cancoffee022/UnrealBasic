@@ -29,5 +29,11 @@ private :
 
 	// 마우스 수직 축 입력 시 호출됩니다.
 	void OnMouseYInput(float axis);
+
+	// 마우스 휠 입력시 호출합니다.
+	void OnZoomInput(float axis);
+
+	// 점프 입력시 호출됩니다.
+	void OnJumpInput();
 	
 };
