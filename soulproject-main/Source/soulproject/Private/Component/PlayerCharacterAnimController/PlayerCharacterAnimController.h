@@ -14,7 +14,11 @@ class UPlayerCharacterAnimController : public UActorComponent
 
 private:
 	// 이 컴포넌트가 제어할 애님 인스턴스입니다.
+	UPROPERTY()
 	class UPlayerCharacterAnimInstance* ControlledAnimInstance;
+
+	UPROPERTY()
+	class AGameCharacter* OwnerCharacter;
 
 public:	
 	// Sets default values for this component's properties
@@ -28,5 +32,8 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	// 제어할 AnimInstance 객체를 설정합니다.
+	// controlledAnimInstance : 제어 시킬 AnimInstance 객체를 전달
+	void SetAnimInstance(class UPlayerCharacterAnimInstance* controlledAnimInstance);
 		
 };

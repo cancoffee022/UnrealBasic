@@ -19,6 +19,12 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float CurrentSpeed;
 
+	// 캐릭터가 땅에 닿아있음을 나타냅니다.
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool bIsGrounded;
+
 public:
 	void SetCurrentSpeed(float currentSpeed);
+	void SetGoundedState(bool isGrounded);
+
 };

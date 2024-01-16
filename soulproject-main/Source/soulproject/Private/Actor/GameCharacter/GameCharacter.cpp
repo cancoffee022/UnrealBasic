@@ -71,6 +71,9 @@ AGameCharacter::AGameCharacter()
 void AGameCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UPlayerCharacterAnimInstance* animInst = Cast<UPlayerCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+	PlayerCharacterAnimController->SetAnimInstance(animInst);
 	
 }
 

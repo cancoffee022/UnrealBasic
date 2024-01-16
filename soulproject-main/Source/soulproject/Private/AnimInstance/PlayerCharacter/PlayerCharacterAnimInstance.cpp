@@ -7,3 +7,8 @@ void UPlayerCharacterAnimInstance::SetCurrentSpeed(float currentSpeed)
 {
 	CurrentSpeed = currentSpeed;
 }
+
+void UPlayerCharacterAnimInstance::SetGoundedState(bool isGrounded)
+{
+	bIsGrounded = isGrounded;
+}
