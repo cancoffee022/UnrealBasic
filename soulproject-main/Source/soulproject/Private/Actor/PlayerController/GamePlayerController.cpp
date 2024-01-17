@@ -24,7 +24,9 @@ void AGamePlayerController::SetupInputComponent()
 	
 	InputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed,
 		this, &ThisClass::OnJumpInput);
-
+	
+	InputComponent->BindAction(TEXT("Attack"), EInputEvent::IE_Pressed,
+		this, &ThisClass::OnAttackInput);
 
 }
 
@@ -63,4 +65,10 @@ void AGamePlayerController::OnJumpInput()
 	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
 	playerCharacter->OnJumpInput();
 
+}
+
+void AGamePlayerController::OnAttackInput()
+{
+	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
+	playerCharacter->OnAttackInput();
 }

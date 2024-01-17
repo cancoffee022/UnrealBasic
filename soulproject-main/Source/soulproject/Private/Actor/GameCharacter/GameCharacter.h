@@ -22,6 +22,9 @@ private :
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UPlayerCharacterAnimController* PlayerCharacterAnimController;
 
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+	class UPlayerCharacterAttackComponent* AttackComponent;
+
 public:
 	AGameCharacter();
 
@@ -38,5 +41,11 @@ public:
 	void OnVerticalInput(float axis);
 	void OnZoomInput(float axis);
 	void OnJumpInput();
+	void OnAttackInput();
 
+
+	FORCEINLINE class UPlayerCharacterAttackComponent* GetAttackComponent() const
+	{
+		return AttackComponent;
+	}
 };

@@ -35,5 +35,7 @@ public:
 	// 제어할 AnimInstance 객체를 설정합니다.
 	// controlledAnimInstance : 제어 시킬 AnimInstance 객체를 전달
 	void SetAnimInstance(class UPlayerCharacterAnimInstance* controlledAnimInstance);
-		
+
+	// 공격이 끝났을 경우 호출됩니다
+	void OnAttackEnded();
 };

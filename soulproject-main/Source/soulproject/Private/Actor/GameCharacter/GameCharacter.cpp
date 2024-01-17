@@ -4,6 +4,7 @@
 #include "../../Component/ZoomableSpringArmComponent/ZoomableSpringArmComponent.h"
 #include "../../Component/PlayerCharacterAnimController/PlayerCharacterAnimController.h"
 #include "../../AnimInstance/PlayerCharacter/PlayerCharacterAnimInstance.h"
+#include "../../Component//PlayerCharacterAttackComponent/PlayerCharacterAttackComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -29,6 +30,10 @@ AGameCharacter::AGameCharacter()
 	PlayerCharacterAnimController =
 		CreateDefaultSubobject<UPlayerCharacterAnimController>(
 			TEXT("PLAYER_CHARACTER_ANIM_CONTROLLER"));
+
+	AttackComponent =
+		CreateDefaultSubobject<UPlayerCharacterAttackComponent>(
+			TEXT("PLAYER_CHARACTER_ATTACK_COMPONENT"));
 
 	// SpringArm 컴포넌트를 루트 컴포넌트에 추가합니다.
 	SpringArmComponent->SetupAttachment(GetRootComponent());
@@ -109,4 +114,9 @@ void AGameCharacter::OnZoomInput(float axis)
 void AGameCharacter::OnJumpInput()
 {
 	PlayerCharacterMovementComponent->OnJump();
+}
+
+void AGameCharacter::OnAttackInput()
+{
+	AttackComponent->RequestAttack(COMBO_ATTACK_01);
 }

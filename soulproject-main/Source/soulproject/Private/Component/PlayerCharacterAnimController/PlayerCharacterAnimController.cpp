@@ -1,6 +1,7 @@
 #include "Component/PlayerCharacterAnimController/PlayerCharacterAnimController.h"
 #include "../../AnimInstance/PlayerCharacter/PlayerCharacterAnimInstance.h"
 #include "../../Actor/GameCharacter/GameCharacter.h"
+#include "../../Component/PlayerCharacterAttackComponent/PlayerCharacterAttackComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values for this component's properties
@@ -20,12 +21,9 @@ void UPlayerCharacterAnimController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	OwnerCharacter = Cast<AGameCharacter>(GetOwner());
 }
 
-
-// Called every frame
 void UPlayerCharacterAnimController::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -34,7 +32,6 @@ void UPlayerCharacterAnimController::TickComponent(float DeltaTime, ELevelTick T
 	FVector characterVelocity = OwnerCharacter->GetVelocity();
 	characterVelocity.Z = 0.f;
 	float xySpeed = characterVelocity.Length();
-	UE_LOG(LogTemp, Warning, TEXT("xySpeed = %.2f"), xySpeed);
 
 	// 속력을 갱신합니다.
 	ControlledAnimInstance->SetCurrentSpeed(xySpeed);
@@ -48,5 +45,10 @@ void UPlayerCharacterAnimController::TickComponent(float DeltaTime, ELevelTick T
 void UPlayerCharacterAnimController::SetAnimInstance(UPlayerCharacterAnimInstance* controlledAnimInstance)
 {
 	ControlledAnimInstance = controlledAnimInstance;
+	ControlledAnimInstance->SetAnimController(this);
 }
 
+void UPlayerCharacterAnimController::OnAttackEnded()
+{
+	OwnerCharacter->GetAttackComponent()->ClearCurrentAttack();
+}

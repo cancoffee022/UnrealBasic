@@ -35,5 +35,8 @@ private :
 
 	// 점프 입력시 호출됩니다.
 	void OnJumpInput();
+
+	// 공격 입력 시 호출됩니다.
+	void OnAttackInput();
 	
 };
