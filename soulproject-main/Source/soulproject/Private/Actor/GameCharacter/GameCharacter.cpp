@@ -1,5 +1,6 @@
 #include "Actor/GameCharacter/GameCharacter.h"
 
+#include "Components/StaticMeshComponent.h"
 #include "../../Component/PlayerCharacterMovementComponent/PlayerCharacterMovementComponent.h"
 #include "../../Component/ZoomableSpringArmComponent/ZoomableSpringArmComponent.h"
 #include "../../Component/PlayerCharacterAnimController/PlayerCharacterAnimController.h"
@@ -15,6 +16,9 @@ AGameCharacter::AGameCharacter()
 
 	static ConstructorHelpers::FClassFinder<UPlayerCharacterAnimInstance> ANIMBP_PLAYER_CHARACTER(
 		TEXT("/Script/Engine.AnimBlueprint'/Game/Blueprints/AnimInstance/AnimBP_PlayerCharacter.AnimBP_PlayerCharacter_C'"));
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_SABER(
+		TEXT("/Script/Engine.StaticMesh'/Game/Resources/GirlKnight1/Mesh/Weapon/SM_Saber.SM_Saber'"));
 
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -34,6 +38,10 @@ AGameCharacter::AGameCharacter()
 	AttackComponent =
 		CreateDefaultSubobject<UPlayerCharacterAttackComponent>(
 			TEXT("PLAYER_CHARACTER_ATTACK_COMPONENT"));
+
+	WeaponMesh =
+		CreateDefaultSubobject<UStaticMeshComponent>(
+			TEXT("WEAPON_MESH"));
 
 	// SpringArm 컴포넌트를 루트 컴포넌트에 추가합니다.
 	SpringArmComponent->SetupAttachment(GetRootComponent());
@@ -65,11 +73,13 @@ AGameCharacter::AGameCharacter()
 	{
 		GetMesh()->SetAnimClass(ANIMBP_PLAYER_CHARACTER.Class);
 	}
-	else
+	
+	// 무기 붙이기
+	WeaponMesh->SetupAttachment(GetMesh(), TEXT("Socket_Weapon"));
+	if (SM_SABER.Succeeded())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("ANIMBP_PLAYER_CHARACTER not loaded"))
+		WeaponMesh->SetStaticMesh(SM_SABER.Object);
 	}
-
 }
 
 // Called when the game starts or when spawned
@@ -78,8 +88,17 @@ void AGameCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	UPlayerCharacterAnimInstance* animInst = Cast<UPlayerCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+	
 	PlayerCharacterAnimController->SetAnimInstance(animInst);
 	
+	// 다음 공격 입력 확인 시작 이벤트 설정
+	PlayerCharacterAnimController->onNextAttackInputCheckStarted.BindUObject(
+		AttackComponent, &UPlayerCharacterAttackComponent::StartCheckingNextAttackInput);
+	
+	// 다음 공격 입력 확인 끝 이벤트 설정
+	PlayerCharacterAnimController->onNextAttackInputCheckFinished.BindUObject(
+		AttackComponent, &UPlayerCharacterAttackComponent::FinishCheckingNextAttackInput);
+
 }
 
 // Called every frame
@@ -118,5 +137,5 @@ void AGameCharacter::OnJumpInput()
 
 void AGameCharacter::OnAttackInput()
 {
-	AttackComponent->RequestAttack(COMBO_ATTACK_01);
+	AttackComponent->RequestAttack(DEFAULT_ATTACK_KEYWORD);
 }

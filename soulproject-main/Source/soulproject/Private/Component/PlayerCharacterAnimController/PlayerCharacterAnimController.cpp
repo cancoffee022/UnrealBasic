@@ -52,3 +52,13 @@ void UPlayerCharacterAnimController::OnAttackEnded()
 {
 	OwnerCharacter->GetAttackComponent()->ClearCurrentAttack();
 }
+
+void UPlayerCharacterAnimController::OnNextAttackCheckStarted()
+{
+	onNextAttackInputCheckStarted.ExecuteIfBound();
+}
+
+void UPlayerCharacterAnimController::OnNextAttackCheckFinished()
+{
+	onNextAttackInputCheckFinished.ExecuteIfBound();
+}

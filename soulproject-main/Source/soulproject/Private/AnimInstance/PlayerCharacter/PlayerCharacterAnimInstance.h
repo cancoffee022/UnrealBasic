@@ -38,4 +38,10 @@ private:
 	UFUNCTION()
 	void AnimNotify_AttackEnd();
 
+	UFUNCTION()
+	void AnimNotify_StartNextAttackCheck();
+	
+	UFUNCTION()
+	void AnimNotify_FinishNextAttackCheck();
+
 };

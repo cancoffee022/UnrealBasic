@@ -25,3 +25,13 @@ void UPlayerCharacterAnimInstance::AnimNotify_AttackEnd()
 	AnimController->OnAttackEnded();
 }
 
+void UPlayerCharacterAnimInstance::AnimNotify_StartNextAttackCheck()
+{
+	AnimController->OnNextAttackCheckStarted();
+}
+
+void UPlayerCharacterAnimInstance::AnimNotify_FinishNextAttackCheck()
+{
+	AnimController->OnNextAttackCheckFinished();
+}
+

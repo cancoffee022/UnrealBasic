@@ -25,6 +25,9 @@ private :
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UPlayerCharacterAttackComponent* AttackComponent;
 
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+	class UStaticMeshComponent* WeaponMesh;
+
 public:
 	AGameCharacter();
 

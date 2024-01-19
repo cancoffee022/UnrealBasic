@@ -6,6 +6,9 @@
 #include "Components/ActorComponent.h"
 #include "PlayerCharacterAnimController.generated.h"
 
+// 다음 공격 입력 확인을 위한 대리자 형식
+DECLARE_DELEGATE(FCheckNextInputEventSignature)
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UPlayerCharacterAnimController : public UActorComponent
@@ -19,6 +22,12 @@ private:
 
 	UPROPERTY()
 	class AGameCharacter* OwnerCharacter;
+
+public:
+	// 다음 공격 입력 확인시작시 발생하는 이벤트
+	FCheckNextInputEventSignature onNextAttackInputCheckStarted;
+	// 다음 공격 입력 확인이 끝났을시 발생하는 이벤트
+	FCheckNextInputEventSignature onNextAttackInputCheckFinished;
 
 public:	
 	// Sets default values for this component's properties
@@ -38,4 +47,11 @@ public:
 
 	// 공격이 끝났을 경우 호출됩니다
 	void OnAttackEnded();
+
+	// 다음 공격 입력 확인이 시작되었을 때 호출됩니다.
+	void OnNextAttackCheckStarted();
+
+	// 다음 공격 입력 확인이 끝났을 때 호출됩니다.
+	void OnNextAttackCheckFinished();
+
 };
