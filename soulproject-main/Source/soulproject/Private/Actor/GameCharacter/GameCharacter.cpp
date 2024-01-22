@@ -106,6 +106,8 @@ void AGameCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// 무기 소켓 위치 갱신
+	AttackComponent->UpdateWeaponSocketLocation(WeaponMesh);
 }
 
 // Called to bind functionality to input

@@ -1,8 +1,14 @@
 #include "Component/PlayerCharacterAttackComponent/PlayerCharacterAttackComponent.h"
 #include "../../Actor/GameCharacter/GameCharacter.h"
+#include "../../Actor/EnemyCharacter/EnemyCharacter.h"
 #include "../../Structure/AttackData/AttackData.h"
 
+#include "Components/StaticMeshComponent.h"
+
 #include "Animation/AnimMontage.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/GameplayStatics.h"
+
 
 UPlayerCharacterAttackComponent::UPlayerCharacterAttackComponent()
 {
@@ -16,7 +22,12 @@ UPlayerCharacterAttackComponent::UPlayerCharacterAttackComponent()
 	}
 
 	PrimaryComponentTick.bCanEverTick = true;
+
 	bCheckingNextAttackInput = true;
+
+	_IsCalculatedPrevSaberSocketLocation = false;
+
+	_IsAttacking = false;
 }
 
 
@@ -34,10 +45,11 @@ void UPlayerCharacterAttackComponent::TickComponent(float DeltaTime, ELevelTick 
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	SkillProcedure();
+	AttackProcedure();
+	CheckAttackArea();
 }
 
-void UPlayerCharacterAttackComponent::SkillProcedure()
+void UPlayerCharacterAttackComponent::AttackProcedure()
 {
 	// 진행중인 공격이 있는가?
 	if (CurrentAttackData != nullptr) return;
@@ -48,9 +60,12 @@ void UPlayerCharacterAttackComponent::SkillProcedure()
 	// 요청된 공격을 얻습니다
 	FAttackData* requestedAttack;
 	RequestAttackQueue.Dequeue(requestedAttack);
+
 	
 	// 현재 공격을 요청된 공격으로 설정합니다.
 	CurrentAttackData = requestedAttack;
+	ApplyDamage = CurrentAttackData->AttackDamage;
+	_IsAttacking = true;
 
 	// 연계공격임을 나타냅니다
 	bool isLinkAttack = false;
@@ -79,11 +94,61 @@ void UPlayerCharacterAttackComponent::SkillProcedure()
 
 }
 
+void UPlayerCharacterAttackComponent::CheckAttackArea()
+{
+	// 공격중이 아닌 경우 함수 종료
+	if (!_IsAttacking) return;
+
+	// 이전 위치가 계산되지 않은 경우
+	if (!_IsCalculatedPrevSaberSocketLocation)
+	{
+		_IsCalculatedPrevSaberSocketLocation = true;
+
+		return;
+	}
+	
+	TArray<AActor*> actorsToIgnore;
+	TArray<FHitResult> hitResults;
+
+	bool isHit = UKismetSystemLibrary::SphereTraceMultiByProfile(
+		this,
+		_CurrentSaberStartSocketLocation,
+		_CurrentSaberEndSocketLocation,
+		10.0f,
+		TEXT("Enemy"),
+		false,
+		actorsToIgnore,
+		EDrawDebugTrace::Type::ForOneFrame,
+		hitResults,
+		true);
+
+	for (FHitResult& hit : hitResults)
+	{
+		AEnemyCharacter* enemyCharacter = Cast<AEnemyCharacter>(hit.GetActor());
+		if (IsValid(enemyCharacter))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Apply DDamage 99"));
+			UGameplayStatics::ApplyDamage(
+				enemyCharacter,
+				ApplyDamage,
+				PlayerCharacter->GetController(),
+				PlayerCharacter,
+				UDamageType::StaticClass());
+		}
+	}
+}
+
 //FAttackData* UPlayerCharacterAttackComponent::GetAttackData(FName attackName)
 //{
 //	//FAttackData** result = 
 //	return *AttackDatas.Find(attackName);
 //}
+
+void UPlayerCharacterAttackComponent::UpdateWeaponSocketLocation(UStaticMeshComponent* weaponMesh)
+{
+	_CurrentSaberStartSocketLocation = weaponMesh->GetSocketTransform(WEAPON_SOCKET_START).GetLocation();
+	_CurrentSaberEndSocketLocation = weaponMesh->GetSocketTransform(WEAPON_SOCKET_END).GetLocation();
+}
 
 void UPlayerCharacterAttackComponent::ClearCurrentAttack()
 {
@@ -92,6 +157,9 @@ void UPlayerCharacterAttackComponent::ClearCurrentAttack()
 	{
 		CurrentCombo = TargetCombo = 0;
 		PrevAttackData = nullptr;
+		ApplyDamage = 0.f;
+		_IsAttacking = false;
+		_IsCalculatedPrevSaberSocketLocation = false;
 		StartCheckingNextAttackInput();
 	}
 	else
@@ -99,6 +167,7 @@ void UPlayerCharacterAttackComponent::ClearCurrentAttack()
 		PrevAttackData = CurrentAttackData;
 		CurrentAttackData = nullptr;
 	}
+	ApplyDamage = 0.f;
 
 	PrevAttackData = CurrentAttackData;
 	CurrentAttackData = nullptr;

@@ -23,6 +23,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UAnimMontage* UseAnimMontage;
 
+	UPROPERTY(EditAnywhere)
+	float AttackDamage;
+
 	int32 GetMaxComboCount() const
 	{
 		return LinkableAttackSectionNames.Num();

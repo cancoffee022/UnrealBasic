@@ -5,11 +5,13 @@
 #include "PlayerCharacterAttackComponent.generated.h"
 
 //아무 공격도 하지 있지 않음을 나타낼 매크로 상수
-#define ATTACK_NONE TEXT("NONE")
+#define ATTACK_NONE				TEXT("NONE")
 
 // 기본 공격을 나타내는 키워드
-#define DEFAULT_ATTACK_KEYWORD TEXT("DefaultAttack")
+#define DEFAULT_ATTACK_KEYWORD	TEXT("DefaultAttack")
 
+#define WEAPON_SOCKET_START		TEXT("Socket_SaberStart")
+#define WEAPON_SOCKET_END		TEXT("Socket_SaberEnd")
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UPlayerCharacterAttackComponent : public UActorComponent
@@ -26,6 +28,9 @@ private:
 	// 현재 실행중인 공격을 나타냅니다
 	struct FAttackData* CurrentAttackData;
 
+	// 현재 공격이 적중한 경우 가할 데미지
+	float ApplyDamage;
+
 	// 입력된 콤보 카운트
 	int32 TargetCombo;
 
@@ -41,6 +46,17 @@ private:
 	// 플레이어 캐릭터 객체를 나타냅니다
 	class AGameCharacter* PlayerCharacter;
 
+	// 현재 공격중임을 나타냅니다.
+	bool _IsAttacking;
+
+	// 이전 위치가 계산되었음을 나타냅니다
+	bool _IsCalculatedPrevSaberSocketLocation;
+	
+	// 무기의 현재 위치를 나타냅니다
+	FVector _CurrentSaberStartSocketLocation;
+	FVector _CurrentSaberEndSocketLocation;
+
+
 public:	
 	UPlayerCharacterAttackComponent();
 
@@ -52,12 +68,18 @@ public:
 
 private:
 	// 스킬을 순서대로 처리합니다.
-	void SkillProcedure();
+	void AttackProcedure();
+
+	void CheckAttackArea();
 
 	// 공격 정보를 얻습니다.
 	//struct FAttackData* GetAttackData(FName attackName);
 
 public:
+	// 무기 소켓 위치를 갱신합니다
+	// weaponMesh : 소켓 위치를 얻을 StaticMesh 에셋을 전달하비니다
+	void UpdateWeaponSocketLocation(class UStaticMeshComponent* weaponMesh);
+
 	void ClearCurrentAttack();
 
 	// 공격을 요청합니다.
