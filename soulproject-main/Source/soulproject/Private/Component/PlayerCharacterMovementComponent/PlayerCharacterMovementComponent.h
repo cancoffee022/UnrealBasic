@@ -13,6 +13,8 @@ class UPlayerCharacterMovementComponent : public UActorComponent
 	GENERATED_BODY()
 
 private :
+	// 이동 입력 허용상태를 나타냅니다
+	bool AllowMovementInput;
 
 public:	
 	UPlayerCharacterMovementComponent();
@@ -28,5 +30,8 @@ public:
 	void OnJump();
 
 
+	// 이동 입력 허용상태를 설정합니다
+	// allowMovementInput : 허용시 true 전달
+	void SetAllowMovementInput(bool allowMovementInput);
 		
 };

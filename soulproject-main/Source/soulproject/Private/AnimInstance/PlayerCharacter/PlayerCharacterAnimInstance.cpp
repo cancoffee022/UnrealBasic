@@ -35,3 +35,23 @@ void UPlayerCharacterAnimInstance::AnimNotify_FinishNextAttackCheck()
 	AnimController->OnNextAttackCheckFinished();
 }
 
+void UPlayerCharacterAnimInstance::AnimNotify_EnableAttackArea()
+{
+	AnimController->EnableAttackArea();
+}
+
+void UPlayerCharacterAnimInstance::AnimNotify_DisableAttackArea()
+{
+	AnimController->DisalbeAttackArea();
+}
+
+void UPlayerCharacterAnimInstance::AnimNotify_BlockMovementInput()
+{
+	AnimController->AllowMovementInput(false);
+}
+
+void UPlayerCharacterAnimInstance::AnimNotify_AllowMovementInput()
+{
+	AnimController->AllowMovementInput(true);
+}
+

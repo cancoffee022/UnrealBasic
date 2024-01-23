@@ -23,8 +23,13 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UAnimMontage* UseAnimMontage;
 
+	// 공격 데미지
 	UPROPERTY(EditAnywhere)
 	float AttackDamage;
+
+	// 이 공격이 실행될 때 카메라 앞방향을 바라보도록 할것인지
+	UPROPERTY(EditAnywhere)
+	bool LookForward;
 
 	int32 GetMaxComboCount() const
 	{

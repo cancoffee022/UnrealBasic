@@ -6,7 +6,7 @@ UPlayerCharacterMovementComponent::UPlayerCharacterMovementComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
+	AllowMovementInput = true;
 	// ...
 }
 
@@ -40,6 +40,8 @@ void UPlayerCharacterMovementComponent::HorizontalMove(float axis)
 
 void UPlayerCharacterMovementComponent::VerticalMove(float axis)
 {
+	axis = AllowMovementInput ? axis : 0;
+
 	// 컨트롤러 회전중 Yaw 회전만을 얻습니다.
 	AGameCharacter* gameCharacter = Cast<AGameCharacter>(GetOwner());
 	FRotator yawRotation = FRotator(0.0f, gameCharacter->GetControlRotation().Yaw, 0.0f);
@@ -55,8 +57,14 @@ void UPlayerCharacterMovementComponent::VerticalMove(float axis)
 
 void UPlayerCharacterMovementComponent::OnJump()
 {
+
 	AGameCharacter* gameCharacter = Cast<AGameCharacter>(GetOwner());
 	gameCharacter->Jump();
+}
+
+void UPlayerCharacterMovementComponent::SetAllowMovementInput(bool allowMovementInput)
+{
+	AllowMovementInput = allowMovementInput;
 }
 
 

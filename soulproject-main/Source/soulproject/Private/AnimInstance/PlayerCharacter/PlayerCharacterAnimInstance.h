@@ -44,4 +44,16 @@ private:
 	UFUNCTION()
 	void AnimNotify_FinishNextAttackCheck();
 
+	UFUNCTION()
+	void AnimNotify_EnableAttackArea();
+	
+	UFUNCTION()
+	void AnimNotify_DisableAttackArea();
+	
+	UFUNCTION()
+	void AnimNotify_BlockMovementInput();
+	
+	UFUNCTION()
+	void AnimNotify_AllowMovementInput();
+
 };

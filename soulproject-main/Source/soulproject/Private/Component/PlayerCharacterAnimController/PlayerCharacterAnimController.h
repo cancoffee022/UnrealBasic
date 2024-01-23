@@ -9,6 +9,12 @@
 // 다음 공격 입력 확인을 위한 대리자 형식
 DECLARE_DELEGATE(FCheckNextInputEventSignature)
 
+// 공격 영역 활성화/비활성화를 위한 대리자 형식
+DECLARE_DELEGATE(FAttackAreaEnableEventSignature)
+
+// 이동 입력 컨트롤을 위한 대리자 형식
+DECLARE_DELEGATE_OneParam(FMovementInputControlEventSignature, bool /* AllowMovement */)
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UPlayerCharacterAnimController : public UActorComponent
@@ -28,6 +34,15 @@ public:
 	FCheckNextInputEventSignature onNextAttackInputCheckStarted;
 	// 다음 공격 입력 확인이 끝났을시 발생하는 이벤트
 	FCheckNextInputEventSignature onNextAttackInputCheckFinished;
+
+	// 공격 영역 활성화 시점에 발생하는 이벤트
+	FAttackAreaEnableEventSignature onAttackAreaEnable;
+	
+	// 공격 영역 비활성화 시점에 발생하는 이벤트
+	FAttackAreaEnableEventSignature onAttackAreaDisable;
+
+	// 이동 입력이 제어될때 발생하는 이벤트
+	FMovementInputControlEventSignature onAllowMovementInput;
 
 public:	
 	// Sets default values for this component's properties
@@ -53,5 +68,11 @@ public:
 
 	// 다음 공격 입력 확인이 끝났을 때 호출됩니다.
 	void OnNextAttackCheckFinished();
+
+	void EnableAttackArea();
+
+	void DisalbeAttackArea();
+
+	void AllowMovementInput(bool allowMovementInput);
 
 };

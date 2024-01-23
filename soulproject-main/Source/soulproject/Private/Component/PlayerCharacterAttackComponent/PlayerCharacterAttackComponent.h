@@ -31,6 +31,12 @@ private:
 	// 현재 공격이 적중한 경우 가할 데미지
 	float ApplyDamage;
 
+	// 공격 영역 활성화 상태를 나타냅니다.
+	bool IsAttackAreaEnabled;
+
+	// 공격 시 감지된 적 객체를 잠시 저장해둘 배열
+	TArray<class AEnemyCharacter*> AttackDectectedEnemies;
+
 	// 입력된 콤보 카운트
 	int32 TargetCombo;
 
@@ -89,4 +95,10 @@ public:
 	void StartCheckingNextAttackInput();
 	// 다음 공격 입력 확인 끝
 	void FinishCheckingNextAttackInput();
+
+	// 공격 영역 활성화
+	void EnableAttackArea();
+	
+	// 공격 영역 비활성화
+	void DisableAttackArea();
 };

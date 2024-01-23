@@ -79,6 +79,7 @@ AGameCharacter::AGameCharacter()
 	if (SM_SABER.Succeeded())
 	{
 		WeaponMesh->SetStaticMesh(SM_SABER.Object);
+		WeaponMesh->SetCollisionProfileName(TEXT("NoCollision"));
 	}
 }
 
@@ -99,6 +100,15 @@ void AGameCharacter::BeginPlay()
 	PlayerCharacterAnimController->onNextAttackInputCheckFinished.BindUObject(
 		AttackComponent, &UPlayerCharacterAttackComponent::FinishCheckingNextAttackInput);
 
+	// 공격 영역 활성화/비활성화 이벤트 설정
+	PlayerCharacterAnimController->onAttackAreaEnable.BindUObject(
+		AttackComponent, &UPlayerCharacterAttackComponent::EnableAttackArea);
+	PlayerCharacterAnimController->onAttackAreaDisable.BindUObject(
+		AttackComponent, &UPlayerCharacterAttackComponent::DisableAttackArea);
+
+
+	PlayerCharacterAnimController->onAllowMovementInput.BindUObject(
+		PlayerCharacterMovementComponent, &UPlayerCharacterMovementComponent::SetAllowMovementInput);
 }
 
 // Called every frame

@@ -25,9 +25,9 @@ UPlayerCharacterAttackComponent::UPlayerCharacterAttackComponent()
 
 	bCheckingNextAttackInput = true;
 
-	_IsCalculatedPrevSaberSocketLocation = false;
-
 	_IsAttacking = false;
+
+	IsAttackAreaEnabled = false;
 }
 
 
@@ -61,11 +61,21 @@ void UPlayerCharacterAttackComponent::AttackProcedure()
 	FAttackData* requestedAttack;
 	RequestAttackQueue.Dequeue(requestedAttack);
 
+	AttackDectectedEnemies.Empty();
+
 	
 	// 현재 공격을 요청된 공격으로 설정합니다.
 	CurrentAttackData = requestedAttack;
 	ApplyDamage = CurrentAttackData->AttackDamage;
 	_IsAttacking = true;
+
+	if (CurrentAttackData->LookForward)
+	{
+		FRotator controlRotation = PlayerCharacter->GetControlRotation();
+		controlRotation.Pitch = controlRotation.Roll = 0;
+
+		PlayerCharacter->SetActorRotation(controlRotation);
+	}
 
 	// 연계공격임을 나타냅니다
 	bool isLinkAttack = false;
@@ -81,7 +91,6 @@ void UPlayerCharacterAttackComponent::AttackProcedure()
 	// 같은 공격을 진행하는 경우
 	if (isLinkAttack)
 	{
-
 		int32 sectionNameIndex = CurrentCombo - 1;
 		FName sectionName = CurrentAttackData->LinkableAttackSectionNames[sectionNameIndex];
 		PlayerCharacter->PlayAnimMontage(CurrentAttackData->UseAnimMontage, 1.0f, sectionName);
@@ -97,15 +106,7 @@ void UPlayerCharacterAttackComponent::AttackProcedure()
 void UPlayerCharacterAttackComponent::CheckAttackArea()
 {
 	// 공격중이 아닌 경우 함수 종료
-	if (!_IsAttacking) return;
-
-	// 이전 위치가 계산되지 않은 경우
-	if (!_IsCalculatedPrevSaberSocketLocation)
-	{
-		_IsCalculatedPrevSaberSocketLocation = true;
-
-		return;
-	}
+	if (!IsAttackAreaEnabled) return;
 	
 	TArray<AActor*> actorsToIgnore;
 	TArray<FHitResult> hitResults;
@@ -127,22 +128,21 @@ void UPlayerCharacterAttackComponent::CheckAttackArea()
 		AEnemyCharacter* enemyCharacter = Cast<AEnemyCharacter>(hit.GetActor());
 		if (IsValid(enemyCharacter))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Apply DDamage 99"));
-			UGameplayStatics::ApplyDamage(
-				enemyCharacter,
-				ApplyDamage,
-				PlayerCharacter->GetController(),
-				PlayerCharacter,
-				UDamageType::StaticClass());
+			if (!AttackDectectedEnemies.Contains(enemyCharacter))
+			{
+				AttackDectectedEnemies.Add(enemyCharacter);
+				UE_LOG(LogTemp, Warning, TEXT("Apply DDamage 99"));
+				UGameplayStatics::ApplyDamage(
+					enemyCharacter,
+					ApplyDamage,
+					PlayerCharacter->GetController(),
+					PlayerCharacter,
+					UDamageType::StaticClass());
+			}
 		}
 	}
 }
 
-//FAttackData* UPlayerCharacterAttackComponent::GetAttackData(FName attackName)
-//{
-//	//FAttackData** result = 
-//	return *AttackDatas.Find(attackName);
-//}
 
 void UPlayerCharacterAttackComponent::UpdateWeaponSocketLocation(UStaticMeshComponent* weaponMesh)
 {
@@ -159,14 +159,13 @@ void UPlayerCharacterAttackComponent::ClearCurrentAttack()
 		PrevAttackData = nullptr;
 		ApplyDamage = 0.f;
 		_IsAttacking = false;
-		_IsCalculatedPrevSaberSocketLocation = false;
 		StartCheckingNextAttackInput();
 	}
-	else
-	{
-		PrevAttackData = CurrentAttackData;
-		CurrentAttackData = nullptr;
-	}
+	//else
+	//{
+	//	PrevAttackData = CurrentAttackData;
+	//	CurrentAttackData = nullptr;
+	//}
 	ApplyDamage = 0.f;
 
 	PrevAttackData = CurrentAttackData;
@@ -218,5 +217,15 @@ void UPlayerCharacterAttackComponent::FinishCheckingNextAttackInput()
 		CurrentAttackData = nullptr;
 	}
 
+}
+
+void UPlayerCharacterAttackComponent::EnableAttackArea()
+{
+	IsAttackAreaEnabled = true;
+}
+
+void UPlayerCharacterAttackComponent::DisableAttackArea()
+{
+	IsAttackAreaEnabled = false;
 }
 

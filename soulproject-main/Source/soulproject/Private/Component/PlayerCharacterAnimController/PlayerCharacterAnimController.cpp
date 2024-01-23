@@ -62,3 +62,18 @@ void UPlayerCharacterAnimController::OnNextAttackCheckFinished()
 {
 	onNextAttackInputCheckFinished.ExecuteIfBound();
 }
+
+void UPlayerCharacterAnimController::EnableAttackArea()
+{
+	onAttackAreaEnable.ExecuteIfBound();
+}
+
+void UPlayerCharacterAnimController::DisalbeAttackArea()
+{
+	onAttackAreaDisable.ExecuteIfBound();
+}
+
+void UPlayerCharacterAnimController::AllowMovementInput(bool allowMovementInput)
+{
+	onAllowMovementInput.ExecuteIfBound(allowMovementInput);
+}
