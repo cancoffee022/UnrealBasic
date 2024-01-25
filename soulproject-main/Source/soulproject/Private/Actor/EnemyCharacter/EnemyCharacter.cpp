@@ -48,6 +48,7 @@ void AEnemyCharacter::PossessedBy(AController* NewController)
 		AEnemyController* enemyController = Cast<AEnemyController>(NewController);
 		enemyController->InitializeEnemyController(EnemyData);
 	}
+
 }
 
 // Called every frame

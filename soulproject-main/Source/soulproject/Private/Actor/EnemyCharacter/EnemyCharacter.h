@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "EnemyCharacter.generated.h"
 
+#define BLACKBOARDKEY_SPAWNLOCATION			TEXT("SpawnLocation")
+
 UCLASS()
 class AEnemyCharacter : public ACharacter
 {
