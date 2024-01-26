@@ -18,9 +18,19 @@ class AChickenCharacter : public AEnemyCharacter
 public:
 	AChickenCharacter();
 
+private:
+	class UChickenCharacterAnimInstance* ControlledAnimInstance;
+
+protected:
+	virtual void BeginPlay() override;
+
 public:
 	// 컨트롤러가 캐릭터에 빙의되었을 때 호출됩니다 
 	virtual void PossessedBy(AController* NewController) override;
+	virtual void Tick(float dt) override;
+
+
+	void SetAnimInstance(UChickenCharacterAnimInstance* controlledAnimInstance);
 
 private:
 	void InitializeBlackboardKey(class UBlackboardComponent* blackboardComponent);
