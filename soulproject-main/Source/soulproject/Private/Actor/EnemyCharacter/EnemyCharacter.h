@@ -6,8 +6,6 @@
 #include "GameFramework/Character.h"
 #include "EnemyCharacter.generated.h"
 
-#define BLACKBOARDKEY_SPAWNLOCATION			TEXT("SpawnLocation")
-
 UCLASS()
 class AEnemyCharacter : public ACharacter
 {
@@ -61,5 +59,19 @@ private:
 		// 가해 액터
 		AActor* DamageCauser
 	);
+
+protected: 
+	// 적 컨트롤러를 설정합니다.
+	virtual void SetEnemyController(TSubclassOf<class AEnemyController> controllerClass,
+		EAutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned);
+	// 대미지를 입은경우 호출됩니다
+	// gameCharacter : GameCharacter 객체가 전달됩니다
+	// damage : 가공된 대미지 수치가 전달됩니다.
+	virtual void OnDamaged(class AGameCharacter* gameCharacter, float damage);
+
+	// 대미지를 계산합니다.
+	// damage : 입은 피해량이 전달됩니다.
+	// return : 가공된 대미지 수치를 반환합니다
+	virtual float CalculateDamage(float damage);
 
 };

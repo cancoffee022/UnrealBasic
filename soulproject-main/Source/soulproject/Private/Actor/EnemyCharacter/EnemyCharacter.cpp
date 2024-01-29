@@ -1,5 +1,6 @@
 #include "Actor/EnemyCharacter/EnemyCharacter.h"
 #include "Actor/EnemyController/EnemyController.h"
+#include "Actor/GameCharacter/GameCharacter.h"
 
 #include "Structure/EnemyData/EnemyData.h"
 
@@ -13,12 +14,7 @@ AEnemyCharacter::AEnemyCharacter()
 		EnemyDataTable = DT_ENEMY_DATA.Object;
 	}
 
- 	// 사용하는 AI 컨트롤러 클래스를 설정합니다
-	AIControllerClass = AEnemyController::StaticClass();
-
-	// 컨트롤러 생성방식을 정의합니다
-	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
-
+	SetEnemyController(AEnemyController::StaticClass());
 
 	PrimaryActorTick.bCanEverTick = true;
 }
@@ -84,7 +80,30 @@ void AEnemyCharacter::InitializeEnemyData()
 
 void AEnemyCharacter::OnDamaged(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Damage = %.2f"), Damage);
+	AEnemyController* enemyController = Cast<AEnemyController>(GetController());
+	AGameCharacter* gameCharacter = Cast<AGameCharacter>(DamageCauser);
+
+	if (IsValid(gameCharacter) && IsValid(enemyController))
+	{
+		float calculatedDamage = CalculateDamage(Damage);
+		enemyController->OnDamaged(gameCharacter, calculatedDamage);
+		OnDamaged(gameCharacter, calculatedDamage);
+	}
+}
+
+void AEnemyCharacter::SetEnemyController(TSubclassOf<class AEnemyController> controllerClass, EAutoPossessAI possessType)
+{
+	AIControllerClass = controllerClass;
+	AutoPossessAI = possessType;
+}
+
+void AEnemyCharacter::OnDamaged(AGameCharacter* gameCharacter, float damage)
+{
+}
+
+float AEnemyCharacter::CalculateDamage(float damage)
+{
+	return damage;
 }
 
 

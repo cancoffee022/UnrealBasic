@@ -6,8 +6,6 @@
 #include "Actor/EnemyCharacter/EnemyCharacter.h"
 #include "ChickenCharacter.generated.h"
 
-#define BLACKBOARDKEY_MAXMOVEDISTANCE		TEXT("MaxMoveDistance")
-
 /**
  * 
  */
@@ -15,6 +13,10 @@ UCLASS()
 class AChickenCharacter : public AEnemyCharacter
 {
 	GENERATED_BODY()
+
+private:
+	class UAnimMontage* OnHitAnimMontage;
+
 public:
 	AChickenCharacter();
 
@@ -32,7 +34,11 @@ public:
 
 	void SetAnimInstance(UChickenCharacterAnimInstance* controlledAnimInstance);
 
+protected:
+	virtual void OnDamaged(class AGameCharacter* gameCharacter, float damage) override;
+
 private:
 	void InitializeBlackboardKey(class UBlackboardComponent* blackboardComponent);
+
 	
 };

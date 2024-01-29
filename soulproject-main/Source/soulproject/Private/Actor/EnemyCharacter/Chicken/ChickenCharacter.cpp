@@ -1,4 +1,5 @@
 #include "Actor/EnemyCharacter/Chicken/ChickenCharacter.h"
+#include "Actor/EnemyController/Chicken/ChickenController.h"
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AnimInstance/ChickenCharacter/ChickenCharacterAnimInstance.h"
@@ -6,6 +7,14 @@
 
 AChickenCharacter::AChickenCharacter()
 {
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> ANIMMONTAGE_ONHIT(
+		TEXT("/Script/Engine.AnimMontage'/Game/Resources/EnemyCharacter/AnimalVarietyPack/Chicken/Animations/AnimMontage_OnHit.AnimMontage_OnHit'"));
+
+	if (ANIMMONTAGE_ONHIT.Succeeded())
+	{
+		OnHitAnimMontage = ANIMMONTAGE_ONHIT.Object;
+	}
+
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_CHICKEN(
 		TEXT("/Script/Engine.SkeletalMesh'/Game/Resources/EnemyCharacter/AnimalVarietyPack/Chicken/Meshes/SK_Chicken.SK_Chicken'"));
 
@@ -21,6 +30,9 @@ AChickenCharacter::AChickenCharacter()
 	{
 		GetMesh()->SetAnimInstanceClass(ANIMBP_CHICKEN_CHARACTER.Class);
 	}
+
+	// 컨트롤러 설정
+	SetEnemyController(AChickenController::StaticClass());
 	
 	EnemyCode = TEXT("000001");
 
@@ -57,6 +69,14 @@ void AChickenCharacter::Tick(float dt)
 void AChickenCharacter::SetAnimInstance(UChickenCharacterAnimInstance* controlledAnimInstance)
 {
 	ControlledAnimInstance = controlledAnimInstance;
+}
+
+void AChickenCharacter::OnDamaged(AGameCharacter* gameCharacter, float damage)
+{
+	Super::OnDamaged(gameCharacter, damage);
+
+	//OnHit 애님 몽타주 재생
+	PlayAnimMontage(OnHitAnimMontage);
 }
 
 void AChickenCharacter::InitializeBlackboardKey(UBlackboardComponent* blackboardComponent)
