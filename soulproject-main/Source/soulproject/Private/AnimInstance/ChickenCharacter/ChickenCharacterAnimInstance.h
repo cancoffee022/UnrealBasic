@@ -16,6 +16,10 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float CurrentSpeed;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	bool IsDead;
+
 public:
+	void SetIsDead(bool isDead);
 	void SetCurrentSpeed(float newSpeed);
 };

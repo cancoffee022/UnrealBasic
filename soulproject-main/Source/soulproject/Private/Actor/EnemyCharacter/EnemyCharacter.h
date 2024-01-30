@@ -15,8 +15,21 @@ private:
 	// 적 정보 데이터 테이블 에셋
 	class UDataTable* EnemyDataTable;
 
+protected:
 	// 적 데이터
 	struct FEnemyData* EnemyData;
+
+	// 현재 체력
+	UPROPERTY()
+	float CurrentHp;
+
+	// 사망 상태
+	UPROPERTY()
+	bool IsDead;
+
+	// 사망시 사용될 메테리얼
+	UPROPERTY()
+	class UMaterialInstanceDynamic* MaterialInstanceOnDead;
 
 protected:
 	// 적 코드
@@ -68,6 +81,9 @@ protected:
 	// gameCharacter : GameCharacter 객체가 전달됩니다
 	// damage : 가공된 대미지 수치가 전달됩니다.
 	virtual void OnDamaged(class AGameCharacter* gameCharacter, float damage);
+
+	// 적이 사망한 경우 호출되는 메서드
+	virtual void OnDead();
 
 	// 대미지를 계산합니다.
 	// damage : 입은 피해량이 전달됩니다.

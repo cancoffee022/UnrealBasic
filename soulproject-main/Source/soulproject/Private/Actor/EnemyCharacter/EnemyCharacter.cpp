@@ -2,6 +2,8 @@
 #include "Actor/EnemyController/EnemyController.h"
 #include "Actor/GameCharacter/GameCharacter.h"
 
+#include "Components/CapsuleComponent.h"
+
 #include "Structure/EnemyData/EnemyData.h"
 
 // Sets default values
@@ -52,6 +54,17 @@ void AEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// 매터리얼 파라미터 설정
+	if (IsDead)
+	{
+		if (IsValid(MaterialInstanceOnDead))
+		{
+			float alpha;
+			MaterialInstanceOnDead->GetScalarParameterValue(TEXT("_Alpha"), alpha);
+			alpha -= 1.0f;
+			MaterialInstanceOnDead->SetScalarParameterValue(TEXT("_Alpha"), alpha);
+		}
+	}
 }
 
 // Called to bind functionality to input
@@ -70,11 +83,7 @@ void AEnemyCharacter::InitializeEnemyData()
 
 	if (EnemyData != nullptr)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Name = %s"), *EnemyData->Name.ToString());
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Error"));
+		CurrentHp = EnemyData->MaxHP;
 	}
 }
 
@@ -99,6 +108,33 @@ void AEnemyCharacter::SetEnemyController(TSubclassOf<class AEnemyController> con
 
 void AEnemyCharacter::OnDamaged(AGameCharacter* gameCharacter, float damage)
 {
+	CurrentHp -= damage;
+
+	if (CurrentHp <= 0)
+	{
+		CurrentHp = 0;
+
+		// 사망 이벤트 실행
+		AEnemyController* enemyController = Cast<AEnemyController>(GetController());
+
+		enemyController->OnDead();
+		OnDead();
+	}
+}
+
+void AEnemyCharacter::OnDead()
+{
+	// 사망 상태 설정
+	IsDead = true;
+
+	// 사망 후 캐릭터가 통과할 수 있도록 컬리전 프리셋 설정
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("NoCollision"));
+
+	// 매터리얼 설정
+	MaterialInstanceOnDead = UMaterialInstanceDynamic::Create(EnemyData->MaterialInstanceOnDead, this);
+	
+	GetMesh()->SetMaterial(0, MaterialInstanceOnDead);
+
 }
 
 float AEnemyCharacter::CalculateDamage(float damage)

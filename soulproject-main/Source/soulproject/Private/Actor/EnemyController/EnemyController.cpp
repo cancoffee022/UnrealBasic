@@ -64,3 +64,8 @@ void AEnemyController::OnDamaged(AGameCharacter* gameCharacter, float damage)
 	BlackboardComponent->SetValueAsFloat(BLACKBOARDKEY_LASTDAMAGEDTIME, currentTimeSeconds);
 
 }
+
+void AEnemyController::OnDead()
+{
+	BlackboardComponent->SetValueAsBool(BLACKBOARDKEY_ISDEAD, true);
+}

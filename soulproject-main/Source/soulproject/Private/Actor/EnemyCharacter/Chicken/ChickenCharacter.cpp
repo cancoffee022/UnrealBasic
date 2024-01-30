@@ -60,9 +60,10 @@ void AChickenCharacter::Tick(float dt)
 	
 	float characterVelocity = GetVelocity().Length();
 	// 局丛 牢胶畔胶俊 利侩
-	ControlledAnimInstance->SetCurrentSpeed(characterVelocity);
+	if (!IsValid(ControlledAnimInstance)) return;
 
-	UE_LOG(LogTemp, Warning, TEXT("%.2f"), characterVelocity);
+	ControlledAnimInstance->SetCurrentSpeed(characterVelocity);
+	ControlledAnimInstance->SetIsDead(IsDead);
 }
 
 
@@ -75,8 +76,11 @@ void AChickenCharacter::OnDamaged(AGameCharacter* gameCharacter, float damage)
 {
 	Super::OnDamaged(gameCharacter, damage);
 
-	//OnHit 局丛 根鸥林 犁积
-	PlayAnimMontage(OnHitAnimMontage);
+	if (!IsDead)
+	{
+		//OnHit 局丛 根鸥林 犁积
+		PlayAnimMontage(OnHitAnimMontage);
+	}
 }
 
 void AChickenCharacter::InitializeBlackboardKey(UBlackboardComponent* blackboardComponent)

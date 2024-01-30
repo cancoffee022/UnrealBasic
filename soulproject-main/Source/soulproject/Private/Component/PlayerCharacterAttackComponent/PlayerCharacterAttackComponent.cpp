@@ -131,7 +131,7 @@ void UPlayerCharacterAttackComponent::CheckAttackArea()
 			if (!AttackDectectedEnemies.Contains(enemyCharacter))
 			{
 				AttackDectectedEnemies.Add(enemyCharacter);
-				UE_LOG(LogTemp, Warning, TEXT("Apply DDamage 99"));
+				UE_LOG(LogTemp, Warning, TEXT("Apply Damage 99"));
 				UGameplayStatics::ApplyDamage(
 					enemyCharacter,
 					ApplyDamage,

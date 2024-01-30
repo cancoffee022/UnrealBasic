@@ -10,6 +10,7 @@
 #define BLACKBOARDKEY_SPAWNLOCATION			TEXT("SpawnLocation")
 #define BLACKBOARDKEY_LASTDAMAGEDTIME		TEXT("LastDamagedTime")
 #define BLACKBOARDKEY_TIMETOCALMDOWN		TEXT("TimeToCalmDown")
+#define BLACKBOARDKEY_ISDEAD				TEXT("IsDead")
 /**
  * 적 캐릭터에서 기본적으로 사용하는 컨트롤러입니다.
  */
@@ -34,4 +35,7 @@ public:
 	// gameCharacter : 피해를 입힌 액터가 전달
 	// damage : 입은 피해량이 계산되어 전달
 	virtual void OnDamaged(class AGameCharacter* gameCharacter, float damage);
+
+	// 조종하는 적이 사망한 경우 호출되는 메서드입니다
+	virtual void OnDead();
 };
