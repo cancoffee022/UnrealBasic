@@ -10,7 +10,8 @@ public class soulproject : ModuleRules
 	
 		PublicDependencyModuleNames.AddRange(new string[] { 
 			"Core", "CoreUObject", "Engine", "InputCore",
-			"AIModule", "NavigationSystem", "GameplayTasks"
+			"AIModule", "NavigationSystem", "GameplayTasks",
+			"UMG", "SlateCore"
 		
 		});
 

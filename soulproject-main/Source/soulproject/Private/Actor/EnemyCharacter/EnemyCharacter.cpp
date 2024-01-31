@@ -3,6 +3,11 @@
 #include "Actor/GameCharacter/GameCharacter.h"
 
 #include "Components/CapsuleComponent.h"
+#include "Components/WidgetComponent.h"
+
+#include "Widget/EnemyWidget/EnemyWidget.h"
+
+#include "Kismet/GameplayStatics.h"
 
 #include "Structure/EnemyData/EnemyData.h"
 
@@ -16,6 +21,13 @@ AEnemyCharacter::AEnemyCharacter()
 		EnemyDataTable = DT_ENEMY_DATA.Object;
 	}
 
+	// 컴포넌트 추가
+	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("WIDGETCOMPONENT"));
+	WidgetComponent->SetupAttachment(GetRootComponent());
+	WidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
+	WidgetComponent->SetRelativeLocation(FVector::UpVector * 50.f);
+
+	// 컨트롤러 설정
 	SetEnemyController(AEnemyController::StaticClass());
 
 	PrimaryActorTick.bCanEverTick = true;
@@ -25,9 +37,16 @@ AEnemyCharacter::AEnemyCharacter()
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	OnTakeAnyDamage.AddDynamic(this, &ThisClass::OnDamaged);
 
+	// 위젯 클래스 설정
+	WidgetComponent->SetWidgetClass(EnemyData->EnemyHUDClass);
+	UEnemyWidget* enemywidget = Cast<UEnemyWidget>(WidgetComponent->GetUserWidgetObject());
+	
+	// 적 위젯 객체 초기화
+	enemywidget->InitializeEnemyWidget(EnemyData->Name, EnemyData->MaxHP);
+
+	// 대미지 이벤트 설정
+	OnTakeAnyDamage.AddDynamic(this, &ThisClass::OnDamaged);
 }
 
 void AEnemyCharacter::PossessedBy(AController* NewController)
@@ -40,12 +59,15 @@ void AEnemyCharacter::PossessedBy(AController* NewController)
 	if (EnemyData == nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("EnemyData is notValide (EnemyCode :%s)"), *EnemyData->Name.ToString());
+		return;
 	}
 	else
 	{
 		AEnemyController* enemyController = Cast<AEnemyController>(NewController);
 		enemyController->InitializeEnemyController(EnemyData);
 	}
+
+	
 
 }
 
@@ -63,6 +85,8 @@ void AEnemyCharacter::Tick(float DeltaTime)
 			MaterialInstanceOnDead->GetScalarParameterValue(TEXT("_Alpha"), alpha);
 			alpha -= 1.0f;
 			MaterialInstanceOnDead->SetScalarParameterValue(TEXT("_Alpha"), alpha);
+
+			if (alpha <= 0) OnEnemyDestroy();
 		}
 	}
 }
@@ -87,7 +111,12 @@ void AEnemyCharacter::InitializeEnemyData()
 	}
 }
 
-void AEnemyCharacter::OnDamaged(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
+void AEnemyCharacter::OnDamaged(
+	AActor* DamagedActor,
+	float Damage,
+	const UDamageType* DamageType,
+	AController* InstigatedBy,
+	AActor* DamageCauser)
 {
 	AEnemyController* enemyController = Cast<AEnemyController>(GetController());
 	AGameCharacter* gameCharacter = Cast<AGameCharacter>(DamageCauser);
@@ -109,6 +138,15 @@ void AEnemyCharacter::SetEnemyController(TSubclassOf<class AEnemyController> con
 void AEnemyCharacter::OnDamaged(AGameCharacter* gameCharacter, float damage)
 {
 	CurrentHp -= damage;
+
+	// 마지막으로 공격받은 시간을 기록합니다
+	LastDamagedTime = UGameplayStatics::GetTimeSeconds(this);
+
+	UEnemyWidget* enemyWidget = Cast<UEnemyWidget>(WidgetComponent->GetUserWidgetObject());
+	if(IsValid(enemyWidget))
+
+	// 현재 체력을 widget에 설정합니다
+	Cast<UEnemyWidget>(WidgetComponent->GetUserWidgetObject())->SetHp(CurrentHp);
 
 	if (CurrentHp <= 0)
 	{
@@ -135,6 +173,11 @@ void AEnemyCharacter::OnDead()
 	
 	GetMesh()->SetMaterial(0, MaterialInstanceOnDead);
 
+}
+
+void AEnemyCharacter::OnEnemyDestroy()
+{
+	Destroy();
 }
 
 float AEnemyCharacter::CalculateDamage(float damage)

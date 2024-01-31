@@ -11,6 +11,10 @@ class AEnemyCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	class UWidgetComponent* WidgetComponent;
+
 private:
 	// 적 정보 데이터 테이블 에셋
 	class UDataTable* EnemyDataTable;
@@ -26,6 +30,9 @@ protected:
 	// 사망 상태
 	UPROPERTY()
 	bool IsDead;
+	
+	UPROPERTY()
+	float LastDamagedTime;
 
 	// 사망시 사용될 메테리얼
 	UPROPERTY()
@@ -84,6 +91,9 @@ protected:
 
 	// 적이 사망한 경우 호출되는 메서드
 	virtual void OnDead();
+
+	// 적이 제거될 때 호출됩니다
+	virtual void OnEnemyDestroy();
 
 	// 대미지를 계산합니다.
 	// damage : 입은 피해량이 전달됩니다.
