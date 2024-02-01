@@ -35,4 +35,9 @@ public:
 
 	// Hp를 설정합니다.
 	void SetHp(float newHp);
+
+	void ShowWidget();
+
+	UFUNCTION()
+	void HideWidget();
 };

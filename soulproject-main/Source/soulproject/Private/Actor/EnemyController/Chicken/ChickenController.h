@@ -4,7 +4,6 @@
 #include "Actor/EnemyController/EnemyController.h"
 #include "ChickenController.generated.h"
 
-#define BLACKBOARDKEY_MAXMOVEDISTANCE		TEXT("MaxMoveDistance")
 
 /**
  * 

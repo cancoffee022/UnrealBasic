@@ -11,6 +11,8 @@
 
 #include "Structure/EnemyData/EnemyData.h"
 
+#include "TimerManager.h"
+
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
 {
@@ -143,7 +145,20 @@ void AEnemyCharacter::OnDamaged(AGameCharacter* gameCharacter, float damage)
 	LastDamagedTime = UGameplayStatics::GetTimeSeconds(this);
 
 	UEnemyWidget* enemyWidget = Cast<UEnemyWidget>(WidgetComponent->GetUserWidgetObject());
-	if(IsValid(enemyWidget))
+	if (IsValid(enemyWidget))
+	{
+		// HUD 표시 타이머가 작동중인 경우, 중단시킵니다
+		if (HUDShowTimerHandle.IsValid())
+			GetWorldTimerManager().ClearTimer(HUDShowTimerHandle);
+
+		// HUD 표시
+		enemyWidget->ShowWidget();
+
+		// 10초 이후 HUD가 숨겨지도록 합니다
+		GetWorldTimerManager().SetTimer(HUDShowTimerHandle,
+			enemyWidget, &UEnemyWidget::HideWidget,
+			10.f, false);
+	}
 
 	// 현재 체력을 widget에 설정합니다
 	Cast<UEnemyWidget>(WidgetComponent->GetUserWidgetObject())->SetHp(CurrentHp);

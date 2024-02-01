@@ -24,10 +24,24 @@ void UEnemyWidget::InitializeEnemyWidget(FText name, float maxHp)
 	Text_Name->SetText(name);
 
 	SetHp(MaxHp);
+
+	HideWidget();
 }
 
 void UEnemyWidget::SetHp(float newHp)
 {
 	float hpValue = newHp / MaxHp;
 	Progressbar_Hp->SetPercent(hpValue);
+}
+
+void UEnemyWidget::ShowWidget()
+{
+	Text_Name->SetVisibility(ESlateVisibility::Visible);
+	Progressbar_Hp->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UEnemyWidget::HideWidget()
+{
+	Text_Name->SetVisibility(ESlateVisibility::Hidden);
+	Progressbar_Hp->SetVisibility(ESlateVisibility::Hidden);
 }

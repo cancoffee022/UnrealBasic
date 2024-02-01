@@ -38,6 +38,8 @@ protected:
 	UPROPERTY()
 	class UMaterialInstanceDynamic* MaterialInstanceOnDead;
 
+	FTimerHandle HUDShowTimerHandle;
+
 protected:
 	// Àû ÄÚµå
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
