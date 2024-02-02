@@ -5,4 +5,5 @@
 
 void UKnightCharacterAnimInstance::SetCurrentSpeed(float newSpeed)
 {
+	CurrentSpeed = newSpeed;
 }

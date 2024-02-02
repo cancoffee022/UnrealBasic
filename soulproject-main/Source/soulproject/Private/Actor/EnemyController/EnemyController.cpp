@@ -63,6 +63,8 @@ void AEnemyController::OnDamaged(AGameCharacter* gameCharacter, float damage)
 	float currentTimeSeconds = UGameplayStatics::GetTimeSeconds(this);
 	BlackboardComponent->SetValueAsFloat(BLACKBOARDKEY_LASTDAMAGEDTIME, currentTimeSeconds);
 
+	// 공격한 액터 설정(GameCharacter 액터)
+	BlackboardComponent->SetValueAsObject(BLACKBOARDKEY_DAMAGEACTOR, gameCharacter);
 }
 
 void AEnemyController::OnDead()

@@ -3,6 +3,8 @@
 
 #include "AnimInstance/KnightCharacter/KnightCharacterAnimInstance.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
+
 AKnightCharacter::AKnightCharacter()
 {
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh>SK_BODY(
@@ -26,6 +28,8 @@ AKnightCharacter::AKnightCharacter()
 
 	// 적 코드 설정
 	EnemyCode = TEXT("000002");
+
+	GetCharacterMovement()->MaxWalkSpeed = 300.f;
 }
 
 void AKnightCharacter::Tick(float dt)

@@ -12,7 +12,7 @@
 #define BLACKBOARDKEY_TIMETOCALMDOWN		TEXT("TimeToCalmDown")
 #define BLACKBOARDKEY_ISDEAD				TEXT("IsDead")
 #define BLACKBOARDKEY_MAXMOVEDISTANCE		TEXT("MaxMoveDistance")
-
+#define BLACKBOARDKEY_DAMAGEACTOR			TEXT("DamageActor")
 
 /**
  * 적 캐릭터에서 기본적으로 사용하는 컨트롤러입니다.
