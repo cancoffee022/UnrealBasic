@@ -13,6 +13,10 @@ UCLASS()
 class AKnightCharacter : public AEnemyCharacter
 {
 	GENERATED_BODY()
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class UKnightAttackComponent* AttackComponent;
 	
 public:
 	AKnightCharacter();
@@ -23,4 +27,11 @@ public:
 private:
 	// 애님 인스턴스 파라미터 갱신
 	void UpdateAnimInstanceParams();
+
+public:
+	// 공격 컴포넌트를 반환합니다
+	FORCEINLINE class UKnightAttackComponent* GetAttackComponent()
+	{
+		return AttackComponent;
+	}
 };

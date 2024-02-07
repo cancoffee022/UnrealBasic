@@ -17,4 +17,8 @@ class AKnightController : public AEnemyController
 public:
 	virtual void OnBlackboardKeyInitialize(class UBlackboardComponent* blackboardComponent, class APawn* inPawn);
 
+
+public:
+	void Attack();
+
 };

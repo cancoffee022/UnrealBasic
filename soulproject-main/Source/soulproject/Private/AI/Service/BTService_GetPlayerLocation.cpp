@@ -1,11 +1,11 @@
-#include "AI/Task/BTTask_GetPlayerLocation.h"
+#include "AI/Service/BTService_GetPlayerLocation.h"
 
 #include "Actor/GameCharacter/GameCharacter.h"
 
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
-UBTTask_GetPlayerLocation::UBTTask_GetPlayerLocation()
+UBTService_GetPlayerLocation::UBTService_GetPlayerLocation()
 {
 	PlayerActorKey.AddObjectFilter(
 		this, 
@@ -15,14 +15,19 @@ UBTTask_GetPlayerLocation::UBTTask_GetPlayerLocation()
 		GET_MEMBER_NAME_CHECKED(ThisClass, TargetLocationKey));
 }
 
-EBTNodeResult::Type UBTTask_GetPlayerLocation::ExecuteTask(UBehaviorTreeComponent& ownerComponent, uint8* nodeMemory)
+void UBTService_GetPlayerLocation::TickNode(
+	UBehaviorTreeComponent& ownerComponent,
+	uint8* nodeMemory,
+	float dt)
 {
+	Super::TickNode(ownerComponent, nodeMemory, dt);
+
 	UBlackboardComponent* blackboardComponent = ownerComponent.GetBlackboardComponent();
 	AGameCharacter* gameCharacter =
 		Cast<AGameCharacter>(blackboardComponent->GetValueAsObject(PlayerActorKey.SelectedKeyName));
 
 	// 얻은 플레이어 캐릭터가 유효하지 않은 경우, 행동 실패 
-	if (!IsValid(gameCharacter)) return EBTNodeResult::Failed;
+	if (!IsValid(gameCharacter)) return;
 
 	AController* enemyController = Cast<AController>(blackboardComponent->GetOwner());
 	FVector currentLocation = enemyController->GetPawn()->GetActorLocation();
@@ -30,7 +35,7 @@ EBTNodeResult::Type UBTTask_GetPlayerLocation::ExecuteTask(UBehaviorTreeComponen
 	FVector targetLocation = gameCharacter->GetActorLocation();
 
 	// 최대 추적거리
-	float maxTrackingDistance = 50.f;
+	float maxTrackingDistance = 500.f;
 
 	// 목표위치까지의 거리가 최대추적 거리를 초과하는지를 확인
 	if (FVector::Distance(currentLocation, targetLocation) > maxTrackingDistance)
@@ -44,7 +49,4 @@ EBTNodeResult::Type UBTTask_GetPlayerLocation::ExecuteTask(UBehaviorTreeComponen
 
 	// 목표 위치를 설정합니다
 	blackboardComponent->SetValueAsVector(TargetLocationKey.SelectedKeyName, targetLocation);
-	
-	// 행동 성공
-	return EBTNodeResult::Succeeded;
 }

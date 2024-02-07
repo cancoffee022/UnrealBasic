@@ -1,6 +1,8 @@
 #include "Actor/EnemyCharacter/Knight/KnightCharacter.h"
 #include "Actor/EnemyController/Knight/KnightController.h"
 
+#include "Component/KnightAttackComponent/KnightAttackComponent.h"
+
 #include "AnimInstance/KnightCharacter/KnightCharacterAnimInstance.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
@@ -22,6 +24,9 @@ AKnightCharacter::AKnightCharacter()
 	{
 		GetMesh()->SetAnimClass(ANIMBP_KNIGHT.Class);
 	}
+
+	// 공격 컴포넌트 설정
+	AttackComponent = CreateDefaultSubobject<UKnightAttackComponent>(TEXT("KNIGHT_ATTACK_COMP"));
 
 	// 컨트롤러 설정
 	SetEnemyController(AKnightController::StaticClass());
