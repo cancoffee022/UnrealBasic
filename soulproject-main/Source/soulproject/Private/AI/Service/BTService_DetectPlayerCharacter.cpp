@@ -22,6 +22,8 @@ void UBTService_DetectPlayerCharacter::TickNode(UBehaviorTreeComponent& ownerCom
 void UBTService_DetectPlayerCharacter::CheckArea(UBehaviorTreeComponent& ownerComponent)
 {
 	AController* ownerController= Cast<AController>(ownerComponent.GetOwner());
+	UBlackboardComponent* blackboardComponent = ownerComponent.GetBlackboardComponent();
+
 
 	// 이 액터의 위치
 	FVector currentLocation = ownerController->GetPawn()->GetActorLocation();
@@ -47,7 +49,8 @@ void UBTService_DetectPlayerCharacter::CheckArea(UBehaviorTreeComponent& ownerCo
 	{
 		for (AActor* detectedActor : detectedActors)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Detected [%s]"), *detectedActor->GetName());
+			// 공격 요청
+			blackboardComponent->SetValueAsBool(IsAttackRequestedKey.SelectedKeyName, true);
 		}
 	}
 }

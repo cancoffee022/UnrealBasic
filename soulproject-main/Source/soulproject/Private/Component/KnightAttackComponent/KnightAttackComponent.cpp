@@ -39,3 +39,7 @@ void UKnightAttackComponent::Attack()
 	Cast<AKnightCharacter>(GetOwner())->PlayAnimMontage(AttackAnimMontage);
 }
 
+void UKnightAttackComponent::OnAttackFinished()
+{
+}
+

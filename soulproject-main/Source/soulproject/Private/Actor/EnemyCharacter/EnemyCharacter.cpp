@@ -69,8 +69,6 @@ void AEnemyCharacter::PossessedBy(AController* NewController)
 		enemyController->InitializeEnemyController(EnemyData);
 	}
 
-	
-
 }
 
 // Called every frame
@@ -131,6 +129,24 @@ void AEnemyCharacter::OnDamaged(
 	}
 }
 
+void AEnemyCharacter::ChangeMaterialToDeadState()
+{
+	// 사망 후 캐릭터가 통과할 수 있도록 컬리전 프리셋 설정
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("NoCollision"));
+
+	// 매터리얼 설정
+	MaterialInstanceOnDead = UMaterialInstanceDynamic::Create(EnemyData->MaterialInstanceOnDead, this);
+
+	GetMesh()->SetMaterial(0, MaterialInstanceOnDead);
+}
+
+void AEnemyCharacter::PlayRagdoll()
+{
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Ragdoll"));
+	GetMesh()->SetSimulatePhysics(true);
+	GetMesh()->SetPhysicsLinearVelocity(FVector::ZeroVector);
+}
+
 void AEnemyCharacter::SetEnemyController(TSubclassOf<class AEnemyController> controllerClass, EAutoPossessAI possessType)
 {
 	AIControllerClass = controllerClass;
@@ -177,17 +193,10 @@ void AEnemyCharacter::OnDamaged(AGameCharacter* gameCharacter, float damage)
 
 void AEnemyCharacter::OnDead()
 {
+	PlayRagdoll();
 	// 사망 상태 설정
 	IsDead = true;
-
-	// 사망 후 캐릭터가 통과할 수 있도록 컬리전 프리셋 설정
-	GetCapsuleComponent()->SetCollisionProfileName(TEXT("NoCollision"));
-
-	// 매터리얼 설정
-	MaterialInstanceOnDead = UMaterialInstanceDynamic::Create(EnemyData->MaterialInstanceOnDead, this);
-	
-	GetMesh()->SetMaterial(0, MaterialInstanceOnDead);
-
+	//ChangeMaterialToDeadState();
 }
 
 void AEnemyCharacter::OnEnemyDestroy()

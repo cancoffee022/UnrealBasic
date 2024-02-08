@@ -20,4 +20,8 @@ protected:
 
 public:
 	void SetCurrentSpeed(float newSpeed);
+
+private:
+	UFUNCTION()
+	void AnimNotify_OnAttackFinished();
 };

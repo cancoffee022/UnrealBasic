@@ -12,6 +12,8 @@ void AKnightController::OnBlackboardKeyInitialize(UBlackboardComponent* blackboa
 {
 	Super::OnBlackboardKeyInitialize(blackboardComponent, inPawn);
 
+	BlackboardComponent = blackboardComponent;
+
 	// MaxMoveDistance 설정
 	blackboardComponent->SetValueAsFloat(BLACKBOARDKEY_MAXMOVEDISTANCE, 300.f);
 }
@@ -26,4 +28,11 @@ void AKnightController::Attack()
 
 	// 공격
 	controlledCharacter->GetAttackComponent()->Attack();
+}
+
+void AKnightController::OnAttackFinished()
+{
+	if (!IsValid(BlackboardComponent)) return;
+
+	BlackboardComponent->SetValueAsBool(KEYNAME_ISATTACKING, false);
 }

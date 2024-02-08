@@ -82,6 +82,12 @@ private:
 		AActor* DamageCauser
 	);
 
+	// 사망 메터리얼로 변경합니다
+	void ChangeMaterialToDeadState();
+
+	// 랙돌을 켭니다
+	void PlayRagdoll();
+
 protected: 
 	// 적 컨트롤러를 설정합니다.
 	virtual void SetEnemyController(TSubclassOf<class AEnemyController> controllerClass,
