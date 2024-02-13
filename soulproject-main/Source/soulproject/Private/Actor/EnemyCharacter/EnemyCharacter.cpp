@@ -142,7 +142,7 @@ void AEnemyCharacter::ChangeMaterialToDeadState()
 
 void AEnemyCharacter::PlayRagdoll()
 {
-	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Ragdoll"));
+	GetMesh()->SetCollisionProfileName(TEXT("Ragdoll"));
 	GetMesh()->SetSimulatePhysics(true);
 	GetMesh()->SetPhysicsLinearVelocity(FVector::ZeroVector);
 }

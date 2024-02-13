@@ -2,10 +2,15 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+
+#include "GenericTeamAgentInterface.h"
+#include "Enum/CharacterTeam.h"
+
 #include "GameCharacter.generated.h"
 
 UCLASS()
-class AGameCharacter : public ACharacter
+class AGameCharacter : public ACharacter,
+	public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
 
@@ -28,6 +33,8 @@ private :
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* WeaponMesh;
 
+	FGenericTeamId Team;
+
 public:
 	AGameCharacter();
 
@@ -46,9 +53,19 @@ public:
 	void OnJumpInput();
 	void OnAttackInput();
 
-
 	FORCEINLINE class UPlayerCharacterAttackComponent* GetAttackComponent() const
 	{
 		return AttackComponent;
 	}
+
+	FORCEINLINE virtual void SetGenericTeamId(const FGenericTeamId& TeamID) override
+	{
+		Team = TeamID;
+	}
+
+	FORCEINLINE virtual FGenericTeamId GetGenericTeamId() const override
+	{
+		return Team;
+	}
+
 };

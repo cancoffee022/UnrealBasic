@@ -81,6 +81,9 @@ AGameCharacter::AGameCharacter()
 		WeaponMesh->SetStaticMesh(SM_SABER.Object);
 		WeaponMesh->SetCollisionProfileName(TEXT("NoCollision"));
 	}
+
+	//플레이어 캐릭터의 팀을 설정합니다
+	SetGenericTeamId(FGenericTeamId(ECharacterTeam::Player));
 }
 
 // Called when the game starts or when spawned
