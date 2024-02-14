@@ -30,8 +30,6 @@ private:
 
 public:
 	// 공격 컴포넌트를 반환합니다
-	FORCEINLINE class UKnightAttackComponent* GetAttackComponent()
-	{
-		return AttackComponent;
-	}
+	FORCEINLINE class UKnightAttackComponent* GetAttackComponent() const
+	{ return AttackComponent; }
 };
