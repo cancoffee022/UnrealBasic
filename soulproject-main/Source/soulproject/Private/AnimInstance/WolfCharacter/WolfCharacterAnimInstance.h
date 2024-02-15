@@ -6,6 +6,7 @@
 #include "Animation/AnimInstance.h"
 #include "WolfCharacterAnimInstance.generated.h"
 
+
 /**
  * 
  */
@@ -21,4 +22,7 @@ public:
 public:
 	void SetCurrentSpeed(float newSpeed);
 	
+private:
+	UFUNCTION()
+	void AnimNotify_OnAttackFinished();
 };

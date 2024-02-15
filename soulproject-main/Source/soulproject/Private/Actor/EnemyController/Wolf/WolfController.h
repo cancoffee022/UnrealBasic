@@ -6,6 +6,9 @@
 #include "Actor/EnemyController/EnemyController.h"
 #include "WolfController.generated.h"
 
+#define BLACKBOARDKEY_ISATTACKING		TEXT("IsAttacking")
+
+
 /**
  * 
  */
@@ -19,5 +22,9 @@ protected:
 
 public:
 	AWolfController();
-	
+	void Attack();
+	void OnAttackFinished();
+
+	// 다른 늑대 캐릭터가 공격 받았을때 호출됩니다.
+	void OnOtherWolfDamaged(class AGameCharacter* gameCharacter);
 };

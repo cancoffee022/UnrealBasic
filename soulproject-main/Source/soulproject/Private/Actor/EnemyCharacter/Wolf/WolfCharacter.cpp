@@ -8,6 +8,8 @@
 
 #include "Component/WolfAttackComponent/WolfAttackComponent.h"
 
+#include "Kismet/KismetSystemLibrary.h"
+
 AWolfCharacter::AWolfCharacter()
 {
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_BODY(
@@ -37,6 +39,14 @@ AWolfCharacter::AWolfCharacter()
 
 }
 
+void AWolfCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// 그룹을 찾습니다
+	FindGroup();
+}
+
 void AWolfCharacter::Tick(float dt)
 {
 	Super::Tick(dt);
@@ -52,4 +62,40 @@ void AWolfCharacter::UpdateAnimInstanceParams()
 
 	// 속력 갱신
 	animInst->SetCurrentSpeed(GetVelocity().Length());
+}
+
+void AWolfCharacter::FindGroup()
+{
+	TArray<TEnumAsByte<EObjectTypeQuery>> objectTypeQuery = 
+		{UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn)};
+
+	TArray<AActor*> actorsToIgnore;
+	TArray<AActor*> findActors;
+
+	if(UKismetSystemLibrary::SphereOverlapActors(
+		this, GetActorLocation(), 300.f,
+		objectTypeQuery,
+		AWolfCharacter::StaticClass(),
+		actorsToIgnore,
+		findActors))
+	{
+		for (AActor* findActor : findActors)
+		{
+			Group.Add(Cast<AWolfCharacter>(findActor));
+		}
+	}
+}
+
+void AWolfCharacter::OnDamaged(AGameCharacter* gameCharacter, float damage)
+{
+	Super::OnDamaged(gameCharacter, damage);
+
+	for (AWolfCharacter* wolfCharacter : Group)
+	{
+		AWolfController* otherWolfController = Cast<AWolfController>(wolfCharacter->GetController());
+		if (!IsValid(otherWolfController)) continue;
+
+		otherWolfController->OnOtherWolfDamaged(gameCharacter);
+
+	}
 }
