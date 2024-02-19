@@ -6,6 +6,9 @@
 #include "Components/ActorComponent.h"
 #include "KnightAttackComponent.generated.h"
 
+#define SWORD_SOCKET_START TEXT("Socket_Start")
+#define SWORD_SOCKET_END TEXT("Socket_End")
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UKnightAttackComponent : public UActorComponent
@@ -13,20 +16,40 @@ class UKnightAttackComponent : public UActorComponent
 	GENERATED_BODY()
 
 private:
+	struct FEnemyData* EnemyData;
+
+	UPROPERTY()
 	class UAnimMontage* AttackAnimMontage;
 
+	UPROPERTY()
+	class UStaticMeshComponent* SwordMeshComponent;
+
+	// 공격 영역 활성화 여부
+	UPROPERTY()
+	bool IsAttackAreaEnabled;
+
 public:	
-	// Sets default values for this component's properties
 	UKnightAttackComponent();
 
 protected:
-	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
+public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+private:
+	// 공격 영역 검사
+	void CheackAttackArea();
+
+public:
+	void InitializeAttackComponent(class UStaticMeshComponent* swordMeshComponent,
+		struct FEnemyData* enemyData);
+
 	void Attack();
+
 	void OnAttackFinished();
+
+	void EnableAttackArea();
+	void DisableAttackArea();
+
 };

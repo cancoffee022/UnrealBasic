@@ -20,6 +20,14 @@ AGameCharacter::AGameCharacter()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_SABER(
 		TEXT("/Script/Engine.StaticMesh'/Game/Resources/GirlKnight1/Mesh/Weapon/SM_Saber.SM_Saber'"));
 
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> ANIMMONTAGE_HIT(
+		TEXT("/Script/Engine.AnimMontage'/Game/Resources/GirlKnight1/Animations/AnimMontage_Hit.AnimMontage_Hit'"));
+
+	if (ANIMMONTAGE_HIT.Succeeded())
+	{
+		HitAnimMontage = ANIMMONTAGE_HIT.Object;
+	}
+
 	PrimaryActorTick.bCanEverTick = true;
 
 	// 컴포넌트 추가
@@ -84,6 +92,9 @@ AGameCharacter::AGameCharacter()
 
 	//플레이어 캐릭터의 팀을 설정합니다
 	SetGenericTeamId(FGenericTeamId(ECharacterTeam::Player));
+
+	// 피해 이벤트 설정
+	OnTakeAnyDamage.AddDynamic(this, &ThisClass::OnDamaged);
 }
 
 // Called when the game starts or when spawned
@@ -121,6 +132,22 @@ void AGameCharacter::Tick(float DeltaTime)
 
 	// 무기 소켓 위치 갱신
 	AttackComponent->UpdateWeaponSocketLocation(WeaponMesh);
+}
+
+void AGameCharacter::OnDamaged(AActor* damageActor, float damage, const UDamageType* damageType, AController* instigatedBy, AActor* damageCauser)
+{
+	// 맞는 애니메이션 재생
+	PlayAnimMontage(HitAnimMontage);
+	
+	PlayerCharacterMovementComponent->OnHit();
+
+	// 방향
+	FVector knockBackDirection = (GetActorLocation() - damageCauser->GetActorLocation());
+	knockBackDirection.Z = 5.f;
+	knockBackDirection.GetSafeNormal();
+
+	// 넉백 시킵니다
+	PlayerCharacterMovementComponent->AddImpulse(knockBackDirection, damage* 1.f);
 }
 
 // Called to bind functionality to input

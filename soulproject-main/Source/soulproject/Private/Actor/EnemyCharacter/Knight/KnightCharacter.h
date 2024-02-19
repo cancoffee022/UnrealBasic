@@ -17,9 +17,18 @@ class AKnightCharacter : public AEnemyCharacter
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class UKnightAttackComponent* AttackComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class UStaticMeshComponent* SwordMeshComponent;
+
+	UPROPERTY()
+	class UStaticMesh* SwordMesh;
 	
 public:
 	AKnightCharacter();
+
+protected:
+	virtual void BeginPlay() override;
 
 public:
 	virtual void Tick(float dt) override;

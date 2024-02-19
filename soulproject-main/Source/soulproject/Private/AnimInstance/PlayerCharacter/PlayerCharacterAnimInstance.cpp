@@ -55,3 +55,8 @@ void UPlayerCharacterAnimInstance::AnimNotify_AllowMovementInput()
 	AnimController->AllowMovementInput(true);
 }
 
+void UPlayerCharacterAnimInstance::AnimNotify_HitFinished()
+{
+	AnimController->AllowMovementInput(true); 
+}
+

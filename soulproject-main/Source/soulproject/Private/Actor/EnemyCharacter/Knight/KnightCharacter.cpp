@@ -16,7 +16,15 @@ AKnightCharacter::AKnightCharacter()
 	{
 		GetMesh()->SetSkeletalMesh(SK_BODY.Object);
 	}
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_SWORD(
+		TEXT("/Script/Engine.StaticMesh'/Game/Resources/EnemyCharacter/GKnight/Meshes/Weapon/SM_WP_GothicKnight_Sword.SM_WP_GothicKnight_Sword'"));
 	
+	if (SM_SWORD.Succeeded())
+	{
+		SwordMesh = SM_SWORD.Object;
+	}
+
 	static ConstructorHelpers::FClassFinder<UKnightCharacterAnimInstance> ANIMBP_KNIGHT
 	(TEXT("/Script/Engine.AnimBlueprint'/Game/Blueprints/AnimInstance/AnimBP_KnightCharacter.AnimBP_KnightCharacter_C'"));
 
@@ -28,6 +36,9 @@ AKnightCharacter::AKnightCharacter()
 	// 공격 컴포넌트 설정
 	AttackComponent = CreateDefaultSubobject<UKnightAttackComponent>(TEXT("KNIGHT_ATTACK_COMP"));
 
+	// 칼 스태틱 메시 컴포넌트 생성
+	SwordMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SWORD_SMCOMP"));
+
 	// 컨트롤러 설정
 	SetEnemyController(AKnightController::StaticClass());
 
@@ -35,6 +46,20 @@ AKnightCharacter::AKnightCharacter()
 	EnemyCode = TEXT("000002");
 
 	GetCharacterMovement()->MaxWalkSpeed = 300.f;
+
+	// 컴포넌트 계층구조 설정
+	SwordMeshComponent->SetupAttachment(GetMesh(), TEXT("Socket_Weapon"));
+
+	// 칼 Mesh 설정
+	SwordMeshComponent->SetStaticMesh(SwordMesh);
+	SwordMeshComponent->SetCollisionProfileName(TEXT("NoCollision"));
+}
+
+void AKnightCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	AttackComponent->InitializeAttackComponent(SwordMeshComponent, EnemyData);
 }
 
 void AKnightCharacter::Tick(float dt)

@@ -15,6 +15,10 @@ class AGameCharacter : public ACharacter,
 	GENERATED_BODY()
 
 private :
+	// 피해를 입었을때 재생시킬 애님 몽타주
+	UPROPERTY()
+	class UAnimMontage* HitAnimMontage;
+
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UZoomableSpringArmComponent* SpringArmComponent;
 
@@ -44,6 +48,16 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 
+private:
+	UFUNCTION()
+	void OnDamaged(
+		AActor* damageActor,
+		float damage,
+		const class UDamageType* damageType,
+		class AController* instigatedBy,
+		AActor* damageCauser);
+
+public:	
 	virtual void SetupPlayerInputComponent(
 		class UInputComponent* PlayerInputComponent) override;
 

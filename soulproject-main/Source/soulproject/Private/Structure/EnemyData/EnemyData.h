@@ -24,6 +24,9 @@ public:
 	float MaxHP;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float Atk;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<UUserWidget> EnemyHUDClass;
 
 	// 행동 트리 에셋

@@ -56,4 +56,6 @@ private:
 	UFUNCTION()
 	void AnimNotify_AllowMovementInput();
 
+	UFUNCTION()
+	void AnimNotify_HitFinished();
 };

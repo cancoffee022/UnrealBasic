@@ -1,5 +1,6 @@
 #include "Component/PlayerCharacterMovementComponent/PlayerCharacterMovementComponent.h"
 #include "../../Actor/GameCharacter/GameCharacter.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 UPlayerCharacterMovementComponent::UPlayerCharacterMovementComponent()
 {
@@ -62,9 +63,20 @@ void UPlayerCharacterMovementComponent::OnJump()
 	gameCharacter->Jump();
 }
 
+void UPlayerCharacterMovementComponent::OnHit()
+{
+	AllowMovementInput = false;
+}
+
 void UPlayerCharacterMovementComponent::SetAllowMovementInput(bool allowMovementInput)
 {
 	AllowMovementInput = allowMovementInput;
+}
+
+void UPlayerCharacterMovementComponent::AddImpulse(FVector direction, float power)
+{
+	AGameCharacter* gameCharacter = Cast<AGameCharacter>(GetOwner());
+	gameCharacter->GetCharacterMovement()->AddImpulse(direction * power);
 }
 
 

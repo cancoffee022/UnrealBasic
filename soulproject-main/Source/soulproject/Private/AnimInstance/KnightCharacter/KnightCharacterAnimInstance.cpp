@@ -22,3 +22,15 @@ void UKnightCharacterAnimInstance::AnimNotify_OnAttackFinished()
 	knightController->OnAttackFinished();
 	knightCharacter->GetAttackComponent()->OnAttackFinished();
 }
+
+void UKnightCharacterAnimInstance::AnimNotify_EnableAttackArea()
+{
+	AKnightCharacter* knightCharacter = Cast<AKnightCharacter>(GetOwningActor());
+	knightCharacter->GetAttackComponent()->EnableAttackArea();
+}
+
+void UKnightCharacterAnimInstance::AnimNotify_DisableAttackArea()
+{
+	AKnightCharacter* knightCharacter = Cast<AKnightCharacter>(GetOwningActor());
+	knightCharacter->GetAttackComponent()->DisableAttackArea();
+}

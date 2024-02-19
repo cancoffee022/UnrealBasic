@@ -9,7 +9,7 @@
 #include "Engine/StreamableManager.h"
 
 #include "BehaviorTree/BlackboardComponent.h"
-#include "BehaviorTree//BehaviorTree.h"
+#include "BehaviorTree/BehaviorTree.h"
 
 void AEnemyController::OnBlackboardKeyInitialize(UBlackboardComponent* blackboardComponent, APawn* inPawn)
 {
@@ -70,4 +70,5 @@ void AEnemyController::OnDamaged(AGameCharacter* gameCharacter, float damage)
 void AEnemyController::OnDead()
 {
 	BlackboardComponent->SetValueAsBool(BLACKBOARDKEY_ISDEAD, true);
+	BlackboardComponent->GetBrainComponent()->StopLogic(FString());
 }

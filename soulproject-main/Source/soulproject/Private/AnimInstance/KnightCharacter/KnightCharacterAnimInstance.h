@@ -24,4 +24,12 @@ public:
 private:
 	UFUNCTION()
 	void AnimNotify_OnAttackFinished();
+
+	UFUNCTION()
+	void AnimNotify_EnableAttackArea();
+	
+	UFUNCTION()
+	void AnimNotify_DisableAttackArea();
+
+
 };

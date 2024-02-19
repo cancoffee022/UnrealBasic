@@ -28,10 +28,14 @@ public:
 	void HorizontalMove(float axis);
 	void VerticalMove(float axis);
 	void OnJump();
+	void OnHit();
 
 
 	// 이동 입력 허용상태를 설정합니다
 	// allowMovementInput : 허용시 true 전달
 	void SetAllowMovementInput(bool allowMovementInput);
+
+	// 충격을 가합니다
+	void AddImpulse(FVector direction, float power);
 		
 };

@@ -174,10 +174,12 @@ void AEnemyCharacter::OnDamaged(AGameCharacter* gameCharacter, float damage)
 		GetWorldTimerManager().SetTimer(HUDShowTimerHandle,
 			enemyWidget, &UEnemyWidget::HideWidget,
 			10.f, false);
+
+		// 현재 체력을 Widget에 설정합니다
+		enemyWidget->SetHp(CurrentHp);
 	}
 
-	// 현재 체력을 widget에 설정합니다
-	Cast<UEnemyWidget>(WidgetComponent->GetUserWidgetObject())->SetHp(CurrentHp);
+	//Cast<UEnemyWidget>(WidgetComponent->GetUserWidgetObject())->SetHp(CurrentHp);
 
 	if (CurrentHp <= 0)
 	{
@@ -193,10 +195,18 @@ void AEnemyCharacter::OnDamaged(AGameCharacter* gameCharacter, float damage)
 
 void AEnemyCharacter::OnDead()
 {
-	PlayRagdoll();
 	// 사망 상태 설정
 	IsDead = true;
-	//ChangeMaterialToDeadState();
+	
+	// 위젯 객체 제거
+	WidgetComponent->SetWidget(nullptr);
+
+	if (HUDShowTimerHandle.IsValid())
+	{
+		GetWorld()->GetTimerManager().ClearTimer(HUDShowTimerHandle);
+	}
+
+	PlayRagdoll();
 }
 
 void AEnemyCharacter::OnEnemyDestroy()

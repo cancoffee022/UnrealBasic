@@ -2,11 +2,19 @@
 
 
 #include "Actor/NpcCharacter/NpcCharacter.h"
+#include "Structure/NpcData/NpcData.h"
 
 // Sets default values
 ANpcCharacter::ANpcCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	static ConstructorHelpers::FObjectFinder<UDataTable> DT_NPCDATA(
+		TEXT(""));
+
+	if (DT_NPCDATA.Succeeded())
+	{
+		DT_NpcData = DT_NPCDATA.Object;
+	}
+ 
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -16,6 +24,11 @@ void ANpcCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	InitializeNpcData();
+}
+
+void ANpcCharacter::InitializeNpcData()
+{
 }
 
 // Called every frame

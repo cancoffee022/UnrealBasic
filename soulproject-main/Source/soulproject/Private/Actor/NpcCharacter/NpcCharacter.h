@@ -11,19 +11,28 @@ class ANpcCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+private:
+	UPROPERTY()
+	class UDataTable* DT_NpcData;
+
+protected:
+	// Npc 코드
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FString NpcCode;
+
 public:
 	// Sets default values for this character's properties
 	ANpcCharacter();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// Npc 데이터 초기화
+	virtual void InitializeNpcData();
+
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 };
