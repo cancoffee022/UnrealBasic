@@ -16,9 +16,15 @@ private:
 	class UDataTable* DT_NpcData;
 
 protected:
+	UPROPERTY(VisibleAnywhere)
+	class UWidgetComponent* NpcWidgetComponent;
+
 	// Npc 코드
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FString NpcCode;
+	FName NpcCode;
+
+	// Npc 정보
+	struct FNpcData* NpcData;
 
 public:
 	// Sets default values for this character's properties
