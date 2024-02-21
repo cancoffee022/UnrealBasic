@@ -38,5 +38,8 @@ private :
 
 	// 공격 입력 시 호출됩니다.
 	void OnAttackInput();
+
+	// 상호작용 키 입력시 호출됩니다
+	void OnInteractionInput();
 	
 };

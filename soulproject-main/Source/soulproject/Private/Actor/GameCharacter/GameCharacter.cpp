@@ -1,11 +1,13 @@
 #include "Actor/GameCharacter/GameCharacter.h"
 
 #include "Components/StaticMeshComponent.h"
-#include "../../Component/PlayerCharacterMovementComponent/PlayerCharacterMovementComponent.h"
-#include "../../Component/ZoomableSpringArmComponent/ZoomableSpringArmComponent.h"
-#include "../../Component/PlayerCharacterAnimController/PlayerCharacterAnimController.h"
-#include "../../AnimInstance/PlayerCharacter/PlayerCharacterAnimInstance.h"
-#include "../../Component//PlayerCharacterAttackComponent/PlayerCharacterAttackComponent.h"
+#include "Component/PlayerCharacterMovementComponent/PlayerCharacterMovementComponent.h"
+#include "Component/ZoomableSpringArmComponent/ZoomableSpringArmComponent.h"
+#include "Component/PlayerCharacterAnimController/PlayerCharacterAnimController.h"
+#include "AnimInstance/PlayerCharacter/PlayerCharacterAnimInstance.h"
+#include "Component/PlayerCharacterAttackComponent/PlayerCharacterAttackComponent.h"
+#include "Component/PlayerCharacterInteractComponent/PlayerCharacterInteractComponent.h"
+
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -46,6 +48,10 @@ AGameCharacter::AGameCharacter()
 	AttackComponent =
 		CreateDefaultSubobject<UPlayerCharacterAttackComponent>(
 			TEXT("PLAYER_CHARACTER_ATTACK_COMPONENT"));
+
+	InteractComponent =
+		CreateDefaultSubobject<UPlayerCharacterInteractComponent>(
+			TEXT("PLAYER_INTERACT_COMPONENT"));
 
 	WeaponMesh =
 		CreateDefaultSubobject<UStaticMeshComponent>(
@@ -180,4 +186,10 @@ void AGameCharacter::OnJumpInput()
 void AGameCharacter::OnAttackInput()
 {
 	AttackComponent->RequestAttack(DEFAULT_ATTACK_KEYWORD);
+}
+
+void AGameCharacter::OnInteractionInput()
+{
+	// 상호작용 시도
+	InteractComponent->TryInteraction();
 }

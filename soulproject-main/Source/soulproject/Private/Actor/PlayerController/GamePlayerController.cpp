@@ -28,6 +28,9 @@ void AGamePlayerController::SetupInputComponent()
 	InputComponent->BindAction(TEXT("Attack"), EInputEvent::IE_Pressed,
 		this, &ThisClass::OnAttackInput);
 
+	InputComponent->BindAction(TEXT("Interaction"), EInputEvent::IE_Pressed,
+		this, &ThisClass::OnInteractionInput);
+
 }
 
 void AGamePlayerController::OnVerticalMovementInput(float axis)
@@ -71,4 +74,10 @@ void AGamePlayerController::OnAttackInput()
 {
 	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
 	playerCharacter->OnAttackInput();
+}
+
+void AGamePlayerController::OnInteractionInput()
+{
+	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
+	playerCharacter->OnInteractionInput();
 }

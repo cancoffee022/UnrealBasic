@@ -23,10 +23,10 @@ void UNpcWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	Super::NativeTick(MyGeometry, InDeltaTime);
 
 	// 페이딩이 시작되는 거리
-	float fadeStartDistance = 300.f;
+	float fadeStartDistance = 30.f;
 
 	// 완전히 숨겨지는 거리
-	float fadedDistance = 500.f;
+	float fadedDistance = 50.f;
 
 	// 플레이어와 Npc 사이의 거리
 	float distance = FVector::Distance(OwnerCharacter->GetActorLocation(), GameCharacter->GetActorLocation());
@@ -41,7 +41,7 @@ void UNpcWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		Alpha = 0;
 	else
 	{
-		Alpha = (distance - fadeStartDistance) / (fadedDistance - fadeStartDistance);
+		Alpha = 1.f - ((distance - fadeStartDistance) / (fadedDistance - fadeStartDistance));
 	}
 
 	Text_Name->SetColorAndOpacity(color);

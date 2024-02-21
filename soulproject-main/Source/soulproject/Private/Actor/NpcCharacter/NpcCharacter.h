@@ -15,9 +15,14 @@ private:
 	UPROPERTY()
 	class UDataTable* DT_NpcData;
 
+
 protected:
 	UPROPERTY(VisibleAnywhere)
 	class UWidgetComponent* NpcWidgetComponent;
+
+	// 상호작용 가능한 영역
+	UPROPERTY(VisibleAnywhere)
+	class UInteractableAreaComponent* InteractableAreaComponent;
 
 	// Npc 코드
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)

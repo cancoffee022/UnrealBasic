@@ -33,6 +33,9 @@ private :
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UPlayerCharacterAttackComponent* AttackComponent;
+	
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+	class UPlayerCharacterInteractComponent* InteractComponent;
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* WeaponMesh;
@@ -66,10 +69,16 @@ public:
 	void OnZoomInput(float axis);
 	void OnJumpInput();
 	void OnAttackInput();
+	void OnInteractionInput();
 
 	FORCEINLINE class UPlayerCharacterAttackComponent* GetAttackComponent() const
 	{
 		return AttackComponent;
+	}
+
+	FORCEINLINE class UPlayerCharacterInteractComponent* GetInteractComponent() const
+	{
+		return InteractComponent;
 	}
 
 	FORCEINLINE virtual void SetGenericTeamId(const FGenericTeamId& TeamID) override
