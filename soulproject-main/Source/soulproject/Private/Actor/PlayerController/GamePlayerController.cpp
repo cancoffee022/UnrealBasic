@@ -1,5 +1,17 @@
 #include "Actor/PlayerController/GamePlayerController.h"
 #include "../../Actor/GameCharacter/GameCharacter.h"
+#include "Widget/GameWidget/GameWidget.h"
+
+AGamePlayerController::AGamePlayerController()
+{
+	static ConstructorHelpers::FClassFinder<UGameWidget> WIDGETBP_GAME(
+		TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Blueprints/Widget/GameWidget/WidgetBP_Game.WidgetBP_Game_C'"));
+
+	if (WIDGETBP_GAME.Succeeded())
+	{
+		GameWidgetClass = WIDGETBP_GAME.Class;
+	}
+}
 
 void AGamePlayerController::SetupInputComponent()
 {
@@ -28,9 +40,20 @@ void AGamePlayerController::SetupInputComponent()
 	InputComponent->BindAction(TEXT("Attack"), EInputEvent::IE_Pressed,
 		this, &ThisClass::OnAttackInput);
 
-	InputComponent->BindAction(TEXT("Interaction"), EInputEvent::IE_Pressed,
+	InputComponent->BindAction(TEXT("Interact"), EInputEvent::IE_Pressed,
 		this, &ThisClass::OnInteractionInput);
 
+}
+
+void AGamePlayerController::OnPossess(APawn* pawn)
+{
+	Super::OnPossess(pawn);
+
+	// GameWidget 생성
+	GameWidget = CreateWidget<UGameWidget>(this, GameWidgetClass);
+
+	// 생성된 위젯을 화면에 표시합니다
+	GameWidget->AddToViewport();
 }
 
 void AGamePlayerController::OnVerticalMovementInput(float axis)
@@ -80,4 +103,9 @@ void AGamePlayerController::OnInteractionInput()
 {
 	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
 	playerCharacter->OnInteractionInput();
+}
+
+UGameWidget* AGamePlayerController::GetGameWidget() const
+{
+	return GameWidget;
 }

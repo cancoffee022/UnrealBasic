@@ -23,4 +23,9 @@ public:
 	// 대화에 사용될 위젯 클래스
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<class UUserWidget> DialogWidgetClass;
+
+	// 기본으로 출력시킬 대화
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FText DialogText;
+
 };

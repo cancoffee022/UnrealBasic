@@ -1,6 +1,8 @@
 #include "Actor/NpcCharacter/NpcCharacter.h"
 #include "Actor/GameCharacter/GameCharacter.h"
 
+#include "Actor/PlayerController/GamePlayerController.h"
+
 #include "Structure/NpcData/NpcData.h"
 
 #include "Components/WidgetComponent.h"
@@ -9,6 +11,8 @@
 #include "Component/InteractableAreaComponent/InteractableAreaComponent.h"
 
 #include "Widget/NpcWidget/NpcWidget.h"
+#include "Widget/GameWidget/GameWidget.h"
+#include "Widget/NpcDialogWidget/NpcDialogWidget.h"
 
 #include "Kismet/GameplayStatics.h"
 // Sets default values
@@ -89,6 +93,29 @@ void ANpcCharacter::Tick(float DeltaTime)
 void ANpcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+}
+
+void ANpcCharacter::OnInteractionStarted()
+{
+	// 첫 번째 플레이어 컨트롤러 (플레이어의 컨트롤러)를 얻습니다.
+	AGamePlayerController* playerController = Cast<AGamePlayerController>(
+		GetWorld()->GetFirstPlayerController());
+
+	// 표시할 위젯을 생성합니다.
+	NpcDialogWidget = CreateWidget<UNpcDialogWidget>(playerController, NpcData->DialogWidgetClass);
+
+	// Npc Dialog 위젯을 띄웁니다.
+	playerController->GetGameWidget()->FloatingWidgetAdditive(NpcDialogWidget);
+
+	// 위젯 초기화
+	NpcDialogWidget->InitializeNpcDialogWidget(NpcData);
+
+	// 입력 모드를 UI 모드로 전환합니다.
+	playerController->SetInputMode(FInputModeUIOnly());
+
+	// 커서를 표시합니다.
+	playerController->bShowMouseCursor = true;
 
 }
 

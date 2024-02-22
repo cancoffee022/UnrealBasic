@@ -31,6 +31,10 @@ protected:
 	// Npc 정보
 	struct FNpcData* NpcData;
 
+	// 생성된 Npc Dialog Widget
+	UPROPERTY()
+	class UNpcDialogWidget* NpcDialogWidget;
+
 public:
 	// Sets default values for this character's properties
 	ANpcCharacter();
@@ -46,4 +50,10 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual void OnInteractionStarted();
+
+	FORCEINLINE class UNpcDialogWidget* GetNpcDialogWidget() const
+	{
+		return NpcDialogWidget;
+	}
 };

@@ -14,4 +14,17 @@ class UNpcDialogWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
-};
+protected:
+	UPROPERTY()
+	class UTextBlock* Text_Name;
+	
+	UPROPERTY()
+	class UTextBlock* Text_Dialog;
+
+protected:
+	virtual void NativeConstruct() override;
+	
+public:
+	void InitializeNpcDialogWidget(struct FNpcData* npcData);
+
+}; 

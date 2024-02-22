@@ -14,8 +14,22 @@ class AGamePlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
+private:
+	// 게임 위젯 블루프린트 클래스
+	UPROPERTY()
+	TSubclassOf<class UGameWidget> GameWidgetClass;
+
+	// 게임 위젯
+	UPROPERTY()
+	class UGameWidget* GameWidget;
+
+public :
+	AGamePlayerController();
+
 protected :
 	virtual void SetupInputComponent() override;
+
+	virtual void OnPossess(APawn* pawn) override;
 
 private :
 	// 수직 축 입력 시 호출됩니다.
@@ -41,5 +55,9 @@ private :
 
 	// 상호작용 키 입력시 호출됩니다
 	void OnInteractionInput();
+
+public:
+	class UGameWidget* GetGameWidget() const;
+
 	
 };

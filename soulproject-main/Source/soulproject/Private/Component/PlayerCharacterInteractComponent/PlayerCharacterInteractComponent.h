@@ -18,8 +18,6 @@ private:
 public:	
 	UPlayerCharacterInteractComponent();
 
-
-
 protected:
 	virtual void BeginPlay() override;
 

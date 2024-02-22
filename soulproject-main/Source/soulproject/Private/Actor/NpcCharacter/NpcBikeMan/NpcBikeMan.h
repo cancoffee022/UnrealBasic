@@ -16,5 +16,7 @@ class ANpcBikeMan : public ANpcCharacter
 
 public:
 	ANpcBikeMan();
+
+	virtual void OnInteractionStarted() override;
 	
 };

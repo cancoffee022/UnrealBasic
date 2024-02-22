@@ -36,7 +36,7 @@ void UPlayerCharacterInteractComponent::TickComponent(float DeltaTime, ELevelTic
 void UPlayerCharacterInteractComponent::AddInteractableArea(UInteractableAreaComponent* newArea)
 {
 	// 상호작용 가능한 영역을 나간후 처음 발견되는 경우
-	if (InteractableAreas.Contains(newArea))
+	if (!InteractableAreas.Contains(newArea))
 		InteractableAreas.Add(newArea);
 }
 
@@ -48,9 +48,12 @@ void UPlayerCharacterInteractComponent::RemoveInteractableArea(UInteractableArea
 
 void UPlayerCharacterInteractComponent::TryInteraction()
 {
+	UE_LOG(LogTemp, Warning, TEXT("%d"), InteractableAreas.Num());
+
 	// 상호작용가능한 객체가 존재하지 않을 경우
 	if (InteractableAreas.Num() < 1) return;
 
+	UE_LOG(LogTemp, Warning, TEXT("객체 존재함"));
 	// 상호작용
 	InteractableAreas[0]->StartInteraction();
 }

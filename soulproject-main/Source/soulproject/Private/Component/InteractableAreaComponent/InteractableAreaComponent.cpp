@@ -5,7 +5,7 @@
 #include "Component/PlayerCharacterInteractComponent/PlayerCharacterInteractComponent.h"
 
 #include "Actor/GameCharacter/GameCharacter.h"
-
+#include "Actor/NpcCharacter/NpcCharacter.h"
 
 UInteractableAreaComponent::UInteractableAreaComponent()
 {
@@ -15,7 +15,7 @@ UInteractableAreaComponent::UInteractableAreaComponent()
 
 void UInteractableAreaComponent::StartInteraction()
 {
-	UE_LOG(LogTemp, Warning, TEXT("StartInteraction"));
+	Cast<ANpcCharacter>(GetOwner())->OnInteractionStarted();
 }
 
 void UInteractableAreaComponent::OnBeginOverlap(
