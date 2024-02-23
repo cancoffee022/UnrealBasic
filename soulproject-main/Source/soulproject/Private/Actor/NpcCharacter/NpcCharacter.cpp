@@ -106,10 +106,23 @@ void ANpcCharacter::OnInteractionStarted()
 	NpcDialogWidget = CreateWidget<UNpcDialogWidget>(playerController, NpcData->DialogWidgetClass);
 
 	// Npc Dialog 위젯을 띄웁니다.
-	playerController->GetGameWidget()->FloatingWidgetAdditive(NpcDialogWidget);
+	UGameWidget* gameWidget = playerController->GetGameWidget();
+	gameWidget->FloatingWidgetAdditive(NpcDialogWidget);
 
 	// 위젯 초기화
-	NpcDialogWidget->InitializeNpcDialogWidget(NpcData);
+	FOnDialogCloseEventSignature onDialogClosed;
+	onDialogClosed.AddLambda([gameWidget, playerController, this]() {
+
+		// 위젯 제거
+		gameWidget->RemoveWidgetAdditive(NpcDialogWidget); 
+		
+		// 입력 모드 
+		playerController->SetInputMode(FInputModeGameOnly());
+
+		// 커서 숨기기
+		playerController->bShowMouseCursor = false;
+		});
+	NpcDialogWidget->InitializeNpcDialogWidget(NpcData, onDialogClosed);
 
 	// 입력 모드를 UI 모드로 전환합니다.
 	playerController->SetInputMode(FInputModeUIOnly());
