@@ -15,6 +15,10 @@ class UPlayerCharacterInteractComponent : public UActorComponent
 private:
 	TArray<class UInteractableAreaComponent*> InteractableAreas;
 
+	// 상호작용 전 위치 , 회정을 저장시켜 놓을 변수
+	FVector BeforeInteractionLocation;
+	FRotator BeforeInteractionRotation;
+
 public:	
 	UPlayerCharacterInteractComponent();
 
@@ -32,5 +36,9 @@ public:
 
 	// 상호작용 시도
 	void TryInteraction();
+
+private:
+	void OnInteractionStarted(FVector interactionLocation, FRotator interactionRotation);
+	void OnInteractionFinished();
 
 };

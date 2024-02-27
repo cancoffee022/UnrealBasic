@@ -59,5 +59,7 @@ private :
 public:
 	class UGameWidget* GetGameWidget() const;
 
+	void SetCameraViewTarget(class AActor* target);
+	void ClearCameraViewTarget();
 	
 };

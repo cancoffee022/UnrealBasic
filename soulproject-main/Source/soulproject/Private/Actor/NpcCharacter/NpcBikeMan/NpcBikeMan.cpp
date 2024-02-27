@@ -27,10 +27,14 @@ ANpcBikeMan::ANpcBikeMan()
 
 }
 
-void ANpcBikeMan::OnInteractionStarted()
+bool ANpcBikeMan::OnInteractionStarted(FOnInterationFinishSignature onInteractionFinished)
 {
-	Super::OnInteractionStarted();
+	bool result = Super::OnInteractionStarted(onInteractionFinished);
+
+	if (!result) return false;
 
 	// 대화 애니메이션 재생
 	Cast<UNpcAnimInstance>(GetMesh()->GetAnimInstance())->SetTalkState(true);
+
+	return true;
 }

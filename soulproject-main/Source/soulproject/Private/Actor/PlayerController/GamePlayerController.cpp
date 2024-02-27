@@ -109,3 +109,13 @@ UGameWidget* AGamePlayerController::GetGameWidget() const
 {
 	return GameWidget;
 }
+
+void AGamePlayerController::SetCameraViewTarget(AActor* target)
+{
+	SetViewTargetWithBlend(target, .2f);
+}
+
+void AGamePlayerController::ClearCameraViewTarget()
+{
+	SetViewTargetWithBlend(GetPawn(), .2f);
+}

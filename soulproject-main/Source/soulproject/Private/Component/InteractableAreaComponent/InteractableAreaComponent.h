@@ -6,6 +6,8 @@
 #include "Components/SphereComponent.h"
 #include "InteractableAreaComponent.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnInterationFinishSignature)
+
 /**
  * 
  */
@@ -18,7 +20,7 @@ public:
 	UInteractableAreaComponent();
 
 	// 상호작용을 시작합니다
-	void StartInteraction();
+	bool StartInteraction(FOnInterationFinishSignature onInteractionFinished);
 	
 private:
 	UFUNCTION()

@@ -7,6 +7,7 @@
 
 #include "Components/WidgetComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Camera/CameraComponent.h"
 
 #include "Component/InteractableAreaComponent/InteractableAreaComponent.h"
 
@@ -28,6 +29,14 @@ ANpcCharacter::ANpcCharacter()
 
 	static ConstructorHelpers::FClassFinder<UNpcWidget> WIDGETBP_NPC(
 		TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Blueprints/Widget/NpcWidget/WidgetBP_Npc.WidgetBP_Npc_C'"));
+
+	// 상호작용 뷰 타깃 카메라 컴포넌트
+	InteractionViewTargetCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("VIEWTARGET_CAM_COMP"));
+	InteractionViewTargetCamera->SetupAttachment(GetRootComponent());
+
+	// 상호작용시 플레이어 캐릭터가 배치될 위치
+	InterationLocation = CreateDefaultSubobject<USceneComponent>(TEXT("INTERATION_LOCATION"));
+	InterationLocation->SetupAttachment(GetRootComponent());
 
 	// 상호 작용 가능한 영역 컴포넌트
 	InteractableAreaComponent =
@@ -96,11 +105,16 @@ void ANpcCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 }
 
-void ANpcCharacter::OnInteractionStarted()
+bool ANpcCharacter::OnInteractionStarted(FOnInterationFinishSignature onInteractionFinished)
 {
 	// 첫 번째 플레이어 컨트롤러 (플레이어의 컨트롤러)를 얻습니다.
 	AGamePlayerController* playerController = Cast<AGamePlayerController>(
 		GetWorld()->GetFirstPlayerController());
+
+	if (!IsValid(NpcData->DialogWidgetClass))
+		return false;
+
+	OnInteractionFinished = onInteractionFinished;
 
 	// 표시할 위젯을 생성합니다.
 	NpcDialogWidget = CreateWidget<UNpcDialogWidget>(playerController, NpcData->DialogWidgetClass);
@@ -113,15 +127,24 @@ void ANpcCharacter::OnInteractionStarted()
 	FOnDialogCloseEventSignature onDialogClosed;
 	onDialogClosed.AddLambda([gameWidget, playerController, this]() {
 
-		// 위젯 제거
-		gameWidget->RemoveWidgetAdditive(NpcDialogWidget); 
-		
-		// 입력 모드 
-		playerController->SetInputMode(FInputModeGameOnly());
+			// 위젯 제거
+			gameWidget->RemoveWidgetAdditive(NpcDialogWidget); 
+			
+			// 입력 모드 
+			playerController->SetInputMode(FInputModeGameOnly());
 
-		// 커서 숨기기
-		playerController->bShowMouseCursor = false;
-		});
+			// 커서 숨기기
+			playerController->bShowMouseCursor = false;
+
+			// 상호작용 종료
+			if (OnInteractionFinished.IsBound())
+			{
+				OnInteractionFinished.Broadcast();
+			}
+		}
+	);
+
+
 	NpcDialogWidget->InitializeNpcDialogWidget(NpcData, onDialogClosed);
 
 	// 입력 모드를 UI 모드로 전환합니다.
@@ -130,6 +153,18 @@ void ANpcCharacter::OnInteractionStarted()
 	// 커서를 표시합니다.
 	playerController->bShowMouseCursor = true;
 
+	return true;
+}
+
+
+FVector ANpcCharacter::GetInterationLocation() const
+{
+	return InterationLocation->GetComponentLocation();
+}
+
+FRotator ANpcCharacter::GetInteractionRotation() const
+{
+	return InterationLocation->GetComponentRotation();
 }
 
 

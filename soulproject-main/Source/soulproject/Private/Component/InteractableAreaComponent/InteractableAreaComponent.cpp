@@ -13,9 +13,9 @@ UInteractableAreaComponent::UInteractableAreaComponent()
 	OnComponentEndOverlap.AddDynamic(this, &UInteractableAreaComponent::OnEndOverlap);
 }
 
-void UInteractableAreaComponent::StartInteraction()
+bool UInteractableAreaComponent::StartInteraction(FOnInterationFinishSignature onInteractionFinished)
 {
-	Cast<ANpcCharacter>(GetOwner())->OnInteractionStarted();
+	 return Cast<ANpcCharacter>(GetOwner())->OnInteractionStarted(onInteractionFinished);
 }
 
 void UInteractableAreaComponent::OnBeginOverlap(
