@@ -1,16 +1,34 @@
 #include "Actor/PlayerController/GamePlayerController.h"
-#include "../../Actor/GameCharacter/GameCharacter.h"
+#include "Actor/GameCharacter/GameCharacter.h"
+
 #include "Widget/GameWidget/GameWidget.h"
+#include "Widget/PlayerStateWidget/PlayerStateWidget.h"
+
+#include "Structure/PlayerCharacterData/PlayerCharacterData.h"
 
 AGamePlayerController::AGamePlayerController()
 {
 	static ConstructorHelpers::FClassFinder<UGameWidget> WIDGETBP_GAME(
 		TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Blueprints/Widget/GameWidget/WidgetBP_Game.WidgetBP_Game_C'"));
 
+	static ConstructorHelpers::FObjectFinder<UDataTable> DT_PLAYERCHARACTERDATA(
+		TEXT("/Script/Engine.DataTable'/Game/Resources/DataTable/DT_PlayerCharacterData.DT_PlayerCharacterData'"));
+
 	if (WIDGETBP_GAME.Succeeded())
 	{
 		GameWidgetClass = WIDGETBP_GAME.Class;
 	}
+
+	if (DT_PLAYERCHARACTERDATA.Succeeded())
+	{
+		PlayerCharacterDataTable = DT_PLAYERCHARACTERDATA.Object;
+	}
+	PlayerCharacterData = nullptr;
+}
+
+void AGamePlayerController::PlayerTick(float DeltaTime)
+{
+	Super::PlayerTick(DeltaTime);
 }
 
 void AGamePlayerController::SetupInputComponent()
@@ -49,11 +67,30 @@ void AGamePlayerController::OnPossess(APawn* pawn)
 {
 	Super::OnPossess(pawn);
 
+	AGameCharacter* gameCharacter = Cast<AGameCharacter>(pawn);
+	if (!IsValid(gameCharacter)) return;
+
+	// 플레이어 캐릭터 정보를 얻습니다
+	FString contextString;
+	PlayerCharacterData = PlayerCharacterDataTable->FindRow<FPlayerCharacterData>(
+		PLAYERCHARACTER_DATA_NORMAL, contextString);
+
+	// Hp,Stamina 초기화
+	CurrentHp = PlayerCharacterData->MaxHp;
+	CurrentStamina = PlayerCharacterData->MaxStamina;
+
+	// GameCharacter 에서 사용되는 캐릭터 데이터 갱신
+	gameCharacter->OnPlayerCharacterDataUpdated(PlayerCharacterData);
+
 	// GameWidget 생성
 	GameWidget = CreateWidget<UGameWidget>(this, GameWidgetClass);
 
 	// 생성된 위젯을 화면에 표시합니다
 	GameWidget->AddToViewport();
+
+	// 플레이어 캐릭터 상태 위젯 초기화
+	InitializePlayerStateWidget(PlayerCharacterData->MaxHp, PlayerCharacterData->MaxStamina);
+
 }
 
 void AGamePlayerController::OnVerticalMovementInput(float axis)
@@ -118,4 +155,35 @@ void AGamePlayerController::SetCameraViewTarget(AActor* target)
 void AGamePlayerController::ClearCameraViewTarget()
 {
 	SetViewTargetWithBlend(GetPawn(), .2f);
+}
+
+void AGamePlayerController::InitializePlayerStateWidget(float maxHp, float maxStamina)
+{
+	if (!IsValid(GameWidget)) return;
+
+	UPlayerStateWidget* playerStateWidget = GameWidget->GetPlayerStateWidget();
+	playerStateWidget->SetMaxHp(maxHp);
+	playerStateWidget->UpdateHp(maxHp);
+	playerStateWidget->SetMaxStamina(maxStamina);
+	playerStateWidget->UpdateStamina(maxStamina);
+
+}
+
+void AGamePlayerController::OnDamaged(float damage)
+{
+	if (!IsValid(GameWidget)) return;
+
+	UPlayerStateWidget* playerStateWidget = GameWidget->GetPlayerStateWidget();
+	
+	// Hp 수치 갱신
+	float hitDamage = (damage - (PlayerCharacterData->Def));
+	if (hitDamage < 0) hitDamage = 1.f;
+
+	CurrentHp -= hitDamage;
+	playerStateWidget->UpdateHp(CurrentHp);
+
+	if (CurrentHp <= 0.f)
+		CurrentHp = 0;
+
+
 }

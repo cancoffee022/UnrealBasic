@@ -72,13 +72,20 @@ void UKnightAttackComponent::CheackAttackArea()
 		{
 			AKnightCharacter* knightCharacter = Cast<AKnightCharacter>(GetOwner());
 
-			// 플레이어 캐릭터에게 피해를 입힙니다
-			UGameplayStatics::ApplyDamage(
-				gameCharacter,
-				EnemyData->Atk,
-				knightCharacter->GetController(),
-				knightCharacter,
-				UDamageType::StaticClass());
+			// 공격 중복 처리
+			if (!TempDamagedActors.Contains(gameCharacter))
+			{
+				TempDamagedActors.Add(gameCharacter);
+
+				// 플레이어 캐릭터에게 피해를 입힙니다
+				UGameplayStatics::ApplyDamage(
+					gameCharacter,
+					EnemyData->Atk,
+					knightCharacter->GetController(),
+					knightCharacter,
+					UDamageType::StaticClass());
+			}
+
 		}
 	}
 }
@@ -96,6 +103,7 @@ void UKnightAttackComponent::Attack()
 
 void UKnightAttackComponent::OnAttackFinished()
 {
+	TempDamagedActors.Empty();
 }
 
 void UKnightAttackComponent::EnableAttackArea()

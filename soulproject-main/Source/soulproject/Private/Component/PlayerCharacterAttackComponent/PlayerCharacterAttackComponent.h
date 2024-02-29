@@ -28,6 +28,9 @@ private:
 	// 현재 실행중인 공격을 나타냅니다
 	struct FAttackData* CurrentAttackData;
 
+	// 현재 캐릭터에게 적용된 공격력
+	float Atk;
+
 	// 현재 공격이 적중한 경우 가할 데미지
 	float ApplyDamage;
 
@@ -63,6 +66,7 @@ private:
 	FVector _CurrentSaberEndSocketLocation;
 
 
+
 public:	
 	UPlayerCharacterAttackComponent();
 
@@ -82,6 +86,8 @@ private:
 	//struct FAttackData* GetAttackData(FName attackName);
 
 public:
+	void UpdateAtk(float atk);
+
 	// 무기 소켓 위치를 갱신합니다
 	// weaponMesh : 소켓 위치를 얻을 StaticMesh 에셋을 전달하비니다
 	void UpdateWeaponSocketLocation(class UStaticMeshComponent* weaponMesh);

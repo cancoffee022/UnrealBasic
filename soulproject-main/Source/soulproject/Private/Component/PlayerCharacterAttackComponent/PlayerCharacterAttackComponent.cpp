@@ -131,10 +131,14 @@ void UPlayerCharacterAttackComponent::CheckAttackArea()
 			if (!AttackDectectedEnemies.Contains(enemyCharacter))
 			{
 				AttackDectectedEnemies.Add(enemyCharacter);
-				UE_LOG(LogTemp, Warning, TEXT("Apply Damage 99"));
+				//UE_LOG(LogTemp, Warning, TEXT("Apply Damage 99"));
+
+				// 적에게 가할 피해량 계산
+				float damage = (Atk * 0.5f) + ApplyDamage;
+
 				UGameplayStatics::ApplyDamage(
 					enemyCharacter,
-					ApplyDamage,
+					damage,
 					PlayerCharacter->GetController(),
 					PlayerCharacter,
 					UDamageType::StaticClass());
@@ -143,6 +147,11 @@ void UPlayerCharacterAttackComponent::CheckAttackArea()
 	}
 }
 
+
+void UPlayerCharacterAttackComponent::UpdateAtk(float atk)
+{
+	Atk = atk;
+}
 
 void UPlayerCharacterAttackComponent::UpdateWeaponSocketLocation(UStaticMeshComponent* weaponMesh)
 {

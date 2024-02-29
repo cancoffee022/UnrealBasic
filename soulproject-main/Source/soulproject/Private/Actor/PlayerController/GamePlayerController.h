@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "GamePlayerController.generated.h"
 
+#define PLAYERCHARACTER_DATA_NORMAL			TEXT("Normal")
+
 /**
  * 
  */
@@ -15,6 +17,10 @@ class AGamePlayerController : public APlayerController
 	GENERATED_BODY()
 
 private:
+	// 플레이어 데이터 테이블 에셋
+	UPROPERTY()
+	class UDataTable* PlayerCharacterDataTable;
+
 	// 게임 위젯 블루프린트 클래스
 	UPROPERTY()
 	TSubclassOf<class UGameWidget> GameWidgetClass;
@@ -23,8 +29,18 @@ private:
 	UPROPERTY()
 	class UGameWidget* GameWidget;
 
+	// 플레이어 캐릭터 데이터
+	struct FPlayerCharacterData* PlayerCharacterData;
+
+	// 현재 Hp
+	float CurrentHp;
+
+	// 현재 Stamina
+	float CurrentStamina;
+
 public :
 	AGamePlayerController();
+	virtual void PlayerTick(float DeltaTime) override;
 
 protected :
 	virtual void SetupInputComponent() override;
@@ -61,5 +77,12 @@ public:
 
 	void SetCameraViewTarget(class AActor* target);
 	void ClearCameraViewTarget();
+
+	// 상태 위젯을 초기화합니다
+	void InitializePlayerStateWidget(float maxHp, float maxStamina);
+
+	// 조종하는 캐릭터가 피해를 입을 경우 호출됩니다
+	// damage : 입은 피해량이 전달됩니다
+	void OnDamaged(float damage);
 	
 };

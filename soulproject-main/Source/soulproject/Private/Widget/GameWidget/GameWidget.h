@@ -20,6 +20,10 @@ private:
 	
 	UPROPERTY()
 	class UOverlay* Overlay_Additive;
+	
+	// 상대 위젯을 나타냅니다
+	UPROPERTY()
+	class UPlayerStateWidget* PlayerStateWidget;
 
 protected:
 	virtual void NativeConstruct() override;
@@ -30,5 +34,8 @@ public:
 
 	// Overlay_Additive에 추가된 위젯을 삭제합니다
 	void RemoveWidgetAdditive(class UUserWidget* widgetForClose);
+
+	// 상태 위젯을 반환합니다.
+	class UPlayerStateWidget* GetPlayerStateWidget() const;
 
 };

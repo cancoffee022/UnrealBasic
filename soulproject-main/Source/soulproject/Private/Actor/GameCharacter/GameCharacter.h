@@ -64,6 +64,9 @@ public:
 	virtual void SetupPlayerInputComponent(
 		class UInputComponent* PlayerInputComponent) override;
 
+	// 캐릭터 데이터가 갱신될 때 호출됩니다
+	void OnPlayerCharacterDataUpdated(const struct FPlayerCharacterData* const playerCharacterData);
+
 	void OnHorizontalInput(float axis);
 	void OnVerticalInput(float axis);
 	void OnZoomInput(float axis);

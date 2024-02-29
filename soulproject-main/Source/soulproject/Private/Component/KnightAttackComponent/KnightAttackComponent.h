@@ -28,6 +28,9 @@ private:
 	UPROPERTY()
 	bool IsAttackAreaEnabled;
 
+	// 피해를 입힌 액터를 임시로 저장할 배열
+	TArray<class AActor*> TempDamagedActors;
+
 public:	
 	UKnightAttackComponent();
 

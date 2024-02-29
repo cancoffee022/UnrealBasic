@@ -2,6 +2,8 @@
 
 
 #include "Widget/GameWidget/GameWidget.h"
+#include "Widget/PlayerStateWidget/PlayerStateWidget.h"
+
 #include "Components/Overlay.h"
 #include "Components/OverlaySlot.h"
 
@@ -11,6 +13,8 @@ void UGameWidget::NativeConstruct()
 
 	Overlay_Player = Cast<UOverlay>(GetWidgetFromName(TEXT("Overlay_Player")));
 	Overlay_Additive = Cast<UOverlay>(GetWidgetFromName(TEXT("Overlay_Additive")));
+
+	PlayerStateWidget = Cast<UPlayerStateWidget>(GetWidgetFromName(TEXT("PlayerStateWidget")));
 }
 
 void UGameWidget::FloatingWidgetAdditive(UUserWidget* widgetInstance)
@@ -30,4 +34,9 @@ void UGameWidget::RemoveWidgetAdditive(UUserWidget* widgetForClose)
 {
 	//widgetForClose->RemoveFromParent();
 	Overlay_Additive->RemoveChild(widgetForClose);
+}
+
+UPlayerStateWidget* UGameWidget::GetPlayerStateWidget() const
+{
+	return PlayerStateWidget;
 }

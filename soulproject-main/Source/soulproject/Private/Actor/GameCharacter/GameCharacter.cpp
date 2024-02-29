@@ -1,15 +1,19 @@
 #include "Actor/GameCharacter/GameCharacter.h"
+#include "Actor/PlayerController/GamePlayerController.h"
 
 #include "Components/StaticMeshComponent.h"
 #include "Component/PlayerCharacterMovementComponent/PlayerCharacterMovementComponent.h"
 #include "Component/ZoomableSpringArmComponent/ZoomableSpringArmComponent.h"
 #include "Component/PlayerCharacterAnimController/PlayerCharacterAnimController.h"
-#include "AnimInstance/PlayerCharacter/PlayerCharacterAnimInstance.h"
 #include "Component/PlayerCharacterAttackComponent/PlayerCharacterAttackComponent.h"
 #include "Component/PlayerCharacterInteractComponent/PlayerCharacterInteractComponent.h"
 
+#include "AnimInstance/PlayerCharacter/PlayerCharacterAnimInstance.h"
+
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+
+#include "Structure/PlayerCharacterData/PlayerCharacterData.h"
 
 AGameCharacter::AGameCharacter()
 {
@@ -142,6 +146,10 @@ void AGameCharacter::Tick(float DeltaTime)
 
 void AGameCharacter::OnDamaged(AActor* damageActor, float damage, const UDamageType* damageType, AController* instigatedBy, AActor* damageCauser)
 {
+	// 컨트롤러에게 피해입음 알림
+	AGamePlayerController* playerController = Cast<AGamePlayerController>(GetController());
+	playerController->OnDamaged(damage);
+
 	// 맞는 애니메이션 재생
 	PlayAnimMontage(HitAnimMontage);
 	
@@ -161,6 +169,11 @@ void AGameCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AGameCharacter::OnPlayerCharacterDataUpdated(const FPlayerCharacterData* const playerCharacterData)
+{
+	AttackComponent->UpdateAtk(playerCharacterData->Atk);
 }
 
 void AGameCharacter::OnHorizontalInput(float axis)
