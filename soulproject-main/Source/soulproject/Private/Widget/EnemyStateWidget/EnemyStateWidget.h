@@ -28,9 +28,10 @@ private:
 
 protected:
 	virtual void NativeConstruct() override;
+	virtual void NativeTick(const FGeometry& myGeometry, float dt) override;
 
 public:
 	// 타깃 적을 갱신합니다
-	void UpdateEnemy(class AEnemyCharacter* newTargetEnemy);
+	void UpdateTargetEnemy(class AEnemyCharacter* newTargetEnemy);
 	
 };

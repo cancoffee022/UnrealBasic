@@ -3,6 +3,9 @@
 
 #include "Widget/GameWidget/GameWidget.h"
 #include "Widget/PlayerStateWidget/PlayerStateWidget.h"
+#include "Widget/EnemyStateWidget/EnemyStateWidget.h"
+
+#include "Actor/EnemyCharacter/EnemyCharacter.h"
 
 #include "Components/Overlay.h"
 #include "Components/OverlaySlot.h"
@@ -15,6 +18,20 @@ void UGameWidget::NativeConstruct()
 	Overlay_Additive = Cast<UOverlay>(GetWidgetFromName(TEXT("Overlay_Additive")));
 
 	PlayerStateWidget = Cast<UPlayerStateWidget>(GetWidgetFromName(TEXT("PlayerStateWidget")));
+	EnemyStateWidget = Cast<UEnemyStateWidget>(GetWidgetFromName(TEXT("EnemyStateWidget")));
+
+	// Àû »óÅÂ À§Á¬À» ¼û±é´Ï´Ù
+	HideEnemyState();
+}
+
+void UGameWidget::NativeTick(const FGeometry& myGeometry, float dt)
+{
+	Super::NativeTick(myGeometry, dt);
+
+	if (GetWorld()->GetTimeSeconds() > EnemyStateWidgetFloatingTime + 5.f)
+	{
+		HideEnemyState();
+	}
 }
 
 void UGameWidget::FloatingWidgetAdditive(UUserWidget* widgetInstance)
@@ -39,4 +56,20 @@ void UGameWidget::RemoveWidgetAdditive(UUserWidget* widgetForClose)
 UPlayerStateWidget* UGameWidget::GetPlayerStateWidget() const
 {
 	return PlayerStateWidget;
+}
+
+void UGameWidget::ShowEnemyState(AEnemyCharacter* enemyCharacter)
+{
+	// À§Á¬À» Ç¥½Ã
+	EnemyStateWidget->SetVisibility(ESlateVisibility::Visible);
+	EnemyStateWidget->UpdateTargetEnemy(enemyCharacter);
+
+	// À§Á¬ÀÌ ¶ç¿öÁø ½Ã°£À» ÀúÀå
+	EnemyStateWidgetFloatingTime = GetWorld()->GetTimeSeconds();
+}
+
+void UGameWidget::HideEnemyState()
+{
+	// À§Á¬À» ¼û±â±â
+	EnemyStateWidget->SetVisibility(ESlateVisibility::Hidden);
 }

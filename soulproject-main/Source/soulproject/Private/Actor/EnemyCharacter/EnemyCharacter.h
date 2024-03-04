@@ -108,4 +108,22 @@ protected:
 	// return : 가공된 대미지 수치를 반환합니다
 	virtual float CalculateDamage(float damage);
 
+public:
+	// 적 데이터를 반환합니다
+	FORCEINLINE const struct FEnemyData* GetEnemyData() const
+	{
+		return EnemyData;
+	}
+
+	// 현재 체력을 반환
+	FORCEINLINE float GetCurrentHp() const
+	{
+		return CurrentHp;
+	}
+
+	FORCEINLINE bool IsDeadState() const
+	{
+		return IsDead;
+	}
+
 };

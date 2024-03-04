@@ -206,3 +206,24 @@ void AGameCharacter::OnInteractionInput()
 	// 상호작용 시도
 	InteractComponent->TryInteraction();
 }
+
+void AGameCharacter::OnRollForward()
+{
+	UE_LOG(LogTemp, Warning, TEXT("OnRollForward"));
+}
+
+void AGameCharacter::OnRollBackward()
+{
+	UE_LOG(LogTemp, Warning, TEXT("OnRollBackward"));
+}
+
+void AGameCharacter::OnRollRight()
+{
+	UE_LOG(LogTemp, Warning, TEXT("OnRollRight"));
+	
+}
+
+void AGameCharacter::OnRollLeft()
+{
+	UE_LOG(LogTemp, Warning, TEXT("OnRollLeft"));
+}

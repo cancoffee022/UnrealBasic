@@ -1,5 +1,6 @@
 #include "Actor/PlayerController/GamePlayerController.h"
 #include "Actor/GameCharacter/GameCharacter.h"
+#include "Actor/EnemyCharacter/EnemyCharacter.h"
 
 #include "Widget/GameWidget/GameWidget.h"
 #include "Widget/PlayerStateWidget/PlayerStateWidget.h"
@@ -60,6 +61,15 @@ void AGamePlayerController::SetupInputComponent()
 
 	InputComponent->BindAction(TEXT("Interact"), EInputEvent::IE_Pressed,
 		this, &ThisClass::OnInteractionInput);
+
+	InputComponent->BindAction(TEXT("RollForward"), EInputEvent::IE_DoubleClick,
+		this, &ThisClass::OnRollForward);
+	InputComponent->BindAction(TEXT("RollBackward"), EInputEvent::IE_DoubleClick,
+		this, &ThisClass::OnRollBackward);
+	InputComponent->BindAction(TEXT("RollRight"), EInputEvent::IE_DoubleClick,
+		this, &ThisClass::OnRollRight);
+	InputComponent->BindAction(TEXT("RollLeft"), EInputEvent::IE_DoubleClick,
+		this, &ThisClass::OnRollLeft);
 
 }
 
@@ -142,6 +152,30 @@ void AGamePlayerController::OnInteractionInput()
 	playerCharacter->OnInteractionInput();
 }
 
+void AGamePlayerController::OnRollForward()
+{
+	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
+	playerCharacter->OnRollForward();
+}
+
+void AGamePlayerController::OnRollBackward()
+{
+	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
+	playerCharacter->OnRollBackward();
+}
+
+void AGamePlayerController::OnRollRight()
+{
+	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
+	playerCharacter->OnRollRight();
+}
+
+void AGamePlayerController::OnRollLeft()
+{
+	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
+	playerCharacter->OnRollLeft();
+}
+
 UGameWidget* AGamePlayerController::GetGameWidget() const
 {
 	return GameWidget;
@@ -186,4 +220,9 @@ void AGamePlayerController::OnDamaged(float damage)
 		CurrentHp = 0;
 
 
+}
+
+void AGamePlayerController::OnEnemyAttack(AEnemyCharacter* newTargetEnemy)
+{
+	GameWidget->ShowEnemyState(newTargetEnemy);
 }

@@ -74,6 +74,12 @@ public:
 	void OnAttackInput();
 	void OnInteractionInput();
 
+	void OnRollForward();
+	void OnRollBackward();
+	void OnRollRight();
+	void OnRollLeft();
+
+
 	FORCEINLINE class UPlayerCharacterAttackComponent* GetAttackComponent() const
 	{
 		return AttackComponent;

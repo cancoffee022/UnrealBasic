@@ -1,7 +1,10 @@
 #include "Component/PlayerCharacterAttackComponent/PlayerCharacterAttackComponent.h"
-#include "../../Actor/GameCharacter/GameCharacter.h"
-#include "../../Actor/EnemyCharacter/EnemyCharacter.h"
-#include "../../Structure/AttackData/AttackData.h"
+
+#include "Actor/GameCharacter/GameCharacter.h"
+#include "Actor/EnemyCharacter/EnemyCharacter.h"
+#include "Actor/PlayerController/GamePlayerController.h"
+
+#include "Structure/AttackData/AttackData.h"
 
 #include "Components/StaticMeshComponent.h"
 
@@ -131,7 +134,13 @@ void UPlayerCharacterAttackComponent::CheckAttackArea()
 			if (!AttackDectectedEnemies.Contains(enemyCharacter))
 			{
 				AttackDectectedEnemies.Add(enemyCharacter);
-				//UE_LOG(LogTemp, Warning, TEXT("Apply Damage 99"));
+				
+				AGamePlayerController* playerController =
+					Cast<AGamePlayerController>(PlayerCharacter->GetController());
+				if (IsValid(playerController))
+				{
+					playerController->OnEnemyAttack(enemyCharacter);
+				}
 
 				// 적에게 가할 피해량 계산
 				float damage = (Atk * 0.5f) + ApplyDamage;

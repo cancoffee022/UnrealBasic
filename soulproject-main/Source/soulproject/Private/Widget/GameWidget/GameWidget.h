@@ -25,8 +25,18 @@ private:
 	UPROPERTY()
 	class UPlayerStateWidget* PlayerStateWidget;
 
+	// 적 상태 위젯을 나타냅니다
+	UPROPERTY()
+	class UEnemyStateWidget* EnemyStateWidget;
+	
+	// 적 상태 위젯이 띄워진 시간을 저장할 변수
+	UPROPERTY()
+	float EnemyStateWidgetFloatingTime;
+
 protected:
 	virtual void NativeConstruct() override;
+
+	virtual void NativeTick(const FGeometry& myGeometry, float dt) override;
 
 public:
 	// Overlay_Additive에 위젯을 추가합니다
@@ -37,5 +47,8 @@ public:
 
 	// 상태 위젯을 반환합니다.
 	class UPlayerStateWidget* GetPlayerStateWidget() const;
+
+	void ShowEnemyState(class AEnemyCharacter* enemyCharacter);
+	void HideEnemyState();
 
 };

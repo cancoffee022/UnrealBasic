@@ -72,6 +72,11 @@ private :
 	// 상호작용 키 입력시 호출됩니다
 	void OnInteractionInput();
 
+	void OnRollForward();
+	void OnRollBackward();
+	void OnRollRight();
+	void OnRollLeft();
+
 public:
 	class UGameWidget* GetGameWidget() const;
 
@@ -84,5 +89,9 @@ public:
 	// 조종하는 캐릭터가 피해를 입을 경우 호출됩니다
 	// damage : 입은 피해량이 전달됩니다
 	void OnDamaged(float damage);
+
+	// 적 공격시 호출됩니다.
+	// newTargetEnemy : 공격한 적 객체를 전달합니다
+	void OnEnemyAttack(class AEnemyCharacter* newTargetEnemy);
 	
 };
