@@ -62,13 +62,13 @@ void AGamePlayerController::SetupInputComponent()
 	InputComponent->BindAction(TEXT("Interact"), EInputEvent::IE_Pressed,
 		this, &ThisClass::OnInteractionInput);
 
-	InputComponent->BindAction(TEXT("RollForward"), EInputEvent::IE_DoubleClick,
+	InputComponent->BindAction(TEXT("RollForward"), EInputEvent::IE_Pressed,
 		this, &ThisClass::OnRollForward);
-	InputComponent->BindAction(TEXT("RollBackward"), EInputEvent::IE_DoubleClick,
+	InputComponent->BindAction(TEXT("RollBackward"), EInputEvent::IE_Pressed,
 		this, &ThisClass::OnRollBackward);
-	InputComponent->BindAction(TEXT("RollRight"), EInputEvent::IE_DoubleClick,
+	InputComponent->BindAction(TEXT("RollRight"), EInputEvent::IE_Pressed,
 		this, &ThisClass::OnRollRight);
-	InputComponent->BindAction(TEXT("RollLeft"), EInputEvent::IE_DoubleClick,
+	InputComponent->BindAction(TEXT("RollLeft"), EInputEvent::IE_Pressed,
 		this, &ThisClass::OnRollLeft);
 
 }

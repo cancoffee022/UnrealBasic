@@ -58,4 +58,7 @@ private:
 
 	UFUNCTION()
 	void AnimNotify_HitFinished();
+
+	UFUNCTION()
+	void AnimNotify_RollFinished();
 };

@@ -77,3 +77,9 @@ void UPlayerCharacterAnimController::AllowMovementInput(bool allowMovementInput)
 {
 	onAllowMovementInput.ExecuteIfBound(allowMovementInput);
 }
+
+void UPlayerCharacterAnimController::OnRollFinished()
+{
+	onRollFinished.ExecuteIfBound();
+}
+

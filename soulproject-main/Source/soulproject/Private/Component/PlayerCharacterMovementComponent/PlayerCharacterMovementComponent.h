@@ -12,9 +12,26 @@ class UPlayerCharacterMovementComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+
 private :
+	UPROPERTY()
+	class AGameCharacter* GameCharacter;
+
+	UPROPERTY()
+	class UAnimMontage* RollAnimMontage;
+
 	// 이동 입력 허용상태를 나타냅니다
 	bool AllowMovementInput;
+
+	// 이전에 입력된 구르기 방향
+	FIntVector2 PrevRollInputDirection;
+
+	// 구르기 입력시간
+	float RollInputTime;
+
+	// 현재 구르기중임을 나타냅니다
+	UPROPERTY()
+	bool IsRollingMovement;
 
 public:	
 	UPlayerCharacterMovementComponent();
@@ -29,7 +46,8 @@ public:
 	void VerticalMove(float axis);
 	void OnJump();
 	void OnHit();
-
+	void OnRollInput(FIntVector2 inputDirection);
+	void OnRollFinished();
 
 	// 이동 입력 허용상태를 설정합니다
 	// allowMovementInput : 허용시 true 전달
@@ -37,5 +55,9 @@ public:
 
 	// 충격을 가합니다
 	void AddImpulse(FVector direction, float power);
+
+private:
+	// 구르기 이동을 실행합니다
+	void RollingMovement(FVector rollDirection);
 		
 };

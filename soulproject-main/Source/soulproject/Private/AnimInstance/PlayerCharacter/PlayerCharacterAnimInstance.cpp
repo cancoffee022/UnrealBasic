@@ -60,3 +60,8 @@ void UPlayerCharacterAnimInstance::AnimNotify_HitFinished()
 	AnimController->AllowMovementInput(true); 
 }
 
+void UPlayerCharacterAnimInstance::AnimNotify_RollFinished()
+{
+	AnimController->OnRollFinished();
+}
+

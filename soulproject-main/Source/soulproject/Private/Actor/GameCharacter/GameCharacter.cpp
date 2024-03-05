@@ -133,6 +133,8 @@ void AGameCharacter::BeginPlay()
 
 	PlayerCharacterAnimController->onAllowMovementInput.BindUObject(
 		PlayerCharacterMovementComponent, &UPlayerCharacterMovementComponent::SetAllowMovementInput);
+	PlayerCharacterAnimController->onRollFinished.BindUObject(
+		PlayerCharacterMovementComponent, &UPlayerCharacterMovementComponent::OnRollFinished);
 }
 
 // Called every frame
@@ -209,21 +211,23 @@ void AGameCharacter::OnInteractionInput()
 
 void AGameCharacter::OnRollForward()
 {
-	UE_LOG(LogTemp, Warning, TEXT("OnRollForward"));
+	PlayerCharacterMovementComponent->OnRollInput(FIntVector2(0, 1));
+
 }
 
 void AGameCharacter::OnRollBackward()
 {
-	UE_LOG(LogTemp, Warning, TEXT("OnRollBackward"));
+	PlayerCharacterMovementComponent->OnRollInput(FIntVector2(0, -1));
+
 }
 
 void AGameCharacter::OnRollRight()
 {
-	UE_LOG(LogTemp, Warning, TEXT("OnRollRight"));
-	
+	PlayerCharacterMovementComponent->OnRollInput(FIntVector2(1, 0));
 }
 
 void AGameCharacter::OnRollLeft()
 {
-	UE_LOG(LogTemp, Warning, TEXT("OnRollLeft"));
+	PlayerCharacterMovementComponent->OnRollInput(FIntVector2(-1, 0));
+
 }

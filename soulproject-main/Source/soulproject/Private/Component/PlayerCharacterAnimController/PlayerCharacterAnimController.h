@@ -15,6 +15,9 @@ DECLARE_DELEGATE(FAttackAreaEnableEventSignature)
 // 이동 입력 컨트롤을 위한 대리자 형식
 DECLARE_DELEGATE_OneParam(FMovementInputControlEventSignature, bool /* AllowMovement */)
 
+// 구르기 이동 애님 끝 대리자 형식
+DECLARE_DELEGATE(FRollAnimFinishedEventSignature);
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UPlayerCharacterAnimController : public UActorComponent
@@ -43,6 +46,9 @@ public:
 
 	// 이동 입력이 제어될때 발생하는 이벤트
 	FMovementInputControlEventSignature onAllowMovementInput;
+
+	// 구르기 입력이 끝났을때 발생하는 이벤트
+	FRollAnimFinishedEventSignature onRollFinished;
 
 public:	
 	// Sets default values for this component's properties
@@ -74,5 +80,8 @@ public:
 	void DisalbeAttackArea();
 
 	void AllowMovementInput(bool allowMovementInput);
+
+	// 구르기 애니메이션이 끝났을 경우 호출됩니다
+	void OnRollFinished();
 
 };
