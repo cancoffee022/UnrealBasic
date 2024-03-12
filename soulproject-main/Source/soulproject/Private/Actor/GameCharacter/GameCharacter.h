@@ -19,6 +19,10 @@ private :
 	UPROPERTY()
 	class UAnimMontage* HitAnimMontage;
 
+	// 현재 피해를 입는중임을 나타냅니다
+	UPROPERTY()
+	bool IsHit;
+
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	class UZoomableSpringArmComponent* SpringArmComponent;
 
@@ -79,6 +83,19 @@ public:
 	void OnRollRight();
 	void OnRollLeft();
 
+	void OnBlockStarted();
+	void OnBlockFinished();
+
+	void OnRunStarted();
+	void OnRunFinished();
+	void OnStaminaEmpty();
+
+	void OnHitFinished();
+
+	FORCEINLINE class UPlayerCharacterMovementComponent* GetPlayerCharacterMovementComponent() const
+	{
+		return PlayerCharacterMovementComponent;
+	}
 
 	FORCEINLINE class UPlayerCharacterAttackComponent* GetAttackComponent() const
 	{
@@ -98,6 +115,11 @@ public:
 	FORCEINLINE virtual FGenericTeamId GetGenericTeamId() const override
 	{
 		return Team;
+	}
+
+	FORCEINLINE bool GetHitState() const
+	{
+		return IsHit;
 	}
 
 };

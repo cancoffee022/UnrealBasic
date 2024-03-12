@@ -28,7 +28,7 @@ UPlayerCharacterAttackComponent::UPlayerCharacterAttackComponent()
 
 	bCheckingNextAttackInput = true;
 
-	_IsAttacking = false;
+	IsAttacking = false;
 
 	IsAttackAreaEnabled = false;
 }
@@ -70,7 +70,7 @@ void UPlayerCharacterAttackComponent::AttackProcedure()
 	// 현재 공격을 요청된 공격으로 설정합니다.
 	CurrentAttackData = requestedAttack;
 	ApplyDamage = CurrentAttackData->AttackDamage;
-	_IsAttacking = true;
+	IsAttacking = true;
 
 	if (CurrentAttackData->LookForward)
 	{
@@ -116,8 +116,8 @@ void UPlayerCharacterAttackComponent::CheckAttackArea()
 
 	bool isHit = UKismetSystemLibrary::SphereTraceMultiByProfile(
 		this,
-		_CurrentSaberStartSocketLocation,
-		_CurrentSaberEndSocketLocation,
+		CurrentSaberStartSocketLocation,
+		CurrentSaberEndSocketLocation,
 		10.0f,
 		TEXT("Enemy"),
 		false,
@@ -164,8 +164,8 @@ void UPlayerCharacterAttackComponent::UpdateAtk(float atk)
 
 void UPlayerCharacterAttackComponent::UpdateWeaponSocketLocation(UStaticMeshComponent* weaponMesh)
 {
-	_CurrentSaberStartSocketLocation = weaponMesh->GetSocketTransform(WEAPON_SOCKET_START).GetLocation();
-	_CurrentSaberEndSocketLocation = weaponMesh->GetSocketTransform(WEAPON_SOCKET_END).GetLocation();
+	CurrentSaberStartSocketLocation = weaponMesh->GetSocketTransform(WEAPON_SOCKET_START).GetLocation();
+	CurrentSaberEndSocketLocation = weaponMesh->GetSocketTransform(WEAPON_SOCKET_END).GetLocation();
 }
 
 void UPlayerCharacterAttackComponent::ClearCurrentAttack()
@@ -176,7 +176,7 @@ void UPlayerCharacterAttackComponent::ClearCurrentAttack()
 		CurrentCombo = TargetCombo = 0;
 		PrevAttackData = nullptr;
 		ApplyDamage = 0.f;
-		_IsAttacking = false;
+		IsAttacking = false;
 		StartCheckingNextAttackInput();
 	}
 	//else
@@ -188,6 +188,22 @@ void UPlayerCharacterAttackComponent::ClearCurrentAttack()
 
 	PrevAttackData = CurrentAttackData;
 	CurrentAttackData = nullptr;
+}
+
+void UPlayerCharacterAttackComponent::CancelAttackState()
+{
+	// 공격 상태 비활성화
+	IsAttacking = false;
+
+	// 공격 데이터 비우기
+	CurrentAttackData = nullptr;
+	PrevAttackData = nullptr;
+
+	// 콤보 초기화
+	TargetCombo = CurrentCombo = 0;
+
+	// 다음 공격 입력 체크 시작
+	bCheckingNextAttackInput = true;
 }
 
 void UPlayerCharacterAttackComponent::RequestAttack(FName attackName)
@@ -245,5 +261,15 @@ void UPlayerCharacterAttackComponent::EnableAttackArea()
 void UPlayerCharacterAttackComponent::DisableAttackArea()
 {
 	IsAttackAreaEnabled = false;
+}
+
+void UPlayerCharacterAttackComponent::OnBlockStarted()
+{
+	IsBlocking = true;
+}
+
+void UPlayerCharacterAttackComponent::OnBlockFinished()
+{
+	IsBlocking = false;
 }
 

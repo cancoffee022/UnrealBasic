@@ -32,6 +32,10 @@ private :
 	// 현재 구르기중임을 나타냅니다
 	UPROPERTY()
 	bool IsRollingMovement;
+	
+	// 달리기 상태임을 나타냅니다
+	UPROPERTY()
+	bool IsRun;
 
 public:	
 	UPlayerCharacterMovementComponent();
@@ -48,6 +52,8 @@ public:
 	void OnHit();
 	void OnRollInput(FIntVector2 inputDirection);
 	void OnRollFinished();
+	void OnRunStarted();
+	void OnRunFinished();
 
 	// 이동 입력 허용상태를 설정합니다
 	// allowMovementInput : 허용시 true 전달
@@ -56,8 +62,21 @@ public:
 	// 충격을 가합니다
 	void AddImpulse(FVector direction, float power);
 
+	void StartRollingMovement();
+
 private:
 	// 구르기 이동을 실행합니다
-	void RollingMovement(FVector rollDirection);
+	void RollingMovement(FVector rollDirection, FIntVector2 inputDirection);
+
+public:
+	FORCEINLINE bool GetRollingState() const
+	{
+		return IsRollingMovement;
+	}
+
+	FORCEINLINE bool GetRunState() const
+	{
+		return IsRun;
+	}
 		
 };

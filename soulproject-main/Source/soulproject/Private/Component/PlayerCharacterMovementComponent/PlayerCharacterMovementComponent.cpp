@@ -1,5 +1,8 @@
 #include "Component/PlayerCharacterMovementComponent/PlayerCharacterMovementComponent.h"
-#include "../../Actor/GameCharacter/GameCharacter.h"
+#include "Component/PlayerCharacterAttackComponent/PlayerCharacterAttackComponent.h"
+
+#include "Actor/GameCharacter/GameCharacter.h"
+
 #include "GameFramework/CharacterMovementComponent.h"
 
 UPlayerCharacterMovementComponent::UPlayerCharacterMovementComponent()
@@ -32,6 +35,11 @@ void UPlayerCharacterMovementComponent::TickComponent(float DeltaTime, ELevelTic
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	if (IsRollingMovement)
+	{
+		GameCharacter->AddMovementInput(
+			GameCharacter->GetActorForwardVector(), 1.f);
+	}
 }
 
 void UPlayerCharacterMovementComponent::HorizontalMove(float axis)
@@ -67,9 +75,6 @@ void UPlayerCharacterMovementComponent::VerticalMove(float axis)
 
 void UPlayerCharacterMovementComponent::OnJump()
 {
-	// 구르기 이동중이라면 실행 안됨
-	if (IsRollingMovement) return;
-
 	AGameCharacter* gameCharacter = Cast<AGameCharacter>(GetOwner());
 	gameCharacter->Jump();
 }
@@ -94,7 +99,7 @@ void UPlayerCharacterMovementComponent::OnRollInput(FIntVector2 inputDirection)
 	{
 		// 구르기 실행
 		FVector rollingDirection = FVector(PrevRollInputDirection.Y, PrevRollInputDirection.X, 0);
-		RollingMovement(rollingDirection);
+		RollingMovement(rollingDirection, inputDirection);
 
 		// 이전값들 초기화
 		RollInputTime = 0;
@@ -113,25 +118,51 @@ void UPlayerCharacterMovementComponent::OnRollInput(FIntVector2 inputDirection)
 void UPlayerCharacterMovementComponent::OnRollFinished()
 {
 	IsRollingMovement = false;
+
+	// 이동 입력 허용
+	AllowMovementInput = true;
+}
+
+void UPlayerCharacterMovementComponent::OnRunStarted()
+{
+	IsRun = true;
+	GameCharacter->GetCharacterMovement()->MaxWalkSpeed = 600.f;
+}
+
+void UPlayerCharacterMovementComponent::OnRunFinished()
+{
+	IsRun = false;
+	GameCharacter->GetCharacterMovement()->MaxWalkSpeed = 300.f;
 }
 
 void UPlayerCharacterMovementComponent::SetAllowMovementInput(bool allowMovementInput)
 {
 	AllowMovementInput = allowMovementInput;
-	// 이동 입력 허용
-	AllowMovementInput = true;
 }
 
 void UPlayerCharacterMovementComponent::AddImpulse(FVector direction, float power)
 {
-	AGameCharacter* gameCharacter = Cast<AGameCharacter>(GetOwner());
-	gameCharacter->GetCharacterMovement()->AddImpulse(direction * power);
+	GameCharacter->LaunchCharacter(direction * power * 0.01f, true, false);
 }
 
-void UPlayerCharacterMovementComponent::RollingMovement(FVector rollDirection)
+void UPlayerCharacterMovementComponent::StartRollingMovement()
 {
+	
+}
+
+void UPlayerCharacterMovementComponent::RollingMovement(FVector rollDirection, FIntVector2 inputDirection)
+{
+	// 공격중에는 실행되지 않도록 합니다.
+	if (GameCharacter->GetAttackComponent()->GetAttackState()) return;
+
+	// 피해를 입는 중이라면 실행되지 않도록 합니다.
+	if (GameCharacter->GetHitState()) return;
+
 	// 공중에서는 실행되진 않도록 합니다
 	if (!GameCharacter->GetCharacterMovement()->IsMovingOnGround()) return;
+
+	// 방어중에는 구르기가 실행되지 않도록 합니다.
+	if (GameCharacter->GetAttackComponent()->GetBlockState()) return;
 
 	// 구르기 이동중인 경우 실행되지 않도록 합니다
 	if (IsRollingMovement) return;
@@ -153,6 +184,7 @@ void UPlayerCharacterMovementComponent::RollingMovement(FVector rollDirection)
 
 	// 애니메이션 몽타주 재생
 	GameCharacter->PlayAnimMontage(RollAnimMontage);
+
 }
 
 

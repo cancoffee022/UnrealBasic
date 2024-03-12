@@ -27,12 +27,17 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool bIsGrounded;
 
+	// 캐릭터가 방어중임을 나타냅니다.
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool bIsBlock;
+
 public:
 	// 애님 컨트롤러를 설정
 	void SetAnimController(class UPlayerCharacterAnimController* animController);
 
 	void SetCurrentSpeed(float currentSpeed);
 	void SetGoundedState(bool isGrounded);
+	void SetBlockState(bool isBlocking);
 
 private:
 	UFUNCTION()
@@ -61,4 +66,8 @@ private:
 
 	UFUNCTION()
 	void AnimNotify_RollFinished();
+
+	UFUNCTION()
+	void AnimNotify_RollStart();
+
 };

@@ -1,7 +1,8 @@
 #include "Component/PlayerCharacterAnimController/PlayerCharacterAnimController.h"
-#include "../../AnimInstance/PlayerCharacter/PlayerCharacterAnimInstance.h"
-#include "../../Actor/GameCharacter/GameCharacter.h"
-#include "../../Component/PlayerCharacterAttackComponent/PlayerCharacterAttackComponent.h"
+#include "AnimInstance/PlayerCharacter/PlayerCharacterAnimInstance.h"
+#include "Actor/GameCharacter/GameCharacter.h"
+#include "Component/PlayerCharacterAttackComponent/PlayerCharacterAttackComponent.h"
+#include "Component/PlayerCharacterMovementComponent/PlayerCharacterMovementComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values for this component's properties
@@ -40,6 +41,10 @@ void UPlayerCharacterAnimController::TickComponent(float DeltaTime, ELevelTick T
 	//bool isInAir = OwnerCharacter->GetMovementComponent()->IsFalling();
 	bool isGrounded = OwnerCharacter->GetMovementComponent()->IsMovingOnGround();
 	ControlledAnimInstance->SetGoundedState(isGrounded);
+
+	// 방어 상태를 갱신합니다
+	bool isBlocking = OwnerCharacter->GetAttackComponent()->GetBlockState();
+	ControlledAnimInstance->SetBlockState(isBlocking);
 }
 
 void UPlayerCharacterAnimController::SetAnimInstance(UPlayerCharacterAnimInstance* controlledAnimInstance)
@@ -78,8 +83,19 @@ void UPlayerCharacterAnimController::AllowMovementInput(bool allowMovementInput)
 	onAllowMovementInput.ExecuteIfBound(allowMovementInput);
 }
 
+void UPlayerCharacterAnimController::OnHitFinished()
+{
+	OwnerCharacter->OnHitFinished();
+	OwnerCharacter->GetAttackComponent()->CancelAttackState();
+}
+
 void UPlayerCharacterAnimController::OnRollFinished()
 {
 	onRollFinished.ExecuteIfBound();
+}
+
+void UPlayerCharacterAnimController::OnRollStart()
+{
+	OwnerCharacter->GetPlayerCharacterMovementComponent()->StartRollingMovement();
 }
 

@@ -38,6 +38,9 @@ private:
 	// 현재 Stamina
 	float CurrentStamina;
 
+	// 스테미너를 계산하기 위한 이전 캐릭터 위치
+	FVector PrevCharacterLocation;
+
 public :
 	AGamePlayerController();
 	virtual void PlayerTick(float DeltaTime) override;
@@ -46,6 +49,9 @@ protected :
 	virtual void SetupInputComponent() override;
 
 	virtual void OnPossess(APawn* pawn) override;
+
+private:
+	void UpdateStamina(float dt);
 
 private :
 	// 수직 축 입력 시 호출됩니다.
@@ -76,6 +82,14 @@ private :
 	void OnRollBackward();
 	void OnRollRight();
 	void OnRollLeft();
+
+	// 방어 키 입력시 호출됩니다
+	void OnBlockPressed();
+	void OnBlockReleased();
+
+	// 달리기 키 눌림 / 떼어짐 함수
+	void OnRunPressed();
+	void OnRunReleased();
 
 public:
 	class UGameWidget* GetGameWidget() const;

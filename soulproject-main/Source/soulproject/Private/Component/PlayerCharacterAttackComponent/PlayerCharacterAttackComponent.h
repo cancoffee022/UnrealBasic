@@ -56,14 +56,17 @@ private:
 	class AGameCharacter* PlayerCharacter;
 
 	// 현재 공격중임을 나타냅니다.
-	bool _IsAttacking;
+	bool IsAttacking;
+
+	// 현재 방어중임을 나타냅니다
+	bool IsBlocking;
 
 	// 이전 위치가 계산되었음을 나타냅니다
 	bool _IsCalculatedPrevSaberSocketLocation;
 	
 	// 무기의 현재 위치를 나타냅니다
-	FVector _CurrentSaberStartSocketLocation;
-	FVector _CurrentSaberEndSocketLocation;
+	FVector CurrentSaberStartSocketLocation;
+	FVector CurrentSaberEndSocketLocation;
 
 
 
@@ -92,7 +95,10 @@ public:
 	// weaponMesh : 소켓 위치를 얻을 StaticMesh 에셋을 전달하비니다
 	void UpdateWeaponSocketLocation(class UStaticMeshComponent* weaponMesh);
 
+	// 현재 공격을 비웁니다
 	void ClearCurrentAttack();
+
+	void CancelAttackState();
 
 	// 공격을 요청합니다.
 	void RequestAttack(FName attackName);
@@ -107,4 +113,20 @@ public:
 	
 	// 공격 영역 비활성화
 	void DisableAttackArea();
+
+	// 방어 시작
+	void OnBlockStarted();
+
+	// 방어 끝
+	void OnBlockFinished();
+
+	FORCEINLINE bool GetAttackState() const
+	{
+		return IsAttacking;
+	}
+	
+	FORCEINLINE bool GetBlockState() const
+	{
+		return IsBlocking;
+	}
 };

@@ -81,7 +81,12 @@ public:
 
 	void AllowMovementInput(bool allowMovementInput);
 
+	void OnHitFinished();
+
 	// 구르기 애니메이션이 끝났을 경우 호출됩니다
 	void OnRollFinished();
+
+	// 구르기 애니메이션 시작
+	void OnRollStart();
 
 };

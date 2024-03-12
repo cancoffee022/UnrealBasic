@@ -3,8 +3,13 @@
 
 #include "Component/PlayerCharacterInteractComponent/PlayerCharacterInteractComponent.h"
 #include "Component/InteractableAreaComponent/InteractableAreaComponent.h"
+#include "Component/PlayerCharacterAttackComponent/PlayerCharacterAttackComponent.h"
+#include "Component/PlayerCharacterMovementComponent/PlayerCharacterMovementComponent.h"
+
+#include "GameFramework/CharacterMovementComponent.h"
 
 #include "Actor/NpcCharacter/NpcCharacter.h"
+#include "Actor/GameCharacter/GameCharacter.h"
 #include "Actor/PlayerController/GamePlayerController.h"
 
 // Sets default values for this component's properties
@@ -54,6 +59,9 @@ void UPlayerCharacterInteractComponent::TryInteraction()
 	// 상호작용가능한 객체가 존재하지 않을 경우
 	if (InteractableAreas.Num() < 1) return;
 
+	// Get GameCharacter
+	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetOwner());
+
 	FOnInterationFinishSignature onInteractionFinished;
 	onInteractionFinished.AddUObject(this, &UPlayerCharacterInteractComponent::OnInteractionFinished);
 
@@ -73,17 +81,21 @@ void UPlayerCharacterInteractComponent::TryInteraction()
 			npc->GetInterationLocation(),
 			npc->GetInteractionRotation());
 
-		ACharacter* playerCharacter = Cast<ACharacter>(GetOwner());
 		Cast<AGamePlayerController>(playerCharacter->GetController())->SetCameraViewTarget(npc);
 	}
 }
 
 void UPlayerCharacterInteractComponent::OnInteractionStarted(FVector interactionLocation, FRotator interactionRotation)
 {
+	// Get GameCharacter
+	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetOwner());
+
+	// 이동 입력을 막습니다
+	playerCharacter->GetPlayerCharacterMovementComponent()->SetAllowMovementInput(false);
+
 	// 이전 위치 저장
-	ACharacter* playerCharacter = Cast<ACharacter>(GetOwner());
-	BeforeInteractionLocation = playerCharacter->GetMesh()->GetComponentLocation();
-	BeforeInteractionRotation = playerCharacter->GetMesh()->GetComponentRotation();
+	BeforeInteractionLocation = playerCharacter->GetMesh()->GetRelativeLocation();
+	BeforeInteractionRotation = playerCharacter->GetMesh()->GetRelativeRotation();
 
 	// 상호작용 위치, 회전 설정
 	playerCharacter->GetMesh()->SetWorldLocation(interactionLocation);
@@ -93,10 +105,15 @@ void UPlayerCharacterInteractComponent::OnInteractionStarted(FVector interaction
 
 void UPlayerCharacterInteractComponent::OnInteractionFinished()
 {
+	// Get GameCharacter
+	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetOwner());
+	
+	// 이동 입력을 허용
+	playerCharacter->GetPlayerCharacterMovementComponent()->SetAllowMovementInput(true);
+
 	// 상호작용 위치, 회전 되돌리기
-	ACharacter* playerCharacter = Cast<ACharacter>(GetOwner());
-	playerCharacter->GetMesh()->SetWorldLocation(BeforeInteractionLocation);
-	playerCharacter->GetMesh()->SetWorldRotation(BeforeInteractionRotation);
+	playerCharacter->GetMesh()->SetRelativeLocation(BeforeInteractionLocation);
+	playerCharacter->GetMesh()->SetRelativeRotation(BeforeInteractionRotation);
 
 	Cast<AGamePlayerController>(playerCharacter->GetController())->ClearCameraViewTarget();
 

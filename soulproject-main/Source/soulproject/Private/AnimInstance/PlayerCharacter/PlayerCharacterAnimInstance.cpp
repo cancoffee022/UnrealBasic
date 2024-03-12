@@ -20,6 +20,11 @@ void UPlayerCharacterAnimInstance::SetGoundedState(bool isGrounded)
 	bIsGrounded = isGrounded;
 }
 
+void UPlayerCharacterAnimInstance::SetBlockState(bool isBlocking)
+{
+	bIsBlock = isBlocking;
+}
+
 void UPlayerCharacterAnimInstance::AnimNotify_AttackEnd()
 {
 	AnimController->OnAttackEnded();
@@ -58,10 +63,16 @@ void UPlayerCharacterAnimInstance::AnimNotify_AllowMovementInput()
 void UPlayerCharacterAnimInstance::AnimNotify_HitFinished()
 {
 	AnimController->AllowMovementInput(true); 
+	AnimController->OnHitFinished();
 }
 
 void UPlayerCharacterAnimInstance::AnimNotify_RollFinished()
 {
 	AnimController->OnRollFinished();
+}
+
+void UPlayerCharacterAnimInstance::AnimNotify_RollStart()
+{
+	AnimController->OnRollStart();
 }
 

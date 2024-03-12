@@ -115,6 +115,10 @@ void AGameCharacter::BeginPlay()
 	UPlayerCharacterAnimInstance* animInst = Cast<UPlayerCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 	
 	PlayerCharacterAnimController->SetAnimInstance(animInst);
+
+	// 걷기로 시작하게 합니다.
+	OnRunStarted();
+	OnRunFinished();
 	
 	// 다음 공격 입력 확인 시작 이벤트 설정
 	PlayerCharacterAnimController->onNextAttackInputCheckStarted.BindUObject(
@@ -155,6 +159,8 @@ void AGameCharacter::OnDamaged(AActor* damageActor, float damage, const UDamageT
 	// 맞는 애니메이션 재생
 	PlayAnimMontage(HitAnimMontage);
 	
+	// 피해를 입는 상태로 설정
+	IsHit = true;
 	PlayerCharacterMovementComponent->OnHit();
 
 	// 방향
@@ -195,16 +201,51 @@ void AGameCharacter::OnZoomInput(float axis)
 
 void AGameCharacter::OnJumpInput()
 {
+	// 방어중이라면 함수 호출 종료
+	if (AttackComponent->GetBlockState()) return;
+
+	// 공격중인경우 함수호출 종료
+	if (GetAttackComponent()->GetAttackState()) return;
+
+	// 구르기 중이라면 함수호출 종료
+	if (PlayerCharacterMovementComponent->GetRollingState()) return;
+
+	// 피해를 입는중이라면 함수 호출 종료
+	if (GetHitState()) return;
+
 	PlayerCharacterMovementComponent->OnJump();
 }
 
 void AGameCharacter::OnAttackInput()
 {
+	// 방어중이라면 함수 호출 종료
+	if (AttackComponent->GetBlockState()) return;
+
+	// 구르기 중이라면 함수호출 종료
+	if (PlayerCharacterMovementComponent->GetRollingState()) return;
+
+	// 점프중이라면 함수 호출 종료
+	if (GetCharacterMovement()->IsFalling()) return;
+
+	// 피해를 입는중이라면 함수 호출 종료
+	if (GetHitState()) return;
+
 	AttackComponent->RequestAttack(DEFAULT_ATTACK_KEYWORD);
 }
 
 void AGameCharacter::OnInteractionInput()
 {
+	// 구르기 중이라면 함수호출 종료
+	if (GetPlayerCharacterMovementComponent()->GetRollingState()) return;
+	// 점프중인 경우 함수호출 종료
+	if (GetMovementComponent()->IsFalling()) return;
+	// 공격중인경우 함수호출 종료
+	if (GetAttackComponent()->GetAttackState()) return;
+	// 피해를 입고있는 경우 함수 호출 종료
+	if (GetHitState()) return;
+	// 방어중인 경우 호출 종료
+	if (GetAttackComponent()->GetBlockState()) return;
+
 	// 상호작용 시도
 	InteractComponent->TryInteraction();
 }
@@ -223,11 +264,67 @@ void AGameCharacter::OnRollBackward()
 
 void AGameCharacter::OnRollRight()
 {
-	PlayerCharacterMovementComponent->OnRollInput(FIntVector2(1, 0));
+	PlayerCharacterMovementComponent->OnRollInput(FIntVector2(-1, 0));
 }
 
 void AGameCharacter::OnRollLeft()
 {
-	PlayerCharacterMovementComponent->OnRollInput(FIntVector2(-1, 0));
+	PlayerCharacterMovementComponent->OnRollInput(FIntVector2(1, 0));
 
+}
+
+void AGameCharacter::OnBlockStarted()
+{
+	// 점프중인 경우 함수 호출 종료
+	if (GetCharacterMovement()->IsFalling()) return;
+
+	// 구르기 중인 경우 함수 호출 종료
+	if (PlayerCharacterMovementComponent->GetRollingState()) return;
+
+	// 공격중인 경우 함수 호출 종료
+	if (AttackComponent->GetAttackState()) return;
+
+	// 피해를 입는중이라면 함수 호출 종료
+	if (GetHitState()) return;
+
+	// 방어시작
+	AttackComponent->OnBlockStarted();
+
+	// 이동입력을 막습니다
+	PlayerCharacterMovementComponent->SetAllowMovementInput(false);
+}
+
+void AGameCharacter::OnBlockFinished()
+{
+	if (AttackComponent->GetBlockState())
+	{
+		AttackComponent->OnBlockFinished();
+
+		// 이동 입력을 허용합니다
+		PlayerCharacterMovementComponent->SetAllowMovementInput(true);
+	}
+}
+
+void AGameCharacter::OnRunStarted()
+{
+	PlayerCharacterMovementComponent->OnRunStarted();
+}
+
+void AGameCharacter::OnRunFinished()
+{
+	if (PlayerCharacterMovementComponent->GetRunState())
+	{
+		PlayerCharacterMovementComponent->OnRunFinished();
+	}
+
+}
+
+void AGameCharacter::OnStaminaEmpty()
+{
+	OnRunFinished();
+}
+
+void AGameCharacter::OnHitFinished()
+{
+	IsHit = false;
 }

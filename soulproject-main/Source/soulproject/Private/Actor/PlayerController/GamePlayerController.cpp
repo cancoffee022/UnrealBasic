@@ -5,6 +5,8 @@
 #include "Widget/GameWidget/GameWidget.h"
 #include "Widget/PlayerStateWidget/PlayerStateWidget.h"
 
+#include "Component/PlayerCharacterMovementComponent/PlayerCharacterMovementComponent.h"
+
 #include "Structure/PlayerCharacterData/PlayerCharacterData.h"
 
 AGamePlayerController::AGamePlayerController()
@@ -30,6 +32,8 @@ AGamePlayerController::AGamePlayerController()
 void AGamePlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
+
+	UpdateStamina(DeltaTime);
 }
 
 void AGamePlayerController::SetupInputComponent()
@@ -71,6 +75,15 @@ void AGamePlayerController::SetupInputComponent()
 	InputComponent->BindAction(TEXT("RollLeft"), EInputEvent::IE_Pressed,
 		this, &ThisClass::OnRollLeft);
 
+	InputComponent->BindAction(TEXT("BlockInput"), EInputEvent::IE_Pressed,
+		this, &ThisClass::OnBlockPressed);
+	InputComponent->BindAction(TEXT("BlockInput"), EInputEvent::IE_Released,
+		this, &ThisClass::OnBlockReleased);
+
+	InputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Pressed,
+		this, &ThisClass::OnRunPressed);
+	InputComponent->BindAction(TEXT("Run"), EInputEvent::IE_Released,
+		this, &ThisClass::OnRunReleased);
 }
 
 void AGamePlayerController::OnPossess(APawn* pawn)
@@ -100,6 +113,48 @@ void AGamePlayerController::OnPossess(APawn* pawn)
 
 	// 플레이어 캐릭터 상태 위젯 초기화
 	InitializePlayerStateWidget(PlayerCharacterData->MaxHp, PlayerCharacterData->MaxStamina);
+
+}
+
+void AGamePlayerController::UpdateStamina(float dt)
+{
+	AGameCharacter* gameCharacter = Cast<AGameCharacter>(GetPawn());
+	if (!IsValid(gameCharacter)) return;
+
+	// 현재 위치를 얻습니다
+	FVector currentLocation = gameCharacter->GetActorLocation();
+
+	
+
+	// 달리기 상태인지 검사합니다
+	if (gameCharacter->GetPlayerCharacterMovementComponent()->GetRunState())
+	{
+		// 현재 위치와 거리 비교
+		float moveDistance = FVector::Distance(currentLocation, PrevCharacterLocation);
+		CurrentStamina -= moveDistance * 0.5f;
+	}
+	else // 달리기 상태가 아닌경우
+	{
+		CurrentStamina += 10.f * dt;
+	}
+
+	if (CurrentStamina < 0)
+	{
+		gameCharacter->OnStaminaEmpty();
+	}
+
+	// 스테미너 수치 최소 최대로 가두기
+	CurrentStamina = FMath::Clamp(CurrentStamina, 0, PlayerCharacterData->MaxStamina);
+
+	UPlayerStateWidget* playerStateWidget = GameWidget->GetPlayerStateWidget();
+
+	if (IsValid(playerStateWidget))
+	{
+		playerStateWidget->UpdateStamina(CurrentStamina);
+	}
+
+	// 이전 위치를 기록
+	PrevCharacterLocation = currentLocation;
 
 }
 
@@ -174,6 +229,30 @@ void AGamePlayerController::OnRollLeft()
 {
 	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
 	playerCharacter->OnRollLeft();
+}
+
+void AGamePlayerController::OnBlockPressed()
+{
+	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
+	playerCharacter->OnBlockStarted();
+}
+
+void AGamePlayerController::OnBlockReleased()
+{
+	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
+	playerCharacter->OnBlockFinished();
+}
+
+void AGamePlayerController::OnRunPressed()
+{
+	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
+	playerCharacter->OnRunStarted();
+}
+
+void AGamePlayerController::OnRunReleased()
+{
+	AGameCharacter* playerCharacter = Cast<AGameCharacter>(GetPawn());
+	playerCharacter->OnRunFinished();
 }
 
 UGameWidget* AGamePlayerController::GetGameWidget() const
