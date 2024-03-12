@@ -31,5 +31,9 @@ private:
 	UFUNCTION()
 	void AnimNotify_DisableAttackArea();
 
+	UFUNCTION()
+	void AnimNotify_ParriedMotionFinished();
 
+	UFUNCTION()
+	void AnimNotify_HitMotionFinished();
 };

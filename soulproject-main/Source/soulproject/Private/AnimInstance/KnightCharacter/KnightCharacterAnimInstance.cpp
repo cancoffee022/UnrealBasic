@@ -34,3 +34,13 @@ void UKnightCharacterAnimInstance::AnimNotify_DisableAttackArea()
 	AKnightCharacter* knightCharacter = Cast<AKnightCharacter>(GetOwningActor());
 	knightCharacter->GetAttackComponent()->DisableAttackArea();
 }
+
+void UKnightCharacterAnimInstance::AnimNotify_ParriedMotionFinished()
+{
+	AnimNotify_OnAttackFinished();
+}
+
+void UKnightCharacterAnimInstance::AnimNotify_HitMotionFinished()
+{
+	AnimNotify_OnAttackFinished();
+}

@@ -57,11 +57,12 @@ public:
 	// 컨트롤러가 캐릭터에 빙의되었을 때 호출됩니다 
 	virtual void PossessedBy(AController* NewController) override;
 
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	void LaunchCharacter(FVector direction, float power);
 
 private:
 	// 적 정보를 초기화합니다.

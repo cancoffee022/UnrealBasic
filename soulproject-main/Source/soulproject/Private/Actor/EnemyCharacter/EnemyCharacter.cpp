@@ -98,6 +98,11 @@ void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 }
 
+void AEnemyCharacter::LaunchCharacter(FVector direction, float power)
+{
+	Super::LaunchCharacter(direction * power , true, false);
+}
+
 void AEnemyCharacter::InitializeEnemyData()
 {
 	if (EnemyCode.IsNone()) return;

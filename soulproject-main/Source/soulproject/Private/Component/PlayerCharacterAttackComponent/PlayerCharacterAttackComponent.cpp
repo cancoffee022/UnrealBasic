@@ -265,6 +265,7 @@ void UPlayerCharacterAttackComponent::DisableAttackArea()
 
 void UPlayerCharacterAttackComponent::OnBlockStarted()
 {
+	BlockStartTime = GetWorld()->GetTimeSeconds();
 	IsBlocking = true;
 }
 

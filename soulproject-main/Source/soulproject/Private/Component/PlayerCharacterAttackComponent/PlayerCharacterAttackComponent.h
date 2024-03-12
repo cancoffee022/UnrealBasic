@@ -37,6 +37,9 @@ private:
 	// 공격 영역 활성화 상태를 나타냅니다.
 	bool IsAttackAreaEnabled;
 
+	// 방어 입력을 시작한 시간을 나타냅니다
+	float BlockStartTime;
+
 	// 공격 시 감지된 적 객체를 잠시 저장해둘 배열
 	TArray<class AEnemyCharacter*> AttackDectectedEnemies;
 
@@ -128,5 +131,10 @@ public:
 	FORCEINLINE bool GetBlockState() const
 	{
 		return IsBlocking;
+	}
+
+	FORCEINLINE float GetBlockStartTime() const
+	{
+		return BlockStartTime;
 	}
 };

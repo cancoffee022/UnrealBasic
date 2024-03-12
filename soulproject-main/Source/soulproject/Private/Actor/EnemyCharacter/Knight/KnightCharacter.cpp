@@ -1,5 +1,6 @@
 #include "Actor/EnemyCharacter/Knight/KnightCharacter.h"
 #include "Actor/EnemyController/Knight/KnightController.h"
+#include "Actor/GameCharacter/GameCharacter.h"
 
 #include "Component/KnightAttackComponent/KnightAttackComponent.h"
 
@@ -32,6 +33,14 @@ AKnightCharacter::AKnightCharacter()
 	{
 		GetMesh()->SetAnimClass(ANIMBP_KNIGHT.Class);
 	}
+
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> ANIMMONTAGE_HIT(
+		TEXT("/Script/Engine.AnimMontage'/Game/Resources/EnemyCharacter/GKnight/Animation/AnimMontage_Hit.AnimMontage_Hit'"));
+	if (ANIMMONTAGE_HIT.Succeeded())
+	{
+		HitAnimMontage = ANIMMONTAGE_HIT.Object;
+	}
+
 
 	// 공격 컴포넌트 설정
 	AttackComponent = CreateDefaultSubobject<UKnightAttackComponent>(TEXT("KNIGHT_ATTACK_COMP"));
@@ -78,4 +87,18 @@ void AKnightCharacter::UpdateAnimInstanceParams()
 
 	// 속력설정
 	animInst->SetCurrentSpeed(GetVelocity().Length());
+}
+
+void AKnightCharacter::OnDamaged(AGameCharacter* gameCharacter, float damage)
+{
+	Super::OnDamaged(gameCharacter, damage);
+
+	//Play Hit AnimMontage
+	PlayAnimMontage(HitAnimMontage);
+
+	FVector direction = GetActorLocation() - gameCharacter->GetActorLocation();
+	direction.Z = 0;
+	direction = direction.GetSafeNormal();
+
+	LaunchCharacter(direction, 200.f);
 }

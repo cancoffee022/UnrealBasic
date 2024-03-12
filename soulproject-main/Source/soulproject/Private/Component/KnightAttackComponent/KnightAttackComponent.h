@@ -22,6 +22,9 @@ private:
 	class UAnimMontage* AttackAnimMontage;
 
 	UPROPERTY()
+	class UAnimMontage* ParriedAnimMontage;
+
+	UPROPERTY()
 	class UStaticMeshComponent* SwordMeshComponent;
 
 	// 공격 영역 활성화 여부
@@ -41,6 +44,8 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
+	bool IsBlocked(class AGameCharacter* gameCharacter, class AActor* ownerEnemy) const;
+
 	// 공격 영역 검사
 	void CheackAttackArea();
 

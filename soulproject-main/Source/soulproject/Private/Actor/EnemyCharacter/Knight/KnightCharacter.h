@@ -24,6 +24,9 @@ protected:
 	UPROPERTY()
 	class UStaticMesh* SwordMesh;
 	
+	UPROPERTY()
+	class UAnimMontage* HitAnimMontage;
+
 public:
 	AKnightCharacter();
 
@@ -36,6 +39,9 @@ public:
 private:
 	// 애님 인스턴스 파라미터 갱신
 	void UpdateAnimInstanceParams();
+
+protected:
+	virtual void OnDamaged(class AGameCharacter* gameCharacter, float damage) override;
 
 public:
 	// 공격 컴포넌트를 반환합니다
