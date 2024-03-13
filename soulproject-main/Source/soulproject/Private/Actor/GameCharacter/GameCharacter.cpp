@@ -150,8 +150,14 @@ void AGameCharacter::Tick(float DeltaTime)
 	AttackComponent->UpdateWeaponSocketLocation(WeaponMesh);
 }
 
-void AGameCharacter::OnDamaged(AActor* damageActor, float damage, const UDamageType* damageType, AController* instigatedBy, AActor* damageCauser)
+void AGameCharacter::OnDamaged(AActor* damageActor,
+	float damage,
+	const UDamageType* damageType,
+	AController* instigatedBy,
+	AActor* damageCauser)
 {
+	if (PlayerCharacterMovementComponent->GetRollingState()) return;
+
 	// 컨트롤러에게 피해입음 알림
 	AGamePlayerController* playerController = Cast<AGamePlayerController>(GetController());
 	playerController->OnDamaged(damage);
