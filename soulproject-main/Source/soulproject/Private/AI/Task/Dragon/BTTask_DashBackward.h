@@ -13,5 +13,9 @@ UCLASS()
 class UBTTask_DashBackward : public UBTTaskNode
 {
 	GENERATED_BODY()
-	
+
+public:
+	virtual EBTNodeResult::Type ExecuteTask(
+		UBehaviorTreeComponent& ownerComponent, uint8* newMemory) override;
+
 };

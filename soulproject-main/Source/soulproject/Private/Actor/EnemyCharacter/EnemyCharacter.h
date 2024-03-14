@@ -31,6 +31,11 @@ protected:
 	UPROPERTY()
 	bool IsDead;
 	
+	// 적 코드
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName EnemyCode;
+
+	// 마지막으로 공격받은 시간을 나타냅니다
 	UPROPERTY()
 	float LastDamagedTime;
 
@@ -40,13 +45,7 @@ protected:
 
 	FTimerHandle HUDShowTimerHandle;
 
-protected:
-	// 적 코드
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FName EnemyCode;
-
 public:
-	// Sets default values for this character's properties
 	AEnemyCharacter();
 
 protected:
@@ -68,7 +67,6 @@ private:
 	// 적 정보를 초기화합니다.
 	void InitializeEnemyData();
 
-private:
 	UFUNCTION()
 	void OnDamaged(
 		// 대미지를 입은 액터
@@ -76,9 +74,9 @@ private:
 		// 피해량
 		float Damage,
 		// 대미지 종류
-		const UDamageType* DamageType,
+		const class UDamageType* DamageType,
 		// 피해를 입힌 가해 컨트롤러
-		AController* InstigatedBy,
+		class AController* InstigatedBy,
 		// 가해 액터
 		AActor* DamageCauser
 	);
@@ -92,7 +90,7 @@ private:
 protected: 
 	// 적 컨트롤러를 설정합니다.
 	virtual void SetEnemyController(TSubclassOf<class AEnemyController> controllerClass,
-		EAutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned);
+		EAutoPossessAI possessType = EAutoPossessAI::PlacedInWorldOrSpawned);
 	// 대미지를 입은경우 호출됩니다
 	// gameCharacter : GameCharacter 객체가 전달됩니다
 	// damage : 가공된 대미지 수치가 전달됩니다.
@@ -122,6 +120,7 @@ public:
 		return CurrentHp;
 	}
 
+	// 사망 상태를 반환압니다.
 	FORCEINLINE bool IsDeadState() const
 	{
 		return IsDead;
