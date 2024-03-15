@@ -7,6 +7,8 @@
 #include "DragonCharacter.generated.h"
 
 #define ANIMMONTAGE_SECTION_DASHBACKWARD		TEXT("DashBackward")
+#define ANIMMONTAGE_SECTION_TURNLEFT			TEXT("TurnLeft")
+#define ANIMMONTAGE_SECTION_TURNRIGHT			TEXT("TurnRight")
 
 /**
  * 
@@ -39,8 +41,13 @@ protected:
 public:
 	ADragonCharacter();
 
+protected:
+	virtual void BeginPlay() override;
+
 public:
+
 	// 이동 애니메이션 몽타주를 재생합니다
+	// playSectionName : 재생시킬 색션 이름
 	void PlayMoveAnimMontage(FName playSectionName);
 
 	UFUNCTION(BlueprintCallable)

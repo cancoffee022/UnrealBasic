@@ -23,6 +23,41 @@ void UDragonCharacterMovementComponent::TickComponent(float DeltaTime, ELevelTic
 	{
 		CheckDashFinish();
 	}
+
+	if (IsYawTurnning)
+	{
+		TurnningSmooth(DeltaTime);
+	}
+}
+
+void UDragonCharacterMovementComponent::TurnningSmooth(float dt)
+{
+	// 현재 회전
+	FRotator currentRotation = DragonCharacter->GetActorRotation();
+
+	// 목표 회전
+	FRotator targetRotation = FRotator(0, TargetYawAngle, 0);
+	
+	if (currentRotation.Equals(targetRotation, 5.f))
+	{
+		TargetYawAngle = targetRotation.Yaw;
+		DragonCharacter->SetActorRotation(targetRotation);
+
+		IsYawTurnning = false;
+	}
+	else
+	{
+		// 부드럽게 회전
+		FRotator newRotation = FMath::RInterpTo(
+			currentRotation,
+			targetRotation,
+			dt, 720.0f);
+
+		DragonCharacter->SetActorRotation(newRotation);
+
+	}
+
+
 }
 
 void UDragonCharacterMovementComponent::CheckDashFinish()
@@ -33,6 +68,18 @@ void UDragonCharacterMovementComponent::CheckDashFinish()
 		IsDash = false;
 	}
 }
+
+void UDragonCharacterMovementComponent::SetTargetYawAngle(float targetYawAngle)
+{
+	TargetYawAngle = targetYawAngle;
+}
+
+void UDragonCharacterMovementComponent::StartTurn()
+{
+	IsYawTurnning = true;
+}
+
+
 
 void UDragonCharacterMovementComponent::StartDash(FVector direction, float power)
 {

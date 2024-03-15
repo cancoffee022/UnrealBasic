@@ -6,6 +6,8 @@
 
 #include "Components/CapsuleComponent.h"
 
+#include "AnimInstance/DragonCharacter/DragonCharacterAnimInstance.h"
+
 ADragonCharacter::ADragonCharacter()
 {
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_BODY(
@@ -16,8 +18,15 @@ ADragonCharacter::ADragonCharacter()
 		GetMesh()->SetSkeletalMesh(SK_BODY.Object);
 	}
 
+	static ConstructorHelpers::FClassFinder<UDragonCharacterAnimInstance> ANIMBP_DRAGON(
+		TEXT("/Script/Engine.AnimBlueprint'/Game/Blueprints/AnimInstance/AnimBP_DragonCharacter.AnimBP_DragonCharacter_C'"));
+	if (ANIMBP_DRAGON.Succeeded())
+	{
+		GetMesh()->SetAnimClass(ANIMBP_DRAGON.Class);
+	}
+
 	static ConstructorHelpers::FObjectFinder<UAnimMontage> ANIMMONTAGE_MOVE(
-		TEXT("/Script/Engine.AnimSequence'/Game/Resources/EnemyCharacter/DesertDragon/Animations/ANIM_DesertDragon_FlyStationaryToLanding.ANIM_DesertDragon_FlyStationaryToLanding'"));
+		TEXT("/Script/Engine.AnimMontage'/Game/Resources/EnemyCharacter/DesertDragon/Animations/AnimMontage_Move.AnimMontage_Move'"));
 	if (ANIMMONTAGE_MOVE.Succeeded())
 	{
 		MoveAnimMontage = ANIMMONTAGE_MOVE.Object;
@@ -43,6 +52,14 @@ ADragonCharacter::ADragonCharacter()
 	// 적 코드 설정
 	EnemyCode = TEXT("000004");
 
+}
+
+void ADragonCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	UDragonCharacterAnimInstance* animInst = Cast<UDragonCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+	animInst->OnTurn.AddUObject(DragonMovementComponent, &UDragonCharacterMovementComponent::StartTurn);
 }
 
 void ADragonCharacter::PlayMoveAnimMontage(FName playSectionName)
