@@ -12,10 +12,43 @@
 
 UBTTask_LookAt::UBTTask_LookAt()
 {
+	IsMoveTaskRunningKey.AddBoolFilter(this,
+		GET_MEMBER_NAME_CHECKED(ThisClass, IsMoveTaskRunningKey));
+
 	TargetActorKey.AddObjectFilter(
 		this,
 		GET_MEMBER_NAME_CHECKED(ThisClass, TargetActorKey),
 		UObject::StaticClass());
+
+	// 틱 기능을 활성화 시킵니다
+	bNotifyTick = true;
+}
+
+void UBTTask_LookAt::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+{
+	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
+
+	// 컨트롤러를 얻습니다
+	AController* ownerController = Cast<AController>(OwnerComp.GetOwner());
+
+	//컨트롤러가 조종하는 액터
+	ADragonCharacter* controlledPawn = Cast<ADragonCharacter>(ownerController->GetPawn());
+
+	UDragonCharacterMovementComponent* movementComponent = controlledPawn->GetDragonMovementComponent();
+
+	if (!YawTurningStarted)
+	{
+		if (movementComponent->GetYawTurningState())
+		{
+			YawTurningStarted = true;
+		}
+		else return;
+	}
+
+	if (controlledPawn->GetDragonMovementComponent()->IsYawTurnFinished())
+	{ 
+		FinishLatentTask(OwnerComp, EBTNodeResult::Type::Succeeded);
+	}
 }
 
 EBTNodeResult::Type UBTTask_LookAt::ExecuteTask(UBehaviorTreeComponent& ownerComponent, uint8* newMemory)
@@ -49,14 +82,16 @@ EBTNodeResult::Type UBTTask_LookAt::ExecuteTask(UBehaviorTreeComponent& ownerCom
 	// 계산한 각도 설정
 	controlledPawn->GetDragonMovementComponent()->SetTargetYawAngle(yawAngle);
 
-	/*if (!FMath::IsNearlyEqual(yawAngle, controlledPawn->GetActorRotation().Yaw))
+	// 현재 회전과 별 차이가 없는 경우, 회전시키지 않습니다
+	float currentYawAngle = controlledPawn->GetActorRotation().Yaw;
+	if (FRotator(0, yawAngle, 0).Equals(FRotator(0, currentYawAngle, 0), 15.f))
 	{
-
-	}*/
+		return EBTNodeResult::Type::Failed;
+	}
 
 	controlledPawn->PlayMoveAnimMontage(
 		yawAngle > 0 ?
 		ANIMMONTAGE_SECTION_TURNRIGHT : ANIMMONTAGE_SECTION_TURNLEFT);
 
-	return EBTNodeResult::Type::Succeeded;
+	return EBTNodeResult::Type::InProgress;
 }

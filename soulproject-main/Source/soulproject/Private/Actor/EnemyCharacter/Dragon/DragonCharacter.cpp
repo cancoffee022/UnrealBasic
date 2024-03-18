@@ -26,10 +26,17 @@ ADragonCharacter::ADragonCharacter()
 	}
 
 	static ConstructorHelpers::FObjectFinder<UAnimMontage> ANIMMONTAGE_MOVE(
-		TEXT("/Script/Engine.AnimMontage'/Game/Resources/EnemyCharacter/DesertDragon/Animations/AnimMontage_Move.AnimMontage_Move'"));
+		TEXT("/Script/Engine.AnimMontage'/Game/Resources/EnemyCharacter/DesertDragon/Animations/AnimMontage/AnimMontage_Move.AnimMontage_Move'"));
 	if (ANIMMONTAGE_MOVE.Succeeded())
 	{
 		MoveAnimMontage = ANIMMONTAGE_MOVE.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> ANIMMONTAGE_ATTACK(
+		TEXT("/Script/Engine.AnimMontage'/Game/Resources/EnemyCharacter/DesertDragon/Animations/AnimMontage/AnimMontage_Move.AnimMontage_Move'"));
+	if (ANIMMONTAGE_ATTACK.Succeeded())
+	{
+		AttackAnimMontage = ANIMMONTAGE_ATTACK.Object;
 	}
 
 	LeftForwardLeg = CreateDefaultSubobject<UCapsuleComponent>(TEXT("LFLEG"));
@@ -57,14 +64,23 @@ ADragonCharacter::ADragonCharacter()
 void ADragonCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	ADragonController* dragonController = Cast<ADragonController>(GetController());
 
 	UDragonCharacterAnimInstance* animInst = Cast<UDragonCharacterAnimInstance>(GetMesh()->GetAnimInstance());
+
 	animInst->OnTurn.AddUObject(DragonMovementComponent, &UDragonCharacterMovementComponent::StartTurn);
+	animInst->OnDashFinished.AddUObject(dragonController,&ADragonController::OnDashFinished);
 }
 
 void ADragonCharacter::PlayMoveAnimMontage(FName playSectionName)
 {
 	PlayAnimMontage(MoveAnimMontage, 1.f, playSectionName);
+}
+
+void ADragonCharacter::PlayAttackAnimMontage(FName playSectionName)
+{
+	PlayAnimMontage(AttackAnimMontage, 1.f, playSectionName);
 }
 
 void ADragonCharacter::OnPlayerCharacterDetected(AGameCharacter* gameCharacter)

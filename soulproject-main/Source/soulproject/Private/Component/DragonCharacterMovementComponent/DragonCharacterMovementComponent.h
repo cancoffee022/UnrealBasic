@@ -52,9 +52,16 @@ public:
 
 	void StartDash(FVector direction, float power);
 
+	bool IsYawTurnFinished();
+
 	FORCEINLINE bool GetDashState() const
 	{
 		return IsDash;
+	}
+
+	FORCEINLINE bool GetYawTurningState() const
+	{
+		return IsYawTurnning;
 	}
 		
 };

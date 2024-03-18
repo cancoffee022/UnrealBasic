@@ -6,9 +6,14 @@
 #include "Actor/EnemyCharacter/EnemyCharacter.h"
 #include "DragonCharacter.generated.h"
 
+
+// Move AnimMontage Section Names..
 #define ANIMMONTAGE_SECTION_DASHBACKWARD		TEXT("DashBackward")
 #define ANIMMONTAGE_SECTION_TURNLEFT			TEXT("TurnLeft")
 #define ANIMMONTAGE_SECTION_TURNRIGHT			TEXT("TurnRight")
+
+// Attack AnimMontage Section Names..
+#define ANIMMONTAGE_SECTION_BREATHFIRE			TEXT("BreathFire")
 
 /**
  * 
@@ -21,6 +26,9 @@ class ADragonCharacter : public AEnemyCharacter
 private:
 	UPROPERTY()
 	class UAnimMontage* MoveAnimMontage;
+
+	UPROPERTY()
+	class UAnimMontage* AttackAnimMontage;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
@@ -49,6 +57,10 @@ public:
 	// 이동 애니메이션 몽타주를 재생합니다
 	// playSectionName : 재생시킬 색션 이름
 	void PlayMoveAnimMontage(FName playSectionName);
+
+	// 공격 애니메이션 몽타주를 재생합니다
+	// playSectionName : 재생시킬 색션 이름
+	void PlayAttackAnimMontage(FName playSectionName);
 
 	UFUNCTION(BlueprintCallable)
 	void OnPlayerCharacterDetected(class AGameCharacter* gameCharacter);

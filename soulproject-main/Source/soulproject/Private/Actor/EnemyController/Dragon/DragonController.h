@@ -7,6 +7,7 @@
 #include "DragonController.generated.h"
 
 #define KEYNAME_PLAYERCHARACTER			TEXT("PlayerCharacter")
+#define KEYNAME_ISMOVETASKRUNNING		TEXT("IsMoveTaskRunning")
 /**
  * 
  */
@@ -18,5 +19,8 @@ class ADragonController : public AEnemyController
 
 public:
 	void SetPlayerCharacterKey(class AGameCharacter* playerCharacter);
+
+	UFUNCTION()
+	void OnDashFinished();
 	
 };

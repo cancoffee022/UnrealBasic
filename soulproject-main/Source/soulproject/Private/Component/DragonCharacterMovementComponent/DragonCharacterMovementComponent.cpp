@@ -38,7 +38,7 @@ void UDragonCharacterMovementComponent::TurnningSmooth(float dt)
 	// 목표 회전
 	FRotator targetRotation = FRotator(0, TargetYawAngle, 0);
 	
-	if (currentRotation.Equals(targetRotation, 5.f))
+	if (IsYawTurnFinished())
 	{
 		TargetYawAngle = targetRotation.Yaw;
 		DragonCharacter->SetActorRotation(targetRotation);
@@ -86,5 +86,16 @@ void UDragonCharacterMovementComponent::StartDash(FVector direction, float power
 	IsDash = true;
 	DragonCharacter->LaunchCharacter(direction, power);
 	DragonCharacter->PlayMoveAnimMontage(ANIMMONTAGE_SECTION_DASHBACKWARD);
+}
+
+bool UDragonCharacterMovementComponent::IsYawTurnFinished()
+{
+	// 현재 회전
+	FRotator currentRotation = DragonCharacter->GetActorRotation();
+
+	// 목표 회전
+	FRotator targetRotation = FRotator(0, TargetYawAngle, 0);
+
+	return (currentRotation.Equals(targetRotation, 5.f));
 }
 

@@ -16,6 +16,7 @@ class UDragonCharacterAnimInstance : public UAnimInstance
 
 public:
 	FDragonCharacterSingleEvent OnTurn;
+	FDragonCharacterSingleEvent OnDashFinished;
 
 private:
 	UFUNCTION()
@@ -23,5 +24,8 @@ private:
 
 	UFUNCTION()
 	void AnimNotify_TurnRight();
+
+	UFUNCTION()
+	void AnimNotify_DashFinished();
 	
 };

@@ -12,3 +12,8 @@ void UDragonCharacterAnimInstance::AnimNotify_TurnRight()
 {
 	OnTurn.Broadcast();
 }
+
+void UDragonCharacterAnimInstance::AnimNotify_DashFinished()
+{
+	OnDashFinished.Broadcast();
+}

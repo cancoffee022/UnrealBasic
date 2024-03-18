@@ -7,3 +7,8 @@ void ADragonController::SetPlayerCharacterKey(AGameCharacter* playerCharacter)
 {
 	BlackboardComponent->SetValueAsObject(KEYNAME_PLAYERCHARACTER, playerCharacter);
 }
+
+void ADragonController::OnDashFinished()
+{
+	BlackboardComponent->SetValueAsBool(KEYNAME_ISMOVETASKRUNNING, false);
+}
