@@ -48,6 +48,7 @@ void UBTTask_LookAt::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 	if (controlledPawn->GetDragonMovementComponent()->IsYawTurnFinished())
 	{ 
 		FinishLatentTask(OwnerComp, EBTNodeResult::Type::Succeeded);
+		YawTurningStarted = false;
 	}
 }
 

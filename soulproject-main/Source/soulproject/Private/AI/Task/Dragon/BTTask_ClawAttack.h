@@ -4,27 +4,27 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTTaskNode.h"
-#include "BTTask_BreathFire.generated.h"
+#include "BTTask_ClawAttack.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class UBTTask_BreathFire : public UBTTaskNode
+class UBTTask_ClawAttack : public UBTTaskNode
 {
 	GENERATED_BODY()
 
 private:
 	UPROPERTY()
-	bool BreathFireStarted;
+	bool ClawAttackStarted;
+	
 
 public:
-	UBTTask_BreathFire();
+	UBTTask_ClawAttack();
 
 protected:
 	virtual void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 
 public:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& ownerComponent, uint8* newMemory) override;
-	
 };

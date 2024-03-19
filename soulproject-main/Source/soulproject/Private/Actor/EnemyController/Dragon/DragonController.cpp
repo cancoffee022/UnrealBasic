@@ -12,3 +12,8 @@ void ADragonController::OnDashFinished()
 {
 	BlackboardComponent->SetValueAsBool(KEYNAME_ISMOVETASKRUNNING, false);
 }
+
+void ADragonController::UpdateCurrentHp(float currentHp)
+{
+	BlackboardComponent->SetValueAsFloat(KEYNAME_CURRENTHP, currentHp);
+}

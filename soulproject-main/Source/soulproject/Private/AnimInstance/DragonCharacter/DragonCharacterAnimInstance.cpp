@@ -17,3 +17,23 @@ void UDragonCharacterAnimInstance::AnimNotify_DashFinished()
 {
 	OnDashFinished.Broadcast();
 }
+
+void UDragonCharacterAnimInstance::AnimNotify_OnBreathFireStarted()
+{
+	OnBreathFireStarted.Broadcast();
+}
+
+void UDragonCharacterAnimInstance::AnimNotify_OnBreathFireFinished()
+{
+	OnBreathFireFinished.Broadcast();
+}
+
+void UDragonCharacterAnimInstance::AnimNotify_OnClawAttackStarted()
+{
+	OnClawAttackStarted.Broadcast();
+}
+
+void UDragonCharacterAnimInstance::AnimNotify_OnClawAttackFinished()
+{
+	OnClawAttackFinished.Broadcast();
+}

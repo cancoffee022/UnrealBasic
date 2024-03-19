@@ -51,7 +51,7 @@ void UDragonCharacterMovementComponent::TurnningSmooth(float dt)
 		FRotator newRotation = FMath::RInterpTo(
 			currentRotation,
 			targetRotation,
-			dt, 720.0f);
+			dt, 15.0f);
 
 		DragonCharacter->SetActorRotation(newRotation);
 

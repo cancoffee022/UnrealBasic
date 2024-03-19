@@ -8,6 +8,7 @@
 
 #define KEYNAME_PLAYERCHARACTER			TEXT("PlayerCharacter")
 #define KEYNAME_ISMOVETASKRUNNING		TEXT("IsMoveTaskRunning")
+#define KEYNAME_CURRENTHP				TEXT("CurrentHp")
 /**
  * 
  */
@@ -22,5 +23,7 @@ public:
 
 	UFUNCTION()
 	void OnDashFinished();
+
+	void UpdateCurrentHp(float currentHp);
 	
 };

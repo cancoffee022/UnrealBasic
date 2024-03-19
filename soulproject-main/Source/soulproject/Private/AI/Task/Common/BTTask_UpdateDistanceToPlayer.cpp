@@ -7,9 +7,9 @@
 
 UBTTask_UpdateDistanceToPlayer::UBTTask_UpdateDistanceToPlayer()
 {
-	PlayerCharacterActorKey.AddObjectFilter(this,GET_MEMBER_NAME_CHECKED(ThisClass,PlayerCharacterActorKey),UObject::StaticClass());
+	PlayerCharacterActorKey.AddObjectFilter(this, GET_MEMBER_NAME_CHECKED(ThisClass,PlayerCharacterActorKey),UObject::StaticClass());
 
-	DistanceToPlayerKey.AddFloatFilter(this,GET_MEMBER_NAME_CHECKED(ThisClass,DistanceToPlayerKey));
+	DistanceToPlayerKey.AddFloatFilter(this, GET_MEMBER_NAME_CHECKED(ThisClass,DistanceToPlayerKey));
 }
 
 EBTNodeResult::Type UBTTask_UpdateDistanceToPlayer::ExecuteTask(
@@ -19,13 +19,13 @@ EBTNodeResult::Type UBTTask_UpdateDistanceToPlayer::ExecuteTask(
 	UBlackboardComponent* blackboardComponent = ownerComponent.GetBlackboardComponent();
 
 	// 이 행동을 실행하는 객체 (컨트롤러)
-	AController* owenrController = Cast<AController>(ownerComponent.GetOwner());
+	AController* ownerController = Cast<AController>(ownerComponent.GetOwner());
 
 	// 유효성 검사
-	if (!IsValid(owenrController)) return EBTNodeResult::Type::Failed;
+	if (!IsValid(ownerController)) return EBTNodeResult::Type::Failed;
 
 	// 이 행동을 실행하는 액터 (적 캐릭터)
-	AActor* controlledPawn = owenrController->GetPawn();
+	AActor* controlledPawn = ownerController->GetPawn();
 
 	// 유효성 검사
 	if (!IsValid(controlledPawn)) return EBTNodeResult::Type::Failed;

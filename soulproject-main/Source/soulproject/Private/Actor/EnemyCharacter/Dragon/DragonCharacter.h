@@ -14,6 +14,7 @@
 
 // Attack AnimMontage Section Names..
 #define ANIMMONTAGE_SECTION_BREATHFIRE			TEXT("BreathFire")
+#define ANIMMONTAGE_SECTION_CLAWATTACK			TEXT("ClawAttack")
 
 /**
  * 
@@ -46,6 +47,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class UDragonCharacterMovementComponent* DragonMovementComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	class UDragonCharacterAttackComponent* AttackComponent;
+
 public:
 	ADragonCharacter();
 
@@ -68,6 +72,11 @@ public:
 	FORCEINLINE class UDragonCharacterMovementComponent* GetDragonMovementComponent() const
 	{
 		return DragonMovementComponent;
+	}
+
+	FORCEINLINE class UDragonCharacterAttackComponent* GetDragonAttackComponent() const
+	{
+		return AttackComponent;
 	}
 	
 };

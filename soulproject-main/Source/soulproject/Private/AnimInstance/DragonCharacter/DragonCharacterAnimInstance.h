@@ -17,6 +17,10 @@ class UDragonCharacterAnimInstance : public UAnimInstance
 public:
 	FDragonCharacterSingleEvent OnTurn;
 	FDragonCharacterSingleEvent OnDashFinished;
+	FDragonCharacterSingleEvent OnBreathFireFinished;
+	FDragonCharacterSingleEvent OnBreathFireStarted;
+	FDragonCharacterSingleEvent OnClawAttackStarted;
+	FDragonCharacterSingleEvent OnClawAttackFinished;
 
 private:
 	UFUNCTION()
@@ -27,5 +31,16 @@ private:
 
 	UFUNCTION()
 	void AnimNotify_DashFinished();
+
+	UFUNCTION()
+	void AnimNotify_OnBreathFireStarted();
 	
+	UFUNCTION()
+	void AnimNotify_OnBreathFireFinished();
+	
+	UFUNCTION()
+	void AnimNotify_OnClawAttackStarted();
+
+	UFUNCTION()
+	void AnimNotify_OnClawAttackFinished();
 };

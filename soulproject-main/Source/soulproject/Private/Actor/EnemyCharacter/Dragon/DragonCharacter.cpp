@@ -3,6 +3,7 @@
 #include "Actor/GameCharacter/GameCharacter.h"
 
 #include "Component/DragonCharacterMovementComponent/DragonCharacterMovementComponent.h"
+#include "Component/DragonCharacterAttackComponent/DragonCharacterAttackComponent.h"
 
 #include "Components/CapsuleComponent.h"
 
@@ -33,7 +34,7 @@ ADragonCharacter::ADragonCharacter()
 	}
 
 	static ConstructorHelpers::FObjectFinder<UAnimMontage> ANIMMONTAGE_ATTACK(
-		TEXT("/Script/Engine.AnimMontage'/Game/Resources/EnemyCharacter/DesertDragon/Animations/AnimMontage/AnimMontage_Move.AnimMontage_Move'"));
+		TEXT("/Script/Engine.AnimMontage'/Game/Resources/EnemyCharacter/DesertDragon/Animations/AnimMontage/AnimMontage_Attack.AnimMontage_Attack'"));
 	if (ANIMMONTAGE_ATTACK.Succeeded())
 	{
 		AttackAnimMontage = ANIMMONTAGE_ATTACK.Object;
@@ -52,6 +53,7 @@ ADragonCharacter::ADragonCharacter()
 	RightBackwardLeg->SetupAttachment(GetMesh(), TEXT("Socket_RBLeg"));
 
 	DragonMovementComponent = CreateDefaultSubobject<UDragonCharacterMovementComponent>(TEXT("MOVEMENT_COMP"));
+	AttackComponent = CreateDefaultSubobject<UDragonCharacterAttackComponent>(TEXT("ATTACK_COMP"));
 
 	// 컨트롤러 설정
 	SetEnemyController(ADragonController::StaticClass());
@@ -67,10 +69,20 @@ void ADragonCharacter::BeginPlay()
 	
 	ADragonController* dragonController = Cast<ADragonController>(GetController());
 
+	// 현재 체력 설정
+	dragonController->UpdateCurrentHp(CurrentHp);
+
 	UDragonCharacterAnimInstance* animInst = Cast<UDragonCharacterAnimInstance>(GetMesh()->GetAnimInstance());
 
 	animInst->OnTurn.AddUObject(DragonMovementComponent, &UDragonCharacterMovementComponent::StartTurn);
 	animInst->OnDashFinished.AddUObject(dragonController,&ADragonController::OnDashFinished);
+
+	animInst->OnBreathFireStarted.AddUObject(AttackComponent, &UDragonCharacterAttackComponent::StartBreathFire);
+	animInst->OnBreathFireFinished.AddUObject(AttackComponent, & UDragonCharacterAttackComponent::OnBreathFireFinished);
+	
+	animInst->OnClawAttackStarted.AddUObject(AttackComponent, &UDragonCharacterAttackComponent::StartClawAttack);
+	animInst->OnClawAttackFinished.AddUObject(AttackComponent, & UDragonCharacterAttackComponent::FinishClawAttack);
+
 }
 
 void ADragonCharacter::PlayMoveAnimMontage(FName playSectionName)
