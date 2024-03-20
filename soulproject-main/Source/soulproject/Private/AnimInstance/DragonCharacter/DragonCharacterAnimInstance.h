@@ -14,13 +14,24 @@ class UDragonCharacterAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
 
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float XYSpeed;
+
+
+
 public:
 	FDragonCharacterSingleEvent OnTurn;
 	FDragonCharacterSingleEvent OnDashFinished;
+
 	FDragonCharacterSingleEvent OnBreathFireFinished;
 	FDragonCharacterSingleEvent OnBreathFireStarted;
+
 	FDragonCharacterSingleEvent OnClawAttackStarted;
 	FDragonCharacterSingleEvent OnClawAttackFinished;
+
+public:
+	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 private:
 	UFUNCTION()

@@ -9,6 +9,8 @@
 
 #include "AnimInstance/DragonCharacter/DragonCharacterAnimInstance.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
+
 ADragonCharacter::ADragonCharacter()
 {
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_BODY(
@@ -61,6 +63,8 @@ ADragonCharacter::ADragonCharacter()
 	// 적 코드 설정
 	EnemyCode = TEXT("000004");
 
+	// 이동속도 설정
+	GetCharacterMovement()->MaxWalkSpeed = 1200.f;
 }
 
 void ADragonCharacter::BeginPlay()

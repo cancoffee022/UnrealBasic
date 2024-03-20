@@ -9,6 +9,7 @@
 
 UBTTask_ClawAttack::UBTTask_ClawAttack()
 {
+	// 틱 기능 활성화
 	bNotifyTick = true;
 }
 
@@ -16,9 +17,21 @@ void UBTTask_ClawAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* Node
 {
 	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
 
+	ADragonCharacter* pawn = Cast<ADragonCharacter>(Cast<AController>(OwnerComp.GetOwner())->GetPawn());
+
 	if (!ClawAttackStarted)
 	{
+		if (pawn->GetDragonAttackComponent()->GetClawAttackState())
+		{
+			ClawAttackStarted = true;
+		}
+		else return;
+	}
 
+	if (ClawAttackStarted && !pawn->GetDragonAttackComponent()->GetClawAttackState())
+	{
+		FinishLatentTask(OwnerComp, EBTNodeResult::Type::Succeeded);
+		ClawAttackStarted = false;
 	}
 }
 

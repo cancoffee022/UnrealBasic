@@ -21,6 +21,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = Blackboard)
 	FBlackboardKeySelector TargetLocationKey;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bUseMaxTrackingDistance;
+
+
 public:
 	UBTService_GetPlayerLocation();
 

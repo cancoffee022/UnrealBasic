@@ -87,7 +87,7 @@ EBTNodeResult::Type UBTTask_LookAt::ExecuteTask(UBehaviorTreeComponent& ownerCom
 	float currentYawAngle = controlledPawn->GetActorRotation().Yaw;
 	if (FRotator(0, yawAngle, 0).Equals(FRotator(0, currentYawAngle, 0), 15.f))
 	{
-		return EBTNodeResult::Type::Failed;
+		return EBTNodeResult::Type::Succeeded;
 	}
 
 	controlledPawn->PlayMoveAnimMontage(

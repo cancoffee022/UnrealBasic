@@ -10,7 +10,7 @@ UBTService_GetPlayerLocation::UBTService_GetPlayerLocation()
 	PlayerActorKey.AddObjectFilter(
 		this, 
 		GET_MEMBER_NAME_CHECKED(ThisClass, PlayerActorKey),
-		AGameCharacter::StaticClass());
+		UObject::StaticClass());
 	TargetLocationKey.AddVectorFilter(this,
 		GET_MEMBER_NAME_CHECKED(ThisClass, TargetLocationKey));
 }
@@ -34,17 +34,20 @@ void UBTService_GetPlayerLocation::TickNode(
 
 	FVector targetLocation = gameCharacter->GetActorLocation();
 
-	// 최대 추적거리
-	float maxTrackingDistance = 500.f;
+	if(bUseMaxTrackingDistance)
+	{ 
+		// 최대 추적거리
+		float maxTrackingDistance = 500.f;
 
-	// 목표위치까지의 거리가 최대추적 거리를 초과하는지를 확인
-	if (FVector::Distance(currentLocation, targetLocation) > maxTrackingDistance)
-	{
-		// 목표 위치까지의 방향을 얻습니다
-		FVector direction = (targetLocation - currentLocation).GetSafeNormal();
+		// 목표위치까지의 거리가 최대추적 거리를 초과하는지를 확인
+		if (FVector::Distance(currentLocation, targetLocation) > maxTrackingDistance)
+		{
+			// 목표 위치까지의 방향을 얻습니다
+			FVector direction = (targetLocation - currentLocation).GetSafeNormal();
 
-		//최대 추적거리를 적용합니다
-		targetLocation = currentLocation + direction * maxTrackingDistance;
+			//최대 추적거리를 적용합니다
+			targetLocation = currentLocation + direction * maxTrackingDistance;
+		}
 	}
 
 	// 목표 위치를 설정합니다

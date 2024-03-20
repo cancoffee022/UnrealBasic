@@ -3,6 +3,24 @@
 
 #include "AnimInstance/DragonCharacter/DragonCharacterAnimInstance.h"
 
+#include "Actor/EnemyCharacter/Dragon/DragonCharacter.h"
+
+void UDragonCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
+{
+	Super::NativeUpdateAnimation(DeltaSeconds);
+
+	ADragonCharacter* dragonCharacter = Cast<ADragonCharacter>(GetOwningActor());
+
+	// 유효성 검사
+	if (!IsValid(dragonCharacter)) return;
+
+	// 속도 갱신
+	FVector velocity = dragonCharacter->GetVelocity();
+	velocity.Z = 0;
+	XYSpeed = velocity.Length();
+
+}
+
 void UDragonCharacterAnimInstance::AnimNotify_TurnLeft()
 {
 	OnTurn.Broadcast();
