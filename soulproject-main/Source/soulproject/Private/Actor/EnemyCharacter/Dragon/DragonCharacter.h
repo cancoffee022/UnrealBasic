@@ -15,6 +15,7 @@
 // Attack AnimMontage Section Names..
 #define ANIMMONTAGE_SECTION_BREATHFIRE			TEXT("BreathFire")
 #define ANIMMONTAGE_SECTION_CLAWATTACK			TEXT("ClawAttack")
+#define ANIMMONTAGE_SECTION_RUSHATTACK			TEXT("RushAttack")
 
 /**
  * 

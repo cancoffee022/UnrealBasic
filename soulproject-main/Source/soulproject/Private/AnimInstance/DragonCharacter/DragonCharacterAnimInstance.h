@@ -18,6 +18,11 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float XYSpeed;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool IsFly;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FIntVector FlyDirection;
 
 
 public:
@@ -30,8 +35,15 @@ public:
 	FDragonCharacterSingleEvent OnClawAttackStarted;
 	FDragonCharacterSingleEvent OnClawAttackFinished;
 
+	FDragonCharacterSingleEvent OnRushAttackStarted;
+	FDragonCharacterSingleEvent OnRushAttackFinished;
+
+
 public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
+	void StartFly();
+	void UpdateFlyDirection(FIntVector direction);
 
 private:
 	UFUNCTION()
@@ -54,4 +66,10 @@ private:
 
 	UFUNCTION()
 	void AnimNotify_OnClawAttackFinished();
+	
+	UFUNCTION()
+	void AnimNotify_OnRushAttackStarted();
+
+	UFUNCTION()
+	void AnimNotify_OnRushAttackFinished();
 };

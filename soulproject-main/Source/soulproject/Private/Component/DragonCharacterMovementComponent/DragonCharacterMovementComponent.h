@@ -20,6 +20,18 @@ private:
 	bool IsDash;
 	
 	UPROPERTY()
+	bool IsFly;
+
+	UPROPERTY()
+	bool IsFlyUp;
+
+	UPROPERTY()
+	float FlyTargetHeight;
+
+	UPROPERTY()
+	FVector BodyMeshLocation;
+
+	UPROPERTY()
 	bool IsYawTurnning;
 
 	// 목표 Yaw 회전값
@@ -40,8 +52,11 @@ public:
 	
 private:
 	void TurnningSmooth(float dt);
+
 	// 대시 끝을 대기합니다
 	void CheckDashFinish();
+
+	void FlyMovement(float dt);
 
 public:
 	// 목표 Yaw 회전값을 설정합니다.
@@ -49,6 +64,9 @@ public:
 
 	// 설정된 목표 Yaw로 회전시킵니다
 	void StartTurn();
+
+	// 설정된 높이로 날아오른다
+	void StartFlyUp(float targetHeight);
 
 	void StartDash(FVector direction, float power);
 

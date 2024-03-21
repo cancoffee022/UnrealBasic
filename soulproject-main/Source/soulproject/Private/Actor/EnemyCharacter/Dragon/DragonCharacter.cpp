@@ -87,6 +87,8 @@ void ADragonCharacter::BeginPlay()
 	animInst->OnClawAttackStarted.AddUObject(AttackComponent, &UDragonCharacterAttackComponent::StartClawAttack);
 	animInst->OnClawAttackFinished.AddUObject(AttackComponent, & UDragonCharacterAttackComponent::FinishClawAttack);
 
+	animInst->OnRushAttackStarted.AddUObject(AttackComponent, &UDragonCharacterAttackComponent::StartRushAttack);
+	animInst->OnRushAttackFinished.AddUObject(AttackComponent, &UDragonCharacterAttackComponent::FinsihRushAttack);
 }
 
 void ADragonCharacter::PlayMoveAnimMontage(FName playSectionName)

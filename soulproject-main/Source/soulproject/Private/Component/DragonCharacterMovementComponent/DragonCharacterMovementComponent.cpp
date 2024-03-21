@@ -28,6 +28,11 @@ void UDragonCharacterMovementComponent::TickComponent(float DeltaTime, ELevelTic
 	{
 		TurnningSmooth(DeltaTime);
 	}
+
+	if (IsFly)
+	{
+		FlyMovement(DeltaTime);
+	}
 }
 
 void UDragonCharacterMovementComponent::TurnningSmooth(float dt)
@@ -69,6 +74,20 @@ void UDragonCharacterMovementComponent::CheckDashFinish()
 	}
 }
 
+void UDragonCharacterMovementComponent::FlyMovement(float dt)
+{
+	USkeletalMeshComponent* bodyMesh = DragonCharacter->GetMesh();
+
+	if (IsFlyUp)
+	{
+		bodyMesh->SetRelativeLocation(
+			FMath::VInterpTo(bodyMesh->GetRelativeLocation(),
+				FVector::UpVector * FlyTargetHeight, dt, 1.5f));
+
+	}
+
+}
+
 void UDragonCharacterMovementComponent::SetTargetYawAngle(float targetYawAngle)
 {
 	TargetYawAngle = targetYawAngle;
@@ -79,7 +98,19 @@ void UDragonCharacterMovementComponent::StartTurn()
 	IsYawTurnning = true;
 }
 
+void UDragonCharacterMovementComponent::StartFlyUp(float targetHeight)
+{
+	if (!IsFly)
+	{
+		IsFly = true;
+		IsFlyUp = true;
+		FlyTargetHeight = targetHeight;
 
+		USkeletalMeshComponent* bodyMesh = DragonCharacter->GetMesh();
+		BodyMeshLocation = bodyMesh->GetRelativeLocation();
+	}
+
+}
 
 void UDragonCharacterMovementComponent::StartDash(FVector direction, float power)
 {

@@ -21,6 +21,16 @@ void UDragonCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 }
 
+void UDragonCharacterAnimInstance::StartFly()
+{
+	IsFly = true;
+}
+
+void UDragonCharacterAnimInstance::UpdateFlyDirection(FIntVector direction)
+{
+	FlyDirection = direction;
+}
+
 void UDragonCharacterAnimInstance::AnimNotify_TurnLeft()
 {
 	OnTurn.Broadcast();
@@ -54,4 +64,14 @@ void UDragonCharacterAnimInstance::AnimNotify_OnClawAttackStarted()
 void UDragonCharacterAnimInstance::AnimNotify_OnClawAttackFinished()
 {
 	OnClawAttackFinished.Broadcast();
+}
+
+void UDragonCharacterAnimInstance::AnimNotify_OnRushAttackStarted()
+{
+	OnRushAttackStarted.Broadcast();
+}
+
+void UDragonCharacterAnimInstance::AnimNotify_OnRushAttackFinished()
+{
+	OnRushAttackFinished.Broadcast();
 }

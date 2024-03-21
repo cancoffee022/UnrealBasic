@@ -17,6 +17,9 @@ private:
 	UPROPERTY()
 	bool IsClawAttack;
 
+	UPROPERTY()
+	bool IsRushAttack;
+
 public:	
 	UDragonCharacterAttackComponent();
 
@@ -32,6 +35,9 @@ public:
 
 	void StartClawAttack();
 	void FinishClawAttack();
+
+	void StartRushAttack();
+	void FinsihRushAttack();
 		
 public:
 	FORCEINLINE bool GetBreathFireState() const
@@ -44,4 +50,8 @@ public:
 		return IsClawAttack;
 	}
 
+	FORCEINLINE bool GetRushAttackState() const
+	{
+		return IsRushAttack;
+	}
 };

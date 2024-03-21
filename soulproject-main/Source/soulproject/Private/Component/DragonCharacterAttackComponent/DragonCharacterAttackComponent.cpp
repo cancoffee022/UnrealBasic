@@ -52,3 +52,13 @@ void UDragonCharacterAttackComponent::FinishClawAttack()
 	IsClawAttack = false;
 }
 
+void UDragonCharacterAttackComponent::StartRushAttack()
+{
+	IsRushAttack = true;
+}
+
+void UDragonCharacterAttackComponent::FinsihRushAttack()
+{
+	IsRushAttack = false;
+}
+
