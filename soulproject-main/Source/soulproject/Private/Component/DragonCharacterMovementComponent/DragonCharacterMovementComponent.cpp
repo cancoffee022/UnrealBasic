@@ -78,14 +78,34 @@ void UDragonCharacterMovementComponent::FlyMovement(float dt)
 {
 	USkeletalMeshComponent* bodyMesh = DragonCharacter->GetMesh();
 
-	if (IsFlyUp)
+	FVector currentLocation = bodyMesh->GetRelativeLocation();
+	FVector targetLocation = FVector::UpVector * FlyTargetHeight;
+
+	FVector nextLocation;
+	
+	if (IsFalling)
+	{
+		nextLocation = currentLocation + (FVector::DownVector * 3000.0f * dt);
+		if (nextLocation.Z < targetLocation.Z)
+		{
+			IsFalling = false;
+			nextLocation.Z = targetLocation.Z;
+		}
+		bodyMesh->SetRelativeLocation(nextLocation);
+	}
+	else
 	{
 		bodyMesh->SetRelativeLocation(
 			FMath::VInterpTo(bodyMesh->GetRelativeLocation(),
-				FVector::UpVector * FlyTargetHeight, dt, 1.5f));
-
+				targetLocation, dt, 1.5f));
 	}
 
+
+	if (FVector::Distance(currentLocation, targetLocation) < 1.0f)
+	{
+		bodyMesh->SetRelativeLocation(targetLocation);
+		IsFly = false;
+	}
 }
 
 void UDragonCharacterMovementComponent::SetTargetYawAngle(float targetYawAngle)
@@ -103,13 +123,28 @@ void UDragonCharacterMovementComponent::StartFlyUp(float targetHeight)
 	if (!IsFly)
 	{
 		IsFly = true;
-		IsFlyUp = true;
 		FlyTargetHeight = targetHeight;
 
 		USkeletalMeshComponent* bodyMesh = DragonCharacter->GetMesh();
 		BodyMeshLocation = bodyMesh->GetRelativeLocation();
 	}
 
+}
+
+void UDragonCharacterMovementComponent::StartFalling()
+{
+	if (!IsFly)
+	{
+		IsFly = true;
+		IsFalling = true;
+		FlyTargetHeight = BodyMeshLocation.Z;
+	}
+}
+
+void UDragonCharacterMovementComponent::FinishFlying()
+{
+	IsFalling = false;
+	IsFly = false;
 }
 
 void UDragonCharacterMovementComponent::StartDash(FVector direction, float power)

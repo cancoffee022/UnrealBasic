@@ -43,7 +43,8 @@ public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 	void StartFly();
-	void UpdateFlyDirection(FIntVector direction);
+	void StartFalling();
+	void FinishFlying();
 
 private:
 	UFUNCTION()

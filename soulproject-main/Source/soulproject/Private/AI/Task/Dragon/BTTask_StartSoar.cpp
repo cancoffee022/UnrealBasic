@@ -9,6 +9,36 @@
 
 #include "AnimInstance/DragonCharacter/DragonCharacterAnimInstance.h"
 
+UBTTask_StartSoar::UBTTask_StartSoar()
+{
+	bNotifyTick = true;
+}
+
+void UBTTask_StartSoar::TickTask(UBehaviorTreeComponent& ownerComp, uint8* nodeMem, float dt)
+{
+	Super::TickTask(ownerComp, nodeMem, dt);
+
+	ADragonCharacter* dragonCharacter = Cast<ADragonCharacter>(Cast<AController>(ownerComp.GetOwner())->GetPawn());
+
+	UDragonCharacterMovementComponent* movementComponent = dragonCharacter->GetDragonMovementComponent();
+
+	if (!FlyStarted)
+	{
+		if (movementComponent->GetFlyState())
+		{
+			FlyStarted = true;
+		}
+		return;
+	}
+
+	if (FlyStarted && !movementComponent->GetFlyState())
+	{
+		FinishLatentTask(ownerComp, EBTNodeResult::Type::Succeeded);
+		FlyStarted = false;
+	}
+
+}
+
 EBTNodeResult::Type UBTTask_StartSoar::ExecuteTask(UBehaviorTreeComponent& ownerComp, uint8* newMem)
 {
 	ADragonCharacter* dragonCharacter = Cast<ADragonCharacter>(Cast<AController>(ownerComp.GetOwner())->GetPawn());
@@ -19,7 +49,6 @@ EBTNodeResult::Type UBTTask_StartSoar::ExecuteTask(UBehaviorTreeComponent& owner
 
 	movementComponent->StartFlyUp(1500);
 	animInst->StartFly();
-	animInst->UpdateFlyDirection(FIntVector(0, 0, 1));
 
-	return EBTNodeResult::Type::Succeeded;
+	return EBTNodeResult::Type::InProgress;
 }

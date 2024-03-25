@@ -23,7 +23,7 @@ private:
 	bool IsFly;
 
 	UPROPERTY()
-	bool IsFlyUp;
+	bool IsFalling;
 
 	UPROPERTY()
 	float FlyTargetHeight;
@@ -67,6 +67,11 @@ public:
 
 	// 설정된 높이로 날아오른다
 	void StartFlyUp(float targetHeight);
+	
+	// 떨어지기 시작합니다
+	void StartFalling();
+
+	void FinishFlying();
 
 	void StartDash(FVector direction, float power);
 
@@ -82,4 +87,8 @@ public:
 		return IsYawTurnning;
 	}
 		
+	FORCEINLINE bool GetFlyState() const
+	{
+		return IsFly;
+	}
 };

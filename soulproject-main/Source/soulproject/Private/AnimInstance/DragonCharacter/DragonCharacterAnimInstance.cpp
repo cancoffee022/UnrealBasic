@@ -24,12 +24,21 @@ void UDragonCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 void UDragonCharacterAnimInstance::StartFly()
 {
 	IsFly = true;
+	FlyDirection = FIntVector(0, 0, 1);
 }
 
-void UDragonCharacterAnimInstance::UpdateFlyDirection(FIntVector direction)
+void UDragonCharacterAnimInstance::StartFalling()
 {
-	FlyDirection = direction;
+	IsFly = true;
+	FlyDirection = FIntVector(0, 0, -1);
 }
+
+void UDragonCharacterAnimInstance::FinishFlying()
+{
+	IsFly = false;
+	FlyDirection = FIntVector(0, 0, 0);
+}
+
 
 void UDragonCharacterAnimInstance::AnimNotify_TurnLeft()
 {
