@@ -1,0 +1,23 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\unrealbasic\\shooter_project\\intermediate\\build\\win64\\unrealeditor\\inc\\shooter_project\\uht\\playercharacter.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\unrealbasic\\shooter_project\\intermediate\\build\\win64\\x64\\shooter_projecteditor\\development\\engine\\sharedpch.engine.cpp20.h.pch",
+        "Includes": [
+            "d:\\unrealbasic\\shooter_project\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\shooter_project\\definitions.shooter_project.h",
+            "d:\\unrealbasic\\shooter_project\\source\\shooter_project\\pirvate\\actor\\playercharacter\\playercharacter.h",
+            "d:\\ue_5.3\\engine\\source\\runtime\\engine\\classes\\gameframework\\character.h",
+            "d:\\ue_5.3\\engine\\source\\runtime\\engine\\classes\\gameframework\\charactermovementreplication.h",
+            "d:\\ue_5.3\\engine\\source\\runtime\\experimental\\iris\\core\\public\\iris\\serialization\\irisobjectreferencepackagemap.h",
+            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\iriscore\\uht\\irisobjectreferencepackagemap.generated.h",
+            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\charactermovementreplication.generated.h",
+            "d:\\ue_5.3\\engine\\source\\runtime\\engine\\classes\\gameframework\\rootmotionsource.h",
+            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\rootmotionsource.generated.h",
+            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\character.generated.h",
+            "d:\\unrealbasic\\shooter_project\\intermediate\\build\\win64\\unrealeditor\\inc\\shooter_project\\uht\\playercharacter.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

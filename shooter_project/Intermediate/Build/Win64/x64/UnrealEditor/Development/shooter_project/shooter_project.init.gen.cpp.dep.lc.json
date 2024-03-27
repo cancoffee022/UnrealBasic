@@ -1,0 +1,13 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\unrealbasic\\shooter_project\\intermediate\\build\\win64\\unrealeditor\\inc\\shooter_project\\uht\\shooter_project.init.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\unrealbasic\\shooter_project\\intermediate\\build\\win64\\x64\\shooter_projecteditor\\development\\engine\\sharedpch.engine.cpp20.h.pch",
+        "Includes": [
+            "d:\\unrealbasic\\shooter_project\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\shooter_project\\definitions.shooter_project.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

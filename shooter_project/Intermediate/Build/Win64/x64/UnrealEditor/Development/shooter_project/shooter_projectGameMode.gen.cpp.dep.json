@@ -1,0 +1,19 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\unrealbasic\\shooter_project\\intermediate\\build\\win64\\unrealeditor\\inc\\shooter_project\\uht\\shooter_projectgamemode.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\unrealbasic\\shooter_project\\intermediate\\build\\win64\\x64\\shooter_projecteditor\\development\\engine\\sharedpch.engine.cpp20.h.pch",
+        "Includes": [
+            "d:\\unrealbasic\\shooter_project\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\shooter_project\\definitions.shooter_project.h",
+            "d:\\unrealbasic\\shooter_project\\source\\shooter_project\\shooter_projectgamemode.h",
+            "d:\\ue_5.3\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
+            "d:\\ue_5.3\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
+            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\serverstatreplicator.generated.h",
+            "d:\\ue_5.3\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\gamemodebase.generated.h",
+            "d:\\unrealbasic\\shooter_project\\intermediate\\build\\win64\\unrealeditor\\inc\\shooter_project\\uht\\shooter_projectgamemode.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

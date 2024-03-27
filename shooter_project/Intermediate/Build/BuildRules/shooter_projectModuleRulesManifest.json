@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"D:\\UnrealBasic\\shooter_project\\Source\\shooter_project\\shooter_project.Build.cs",
+		"D:\\UnrealBasic\\shooter_project\\Source\\shooter_project.Target.cs",
+		"D:\\UnrealBasic\\shooter_project\\Source\\shooter_projectEditor.Target.cs"
+	],
+	"EngineVersion": "5.3.2"
+}
