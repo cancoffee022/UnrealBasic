@@ -49,3 +49,7 @@ Session.vim
 
 # Visual Studio
 .vs
+
+# ignore Directory
+Content/STF/
+
