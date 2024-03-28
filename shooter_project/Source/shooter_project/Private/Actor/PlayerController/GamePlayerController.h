@@ -26,13 +26,13 @@ private:
 	void OnFirePressed();
 	void OnFireReleased();
 	
-	void OnZoomReleased();
+	void OnZoomPressed();
 	void OnZoomReleased();
 
 	void OnVerticalInput(float axis);
 	void OnHorizontalInput(float axis);
 
 	void OnMouseX(float axis);
-	void OnMouseX(float axis)
+	void OnMouseY(float axis);
 	
 };

@@ -11,9 +11,17 @@ class SHOOTER_PROJECT_API APlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+// SpringArm 컴포넌트 추가
+	UPROPERTY(VisibleAnyWhere)
+	class USpringArmComponent* SpringArmComponent;
+
+	UPROPERTY(VisibleAnyWhere)
+	class UCameraComponent* CameraComponent;
+
+
 public:
 	// Sets default values for this character's properties
-	APlayerCharacter();
+	APlayerCharacter(const FObjectInitializer& ObjectInitializer);
 
 protected:
 	// Called when the game starts or when spawned
@@ -26,5 +34,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+public:
+	void OnHorizontalInput(float axis);
+	void OnVerticalInput(float axis);
 
 };
