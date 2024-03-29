@@ -18,6 +18,9 @@ class SHOOTER_PROJECT_API APlayerCharacter : public ACharacter
 	UPROPERTY(VisibleAnyWhere)
 	class UCameraComponent* CameraComponent;
 
+	// 입력 축 값을 나타냅니다
+	UPROPERTY(VisibleAnyWhere)
+	FIntVector InputAxisRaw;
 
 public:
 	// Sets default values for this character's properties
@@ -35,7 +38,14 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 public:
+	void OnJumpInput();
+
 	void OnHorizontalInput(float axis);
 	void OnVerticalInput(float axis);
+
+	FORCEINLINE FIntVector GetInputAxisRaw() const
+	{
+		return InputAxisRaw;
+	}
 
 };

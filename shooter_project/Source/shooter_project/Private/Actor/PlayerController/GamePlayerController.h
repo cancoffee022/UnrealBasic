@@ -29,10 +29,13 @@ private:
 	void OnZoomPressed();
 	void OnZoomReleased();
 
+	void OnJumpInput();
+
 	void OnVerticalInput(float axis);
 	void OnHorizontalInput(float axis);
 
 	void OnMouseX(float axis);
 	void OnMouseY(float axis);
+
 	
 };

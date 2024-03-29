@@ -21,6 +21,16 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float Speed;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool  IsInAir;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float  ZVelocity;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FVector Direction;
+
+
 public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 	

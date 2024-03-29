@@ -3,6 +3,7 @@
 
 #include "AnimInstance/PlayerCharacterAnimInstance/PlayerCharacterAnimInstance.h"
 #include "Actor/PlayerCharacter/PlayerCharacter.h"
+#include "Component/PlayerCharacterMovementComponent/PlayerCharacterMovementComponent.h"
 
 void UPlayerCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
@@ -14,4 +15,10 @@ void UPlayerCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	Speed = owner->GetVelocity().Length();
 	IsMove = Speed > 1;
+
+	Direction = FVector(owner->GetInputAxisRaw());
+
+	IsInAir = owner->GetMovementComponent()->IsFalling();
+	ZVelocity = IsInAir ? owner->GetVelocity().Z : 0.f;
+
 }

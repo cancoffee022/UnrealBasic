@@ -9,6 +9,8 @@ void AGamePlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
+	InputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ThisClass::OnJumpInput);
+
 	InputComponent->BindAxis(TEXT("Horizontal"), this, &ThisClass::OnHorizontalInput);
 	InputComponent->BindAxis(TEXT("Vertical"), this, &ThisClass::OnVerticalInput);
 
@@ -43,6 +45,14 @@ void AGamePlayerController::OnZoomPressed()
 
 void AGamePlayerController::OnZoomReleased()
 {
+}
+
+void AGamePlayerController::OnJumpInput()
+{
+	APlayerCharacter* playerCharacter = Cast<APlayerCharacter>(GetPawn());
+	if (!IsValid(playerCharacter)) return;
+	
+	playerCharacter->OnJumpInput();
 }
 
 void AGamePlayerController::OnVerticalInput(float axis)

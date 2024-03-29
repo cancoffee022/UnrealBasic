@@ -76,9 +76,16 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 }
 
+void APlayerCharacter::OnJumpInput()
+{
+	Jump();
+}
+
 void APlayerCharacter::OnHorizontalInput(float axis)
 {
 	UPlayerCharacterMovementComponent * movementComponent = Cast<UPlayerCharacterMovementComponent>(GetCharacterMovement());
+
+	InputAxisRaw.Y = axis;
 
 	movementComponent->OnHorizontalMovement(axis);
 }
@@ -87,6 +94,9 @@ void APlayerCharacter::OnVerticalInput(float axis)
 {
 	UPlayerCharacterMovementComponent* movementComponent = Cast<UPlayerCharacterMovementComponent>(GetCharacterMovement());
 
+	InputAxisRaw.X = axis;
+
 	movementComponent->OnVerticalMovement(axis);
 }
+
 
