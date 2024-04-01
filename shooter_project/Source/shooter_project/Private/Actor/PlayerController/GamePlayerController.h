@@ -14,7 +14,19 @@ class AGamePlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
+private:
+	// 화면에 띄울 위젯 클래스
+	UPROPERTY()
+	TSubclassOf<class UPlayerWidget> WidgetBP_PlayerWidget;
+
+	// 화면에 띄워진 플레이어 위젯 객체
+	UPROPERTY()
+	class UPlayerWidget* PlayerWidget;
+
 public:
+	AGamePlayerController();
+
+protected:
 	virtual void SetupInputComponent() override;
 
 	virtual void OnPossess(class APawn* pawn) override;

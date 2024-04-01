@@ -11,15 +11,16 @@ class SHOOTER_PROJECT_API APlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+protected:
 // SpringArm 컴포넌트 추가
-	UPROPERTY(VisibleAnyWhere)
+	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* SpringArmComponent;
 
-	UPROPERTY(VisibleAnyWhere)
+	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* CameraComponent;
 
 	// 입력 축 값을 나타냅니다
-	UPROPERTY(VisibleAnyWhere)
+	UPROPERTY(VisibleAnywhere)
 	FIntVector InputAxisRaw;
 
 public:
@@ -36,6 +37,22 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+private:
+	UFUNCTION()
+	void OnPlayerCharacterBeginOverlap(
+		UPrimitiveComponent* OverlappedComponent,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex,
+		bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnPlayerCharacterEndOverlap(
+		UPrimitiveComponent* OverlappedComponent,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex);
 
 public:
 	void OnJumpInput();
