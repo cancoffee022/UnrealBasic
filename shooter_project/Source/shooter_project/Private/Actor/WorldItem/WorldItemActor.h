@@ -15,6 +15,9 @@ private:
 	// 월드 아이템 정보를 담는 DataTable 에셋
 	class UDataTable* DT_WorldItemInfo;
 
+	// 이 아이템 정보를 나타냅니다
+	struct FWorldItemInfo* ThisWorldItemInfo;
+
 protected:
 	// 액터의 루트 컴포넌트
 	UPROPERTY(VisibleAnywhere)
@@ -48,5 +51,11 @@ public:
 private:
 	// 월드 아이템을 초기화합니다.
 	void InitializeWorldItem();
+
+public:
+	FORCEINLINE struct FWorldItemInfo* GetWorldItemInfo() const
+	{
+		return ThisWorldItemInfo;
+	}
 
 };

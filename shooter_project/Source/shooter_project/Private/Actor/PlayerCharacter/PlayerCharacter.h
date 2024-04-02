@@ -23,6 +23,11 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	FIntVector InputAxisRaw;
 
+private:
+	// 겹친 World Item 액터들을 나타냅니다
+	UPROPERTY()
+	TArray<class AWorldItemActor*> OverlappedWorldItems;
+
 public:
 	// Sets default values for this character's properties
 	APlayerCharacter(const FObjectInitializer& ObjectInitializer);
@@ -53,6 +58,18 @@ private:
 		AActor* OtherActor,
 		UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex);
+
+	// 겹친 WorldItem 액터를 추가합니다.
+	void AddOverlappedWorldItem(class AWorldItemActor* worldItem);
+
+	// 겹쳤던 WorldItem 액터를 제거합니다.
+	void RemoveOverlappedWorldItem(class AWorldItemActor* worldItem);
+
+	// 거리를 기준으로 가까운 순서대로 WorldItem들을 정렬합니다
+	void SortWorldItemByDistance();
+
+	// 가장 가까운 월드 아이템의 상호작용 위젯을 표시합니다
+	void ShowNearestWorldItemInteractionWidget();
 
 public:
 	void OnJumpInput();

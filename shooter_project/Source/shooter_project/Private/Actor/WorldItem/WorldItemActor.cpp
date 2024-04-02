@@ -5,6 +5,8 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 
+#include "../shooter_project.h"
+
 AWorldItemActor::AWorldItemActor()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -45,6 +47,8 @@ void AWorldItemActor::BeginPlay()
 
 	InitializeWorldItem();
 	
+	// World Item Tag 추가
+	Tags.Add(TAG_WORLDITEM);
 }
 
 void AWorldItemActor::Tick(float DeltaTime)
@@ -57,10 +61,10 @@ void AWorldItemActor::InitializeWorldItem()
 {
 	// ItemCode 에 해당하는 아이템 정보를 얻습니다.
 	FString contextString;
-	FWorldItemInfo* itemInfo = DT_WorldItemInfo->FindRow<FWorldItemInfo>(ItemCode, contextString);
+	ThisWorldItemInfo = DT_WorldItemInfo->FindRow<FWorldItemInfo>(ItemCode, contextString);
 
 	// 아이템 코드를 찾을 수 없는 경우
-	if (itemInfo == nullptr)
+	if (ThisWorldItemInfo == nullptr)
 	{
 		UE_LOG(LogTemp, Error,
 			TEXT("아이템 코드에 해당하는 아이템 정보를 찾을 수 없습니다. (itemCode : %s)"), 
@@ -76,6 +80,6 @@ void AWorldItemActor::InitializeWorldItem()
 	ItemStaticMesh->SetStaticMesh(nullptr);
 
 	// SketletalMesh 설정
-	ItemSkeletalMesh->SetSkeletalMesh(itemInfo->ItemMesh);
+	ItemSkeletalMesh->SetSkeletalMesh(ThisWorldItemInfo->ItemMesh);
 }
 

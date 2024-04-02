@@ -30,6 +30,8 @@ void AGamePlayerController::SetupInputComponent()
 void AGamePlayerController::OnPossess(APawn* pawn)
 {
 	Super::OnPossess(pawn);
+	
+	if (!IsLocalPlayerController()) return;
 
 	// 플레이어 위젯을 생성합니다.
 	PlayerWidget = CreateWidget<UPlayerWidget>(this, WidgetBP_PlayerWidget);
