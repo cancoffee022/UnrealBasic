@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
+#include "Enum/WorldItemType.h"
 #include "WorldItemInfo.generated.h"
 
 /**
@@ -18,6 +19,10 @@ public:
 	// 아이템 이름
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FText ItemName;
+
+	// 아이템 타입
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	EWorldItemType ItemType;
 
 	// 아이템 Skeletal Mesh
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

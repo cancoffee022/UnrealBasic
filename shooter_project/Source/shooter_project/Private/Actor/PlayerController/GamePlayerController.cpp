@@ -25,11 +25,13 @@ void AGamePlayerController::SetupInputComponent()
 	InputComponent->BindAxis(TEXT("MouseX"), this, &ThisClass::OnMouseX);
 	InputComponent->BindAxis(TEXT("MouseY"), this, &ThisClass::OnMouseY);
 
+	InputComponent->BindAction(TEXT("GetItem"), EInputEvent::IE_Pressed, this, &ThisClass::OnGetItemPressed);
+
 }
 
-void AGamePlayerController::OnPossess(APawn* pawn)
+void AGamePlayerController::BeginPlay()
 {
-	Super::OnPossess(pawn);
+	Super::BeginPlay();
 	
 	if (!IsLocalPlayerController()) return;
 
@@ -37,11 +39,15 @@ void AGamePlayerController::OnPossess(APawn* pawn)
 	PlayerWidget = CreateWidget<UPlayerWidget>(this, WidgetBP_PlayerWidget);
 
 	// 플레이어 위젯을 화면에 표시합니다.
-	PlayerWidget->AddToViewport();
+	PlayerWidget->AddToPlayerScreen();
 }
 
 void AGamePlayerController::OnGetItemPressed()
 {
+	APlayerCharacter* playerCharacter = Cast<APlayerCharacter>(GetPawn());
+	if (!IsValid(playerCharacter)) return;
+
+	playerCharacter->OnGetItemPressed();
 }
 
 void AGamePlayerController::OnGetItemReleased()

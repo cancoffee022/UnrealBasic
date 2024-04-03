@@ -29,7 +29,7 @@ public:
 protected:
 	virtual void SetupInputComponent() override;
 
-	virtual void OnPossess(class APawn* pawn) override;
+	virtual void BeginPlay() override;
 
 private:
 	void OnGetItemPressed();

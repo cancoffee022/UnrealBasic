@@ -19,9 +19,21 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* CameraComponent;
 
-	// 입력 축 값을 나타냅니다
 	UPROPERTY(VisibleAnywhere)
+	class USkeletalMeshComponent* PistolMesh;
+	
+	UPROPERTY(VisibleAnywhere)
+	class USkeletalMeshComponent* RifleMesh;
+	
+	UPROPERTY(VisibleAnywhere)
+	class USkeletalMeshComponent* ShotgunMesh;
+
+	// 입력 축 값을 나타냅니다
+	UPROPERTY(VisibleAnywhere, Replicated)
 	FIntVector InputAxisRaw;
+
+	UPROPERTY(VisibleAnywhere, Replicated)
+	float CurrentSpeed;
 
 private:
 	// 겹친 World Item 액터들을 나타냅니다
@@ -31,6 +43,9 @@ private:
 public:
 	// Sets default values for this character's properties
 	APlayerCharacter(const FObjectInitializer& ObjectInitializer);
+
+	virtual void GetLifetimeReplicatedProps(
+		TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 protected:
 	// Called when the game starts or when spawned
@@ -71,7 +86,13 @@ private:
 	// 가장 가까운 월드 아이템의 상호작용 위젯을 표시합니다
 	void ShowNearestWorldItemInteractionWidget();
 
+	// 아이템을 장착합니다.
+	// worlItemInfo : 장착 가능한 월드 아이템 정보를 전달합니다
+	void EquipItem(struct FWorldItemInfo* worldItemInfo);
+
 public:
+	void OnGetItemPressed();
+	
 	void OnJumpInput();
 
 	void OnHorizontalInput(float axis);
@@ -80,6 +101,11 @@ public:
 	FORCEINLINE FIntVector GetInputAxisRaw() const
 	{
 		return InputAxisRaw;
+	}
+
+	FORCEINLINE float GetCurrentSpeed() const
+	{
+		return CurrentSpeed;
 	}
 
 };

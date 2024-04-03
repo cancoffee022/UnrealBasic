@@ -13,7 +13,7 @@ void UPlayerCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	if (!IsValid(owner)) return;
 
-	Speed = owner->GetVelocity().Length();
+	Speed = owner->GetCurrentSpeed();
 	IsMove = Speed > 1;
 
 	Direction = FVector(owner->GetInputAxisRaw());
