@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "Enum/WorldItemType.h"
 #include "PlayerCharacterAnimInstance.generated.h"
 
 /**
@@ -30,6 +31,13 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector Direction;
 
+	// 장비 장착 여부
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool IsEquipped;
+
+	// 장착된 아이템 타입
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	EWorldItemType EquippedItemType;
 
 public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;

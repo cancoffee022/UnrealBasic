@@ -4,12 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Enum/WorldItemType.h"
 #include "PlayerCharacter.generated.h"
 
 UCLASS()
 class SHOOTER_PROJECT_API APlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
+
+
+private:
+	UPROPERTY()
+	TSubclassOf<class ABulletActor> BP_BulletActor;
 
 protected:
 // SpringArm 컴포넌트 추가
@@ -29,11 +35,20 @@ protected:
 	class USkeletalMeshComponent* ShotgunMesh;
 
 	// 입력 축 값을 나타냅니다
-	UPROPERTY(VisibleAnywhere, Replicated)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Replicated)
 	FIntVector InputAxisRaw;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Replicated)
+	bool IsEquipped;
 
-	UPROPERTY(VisibleAnywhere, Replicated)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Replicated)
 	float CurrentSpeed;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Replicated)
+	EWorldItemType EquippedItemType;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool IsFireStarted;
 
 private:
 	// 겹친 World Item 액터들을 나타냅니다
@@ -90,7 +105,12 @@ private:
 	// worlItemInfo : 장착 가능한 월드 아이템 정보를 전달합니다
 	void EquipItem(struct FWorldItemInfo* worldItemInfo);
 
+	void Fire();
+
 public:
+	void OnFirePressed();
+	void OnFireReleased();
+
 	void OnGetItemPressed();
 	
 	void OnJumpInput();
@@ -106,6 +126,16 @@ public:
 	FORCEINLINE float GetCurrentSpeed() const
 	{
 		return CurrentSpeed;
+	}
+
+	FORCEINLINE bool GetEquippedState() const
+	{
+		return IsEquipped;
+	}
+
+	FORCEINLINE EWorldItemType GetEquippedItemType() const
+	{
+		return EquippedItemType;
 	}
 
 };

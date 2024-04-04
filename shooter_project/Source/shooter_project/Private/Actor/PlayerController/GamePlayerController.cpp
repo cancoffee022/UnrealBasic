@@ -19,6 +19,10 @@ void AGamePlayerController::SetupInputComponent()
 
 
 	InputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ThisClass::OnJumpInput);
+
+	InputComponent->BindAction(TEXT("Fire"), EInputEvent::IE_Pressed, this, &ThisClass::OnFirePressed);
+	InputComponent->BindAction(TEXT("Fire"), EInputEvent::IE_Released, this, &ThisClass::OnFireReleased);
+
 	InputComponent->BindAxis(TEXT("Horizontal"), this, &ThisClass::OnHorizontalInput);
 	InputComponent->BindAxis(TEXT("Vertical"), this, &ThisClass::OnVerticalInput);
 
@@ -56,10 +60,18 @@ void AGamePlayerController::OnGetItemReleased()
 
 void AGamePlayerController::OnFirePressed()
 {
+	APlayerCharacter* playerCharacter = Cast<APlayerCharacter>(GetPawn());
+	if (!IsValid(playerCharacter)) return;
+
+	playerCharacter->OnFirePressed();
 }
 
 void AGamePlayerController::OnFireReleased()
 {
+	APlayerCharacter* playerCharacter = Cast<APlayerCharacter>(GetPawn());
+	if (!IsValid(playerCharacter)) return;
+
+	playerCharacter->OnFireReleased();
 }
 
 void AGamePlayerController::OnZoomPressed()

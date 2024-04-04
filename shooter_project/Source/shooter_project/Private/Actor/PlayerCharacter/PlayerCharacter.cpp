@@ -1,6 +1,7 @@
 #include "Actor/PlayerCharacter/PlayerCharacter.h"
 #include "Actor/WorldItem/WorldItemActor.h"
 #include "Actor/PlayerController/GamePlayerController.h"
+#include "Actor/BulletActor/BulletActor.h"
 
 #include "AnimInstance/PlayerCharacterAnimInstance/PlayerCharacterAnimInstance.h"
 
@@ -40,6 +41,13 @@ APlayerCharacter::APlayerCharacter(const FObjectInitializer& ObjectInitializer) 
 	if (ANIMBP_PLAYERCHARACTER.Succeeded())
 	{
 		GetMesh()->SetAnimClass(ANIMBP_PLAYERCHARACTER.Class);
+	}
+
+	static ConstructorHelpers::FClassFinder<ABulletActor> BP_BULLETACTOR(
+		TEXT("/Script/Engine.Blueprint'/Game/Blueprints/Actor/BP_BulletActor.BP_BulletActor_C'"));
+	if (BP_BULLETACTOR.Succeeded())
+	{
+		BP_BulletActor = BP_BULLETACTOR.Class;
 	}
 
 	// 컨트롤러의 Yaw회전을 사용하지 않습니다
@@ -96,6 +104,11 @@ void APlayerCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	CurrentSpeed = GetVelocity().Length();
+
+	if (IsFireStarted)
+	{
+		Fire();
+	}
 }
 
 // Called to bind functionality to input
@@ -238,8 +251,50 @@ void APlayerCharacter::EquipItem(FWorldItemInfo* worldItemInfo)
 		UE_LOG(LogTemp, Error, TEXT("Target Skeletal Mesh is nullptr"));
 		return;
 	}
+
+	IsEquipped = true;
+	EquippedItemType = worldItemInfo->ItemType;
+
 	targetSkeletalMeshComponent->SetSkeletalMesh(worldItemInfo->ItemMesh);
 
+}
+
+void APlayerCharacter::Fire()
+{
+	USkeletalMeshComponent* targetSKMeshComponent = nullptr;
+
+	switch (EquippedItemType)
+	{
+	case EWorldItemType::Weapon_Pistol:
+		targetSKMeshComponent = PistolMesh;
+		break;
+	case EWorldItemType::Weapon_Rifle:
+		targetSKMeshComponent = RifleMesh;
+		break;
+	case EWorldItemType::Weapon_Shotgun:
+		targetSKMeshComponent = ShotgunMesh;
+		break;
+	}
+	if (targetSKMeshComponent == nullptr) return;
+	// 발사 위치를 얻습니다
+	//FVector firePos = targetSKMeshComponent->GetSocketLocation(SOCKET_NAME_FIRE_POS);
+
+
+	FTransform spawnTransform = targetSKMeshComponent->GetSocketTransform(SOCKET_NAME_FIRE_POS);
+	GetWorld()->SpawnActor<ABulletActor>(BP_BulletActor, spawnTransform);
+}
+
+
+void APlayerCharacter::OnFirePressed()
+{
+	if (!IsEquipped) return;
+
+	IsFireStarted = true;
+}
+
+void APlayerCharacter::OnFireReleased()
+{
+	IsFireStarted = false;
 }
 
 void APlayerCharacter::OnGetItemPressed()
