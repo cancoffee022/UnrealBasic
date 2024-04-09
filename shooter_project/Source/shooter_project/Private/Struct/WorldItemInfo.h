@@ -23,9 +23,17 @@ public:
 	// 아이템 타입
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	EWorldItemType ItemType;
+	
+	// 발사 딜레이
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float ShotDelay;
 
 	// 아이템 Skeletal Mesh
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* ItemMesh;
+
+	// 아이템 액터 클래스
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<class AGunActor> GunActorClass;
 
 };

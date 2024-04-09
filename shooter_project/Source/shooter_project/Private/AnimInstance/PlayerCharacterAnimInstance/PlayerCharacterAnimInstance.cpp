@@ -21,7 +21,7 @@ void UPlayerCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	IsInAir = owner->GetMovementComponent()->IsFalling();
 	ZVelocity = IsInAir ? owner->GetVelocity().Z : 0.f;
 
-	IsEquipped = owner->GetEquippedState();
+	IsEquipped = owner->IsEquipped();
 	if (IsEquipped)
 	{
 		EquippedItemType = owner->GetEquippedItemType();

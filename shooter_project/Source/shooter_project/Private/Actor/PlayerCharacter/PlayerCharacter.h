@@ -13,9 +13,6 @@ class SHOOTER_PROJECT_API APlayerCharacter : public ACharacter
 	GENERATED_BODY()
 
 
-private:
-	UPROPERTY()
-	TSubclassOf<class ABulletActor> BP_BulletActor;
 
 protected:
 // SpringArm 컴포넌트 추가
@@ -25,21 +22,10 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* CameraComponent;
 
-	UPROPERTY(VisibleAnywhere)
-	class USkeletalMeshComponent* PistolMesh;
-	
-	UPROPERTY(VisibleAnywhere)
-	class USkeletalMeshComponent* RifleMesh;
-	
-	UPROPERTY(VisibleAnywhere)
-	class USkeletalMeshComponent* ShotgunMesh;
 
 	// 입력 축 값을 나타냅니다
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Replicated)
 	FIntVector InputAxisRaw;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Replicated)
-	bool IsEquipped;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Replicated)
 	float CurrentSpeed;
@@ -49,6 +35,11 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool IsFireStarted;
+
+private:
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class AGunActor* EquippedGunActor;
+
 
 private:
 	// 겹친 World Item 액터들을 나타냅니다
@@ -128,14 +119,11 @@ public:
 		return CurrentSpeed;
 	}
 
-	FORCEINLINE bool GetEquippedState() const
-	{
-		return IsEquipped;
-	}
-
 	FORCEINLINE EWorldItemType GetEquippedItemType() const
 	{
 		return EquippedItemType;
 	}
+
+	bool IsEquipped() const;
 
 };

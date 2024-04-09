@@ -2,6 +2,7 @@
 #include "Actor/WorldItem/WorldItemActor.h"
 #include "Actor/PlayerController/GamePlayerController.h"
 #include "Actor/BulletActor/BulletActor.h"
+#include "Actor/GunActor/GunActor.h"
 
 #include "AnimInstance/PlayerCharacterAnimInstance/PlayerCharacterAnimInstance.h"
 
@@ -43,12 +44,6 @@ APlayerCharacter::APlayerCharacter(const FObjectInitializer& ObjectInitializer) 
 		GetMesh()->SetAnimClass(ANIMBP_PLAYERCHARACTER.Class);
 	}
 
-	static ConstructorHelpers::FClassFinder<ABulletActor> BP_BULLETACTOR(
-		TEXT("/Script/Engine.Blueprint'/Game/Blueprints/Actor/BP_BulletActor.BP_BulletActor_C'"));
-	if (BP_BULLETACTOR.Succeeded())
-	{
-		BP_BulletActor = BP_BULLETACTOR.Class;
-	}
 
 	// 컨트롤러의 Yaw회전을 사용하지 않습니다
 	bUseControllerRotationYaw = false;
@@ -67,15 +62,6 @@ APlayerCharacter::APlayerCharacter(const FObjectInitializer& ObjectInitializer) 
 	// 카메라 컴포넌트 추가
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CAM_COMP"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
-
-	PistolMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SK_PISTON"));
-	PistolMesh->SetupAttachment(GetMesh(), TEXT("Socket_Pistol"));
-	
-	RifleMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SK_RIFLE"));
-	RifleMesh->SetupAttachment(GetMesh(), TEXT("Socket_Rifle"));
-	
-	ShotgunMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SK_SHOTGUN"));
-	ShotgunMesh->SetupAttachment(GetMesh(), TEXT("Socket_Shotgun"));
 
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -226,68 +212,53 @@ void APlayerCharacter::ShowNearestWorldItemInteractionWidget()
 
 void APlayerCharacter::EquipItem(FWorldItemInfo* worldItemInfo)
 {
-	// 무기 Mesh를 초기화 합니다
-	PistolMesh->SetSkeletalMesh(nullptr);
-	RifleMesh->SetSkeletalMesh(nullptr);
-	ShotgunMesh->SetSkeletalMesh(nullptr);
+	FTransform socketTransform = FTransform();
 
-	USkeletalMeshComponent* targetSkeletalMeshComponent = nullptr;
+	if (IsEquipped())
+	{
+		EquippedGunActor->Destroy();
+		EquippedGunActor = nullptr;
+	}
 
+	EquippedGunActor = GetWorld()->SpawnActor<AGunActor>(worldItemInfo->GunActorClass, socketTransform);
+	EquippedGunActor->SetGunInfo(worldItemInfo);
+
+	FName socketName;
 	switch (worldItemInfo->ItemType)
 	{
 	case EWorldItemType::Weapon_Pistol:
-		targetSkeletalMeshComponent = PistolMesh;
+		socketName = TEXT("Socket_Pistol");
 		break;
 	case EWorldItemType::Weapon_Rifle:
-		targetSkeletalMeshComponent = RifleMesh;
+		socketName = TEXT("Socket_Rifle");
 		break;
 	case EWorldItemType::Weapon_Shotgun:
-		targetSkeletalMeshComponent = ShotgunMesh;
+		socketName = TEXT("Socket_Shotgun");
 		break;
+
 	}
 
-	if (targetSkeletalMeshComponent == nullptr)
-	{
-		UE_LOG(LogTemp, Error, TEXT("Target Skeletal Mesh is nullptr"));
-		return;
-	}
+	// 생성된 총 액터를 캐릭터 Mesh에 붙입니다
+	EquippedGunActor->AttachToComponent(GetMesh(),
+		FAttachmentTransformRules::KeepWorldTransform, socketName);
+	EquippedGunActor->SetActorRelativeLocation(FVector::ZeroVector);
+	EquippedGunActor->SetActorRelativeRotation(FRotator::ZeroRotator);
 
-	IsEquipped = true;
 	EquippedItemType = worldItemInfo->ItemType;
-
-	targetSkeletalMeshComponent->SetSkeletalMesh(worldItemInfo->ItemMesh);
 
 }
 
 void APlayerCharacter::Fire()
 {
-	USkeletalMeshComponent* targetSKMeshComponent = nullptr;
+	if (!IsValid(EquippedGunActor)) return;
 
-	switch (EquippedItemType)
-	{
-	case EWorldItemType::Weapon_Pistol:
-		targetSKMeshComponent = PistolMesh;
-		break;
-	case EWorldItemType::Weapon_Rifle:
-		targetSKMeshComponent = RifleMesh;
-		break;
-	case EWorldItemType::Weapon_Shotgun:
-		targetSKMeshComponent = ShotgunMesh;
-		break;
-	}
-	if (targetSKMeshComponent == nullptr) return;
-	// 발사 위치를 얻습니다
-	//FVector firePos = targetSKMeshComponent->GetSocketLocation(SOCKET_NAME_FIRE_POS);
-
-
-	FTransform spawnTransform = targetSKMeshComponent->GetSocketTransform(SOCKET_NAME_FIRE_POS);
-	GetWorld()->SpawnActor<ABulletActor>(BP_BulletActor, spawnTransform);
+	EquippedGunActor->Fire();
 }
 
 
 void APlayerCharacter::OnFirePressed()
 {
-	if (!IsEquipped) return;
+	if (!IsEquipped()) return;
 
 	IsFireStarted = true;
 }
@@ -337,6 +308,11 @@ void APlayerCharacter::OnVerticalInput(float axis)
 	InputAxisRaw.X = axis;
 
 	movementComponent->OnVerticalMovement(axis);
+}
+
+bool APlayerCharacter::IsEquipped() const
+{
+	return IsValid(EquippedGunActor);
 }
 
 
