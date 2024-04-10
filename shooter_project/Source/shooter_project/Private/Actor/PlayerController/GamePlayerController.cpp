@@ -44,6 +44,9 @@ void AGamePlayerController::BeginPlay()
 
 	// 플레이어 위젯을 화면에 표시합니다.
 	PlayerWidget->AddToPlayerScreen();
+
+	PlayerCameraManager->ViewPitchMin = -50.f;
+	PlayerCameraManager->ViewPitchMax = 50.f;
 }
 
 void AGamePlayerController::OnGetItemPressed()
@@ -115,4 +118,6 @@ void AGamePlayerController::OnMouseX(float axis)
 void AGamePlayerController::OnMouseY(float axis)
 {
 	AddPitchInput(axis);
+
+
 }

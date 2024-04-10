@@ -91,9 +91,17 @@ void APlayerCharacter::Tick(float DeltaTime)
 
 	CurrentSpeed = GetVelocity().Length();
 
+	CameraPitchAngle = Cast<AGamePlayerController>(GetOwner())->GetControlRotation().Pitch;
+
 	if (IsFireStarted)
 	{
 		Fire();
+	}
+
+	if (IsEquipped())
+	{
+		EquippedGunActor->UpdateFireDirection(
+			CameraComponent->GetComponentLocation());
 	}
 }
 
@@ -222,6 +230,7 @@ void APlayerCharacter::EquipItem(FWorldItemInfo* worldItemInfo)
 
 	EquippedGunActor = GetWorld()->SpawnActor<AGunActor>(worldItemInfo->GunActorClass, socketTransform);
 	EquippedGunActor->SetGunInfo(worldItemInfo);
+	EquippedGunActor->SetOwnerCharacter(this);
 
 	FName socketName;
 	switch (worldItemInfo->ItemType)
@@ -242,7 +251,7 @@ void APlayerCharacter::EquipItem(FWorldItemInfo* worldItemInfo)
 	EquippedGunActor->AttachToComponent(GetMesh(),
 		FAttachmentTransformRules::KeepWorldTransform, socketName);
 	EquippedGunActor->SetActorRelativeLocation(FVector::ZeroVector);
-	EquippedGunActor->SetActorRelativeRotation(FRotator::ZeroRotator);
+	EquippedGunActor->SetActorRelativeRotation(FVector::RightVector.Rotation());
 
 	EquippedItemType = worldItemInfo->ItemType;
 

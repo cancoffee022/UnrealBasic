@@ -40,6 +40,8 @@ private:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class AGunActor* EquippedGunActor;
 
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	float CameraPitchAngle;
 
 private:
 	// 겹친 World Item 액터들을 나타냅니다
@@ -123,6 +125,12 @@ public:
 	{
 		return EquippedItemType;
 	}
+
+	FORCEINLINE float GetCameraPitchAngle() const
+	{
+		return CameraPitchAngle;
+	}
+
 
 	bool IsEquipped() const;
 

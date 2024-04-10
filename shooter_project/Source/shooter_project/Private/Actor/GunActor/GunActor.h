@@ -18,7 +18,17 @@ private:
 
 protected:
 	UPROPERTY(VisibleAnywhere)
+	class USceneComponent* DefaultRootComponent;
+
+	UPROPERTY(VisibleAnywhere)
 	class USkeletalMeshComponent* GunMesh;
+
+	UPROPERTY(VisibleAnywhere)
+	FVector FireDirection;
+
+	UPROPERTY(VisibleAnywhere)
+	class APlayerCharacter* OwnerCharacter;
+	
 
 private:
 	struct FWorldItemInfo* GunInfo;
@@ -45,6 +55,11 @@ public:
 		GunInfo = worldItemInfo;
 	}
 
+	// 발사 방향을 반환합니다.
+	// cameraWorldLocation : 카메라의 월드 위치를 전달합니다
+	// return : 방향을 반환합니다
+	void UpdateFireDirection(const FVector& cameraWorldLocation) const;
+
 	// 총알 발사
 	UFUNCTION(BlueprintImplementableEvent)
 	void Fire();
@@ -56,6 +71,17 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsFirable();
 
+	// 총알을 생성합니다
 	UFUNCTION(BlueprintCallable)
-	class ABulletActor* CreateBullet(FVector direction);
+	class ABulletActor* CreateBullet();
+	
+	// 총알 속력을 얻습니다
+	UFUNCTION(BlueprintCallable)
+	float GetBulletSpeed() const;
+
+	FORCEINLINE void SetOwnerCharacter(class APlayerCharacter* ownerCharacter)
+	{
+		OwnerCharacter = ownerCharacter;
+	}
+
 };

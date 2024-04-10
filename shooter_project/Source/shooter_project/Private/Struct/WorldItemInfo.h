@@ -36,4 +36,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<class AGunActor> GunActorClass;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TMap<FString, float> FloatValues;
+
 };

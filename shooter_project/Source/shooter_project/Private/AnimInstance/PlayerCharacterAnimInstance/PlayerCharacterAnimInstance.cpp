@@ -20,6 +20,9 @@ void UPlayerCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	IsInAir = owner->GetMovementComponent()->IsFalling();
 	ZVelocity = IsInAir ? owner->GetVelocity().Z : 0.f;
+	PitchAngle = owner->GetCameraPitchAngle();
+
+	if (PitchAngle - 180.f > 0) PitchAngle -= 360.f;
 
 	IsEquipped = owner->IsEquipped();
 	if (IsEquipped)

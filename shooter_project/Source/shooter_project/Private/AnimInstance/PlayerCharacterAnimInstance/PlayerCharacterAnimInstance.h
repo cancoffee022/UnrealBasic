@@ -21,6 +21,9 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float Speed;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float PitchAngle;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool  IsInAir;
