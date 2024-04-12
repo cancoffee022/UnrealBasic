@@ -6,10 +6,15 @@
 #include "GameFramework/Actor.h"
 #include "GunActor.generated.h"
 
+DECLARE_EVENT_TwoParams(AGunActor, FOnFireFinishedEvent, int32, int32)
+
 UCLASS()
 class AGunActor : public AActor
 {
 	GENERATED_BODY()
+
+public:
+	FOnFireFinishedEvent OnFireFinished;
 
 private:
 	// 총알 클래스
@@ -21,6 +26,9 @@ private:
 
 	UPROPERTY()
 	class AActor* FireBlockDecalActor;
+
+	UPROPERTY()
+	class UDecalComponent* FireBlockDecalComponent;
 
 
 protected:
@@ -53,6 +61,12 @@ private:
 	UPROPERTY()
 	FVector BlockedLocation;
 	
+	UPROPERTY()
+	int32 MaxBullets;
+
+	UPROPERTY()
+	int32 RemainBullets;
+
 public:	
 	// Sets default values for this actor's properties
 	AGunActor();
@@ -66,10 +80,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 public:
-	FORCEINLINE void SetGunInfo(struct FWorldItemInfo* worldItemInfo)
-	{
-		GunInfo = worldItemInfo;
-	}
+	void InitializeGunActor(struct FWorldItemInfo* worldItemInfo);
+
+	UFUNCTION(BlueprintCallable)
+	void DecreaseRemainBullet();
 
 	// 발사 방향을 반환합니다.
 	// cameraWorldLocation : 카메라의 월드 위치를 전달합니다
@@ -77,6 +91,9 @@ public:
 	void UpdateFireDirection(
 		const FVector& cameraWorldLocation,
 		const FVector& direction);
+
+	// 재장전이 끝났을때 호출되는 함수
+	void OnReloaded();
 
 	// 총알 발사
 	UFUNCTION(BlueprintImplementableEvent)
@@ -96,6 +113,8 @@ public:
 	// 총알 속력을 얻습니다
 	UFUNCTION(BlueprintCallable)
 	float GetBulletSpeed() const;
+
+	int32 GetMaxBulletCount() const;
 
 	FORCEINLINE void SetOwnerCharacter(class APlayerCharacter* ownerCharacter)
 	{

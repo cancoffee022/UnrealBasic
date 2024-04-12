@@ -21,6 +21,9 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* TextBlock_ItemName;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* TextBlock_BulletRemain;
+
 protected:
 	virtual void NativeConstruct() override;
 
@@ -32,5 +35,6 @@ public:
 	// »óÈ£ÀÛ¿ë À§Á¬À» ¼û±é´Ï´Ù
 	void HideInteractionWidget();
 
+	void UpdateBulletRemainText(int remain, int max);
 	
 };

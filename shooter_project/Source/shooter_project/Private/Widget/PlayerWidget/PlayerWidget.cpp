@@ -29,3 +29,10 @@ void UPlayerWidget::HideInteractionWidget()
 	// 상호 작용 패널을 숨깁니다
 	HorizontalBox_InteractionItem->SetVisibility(ESlateVisibility::Collapsed);
 }
+
+void UPlayerWidget::UpdateBulletRemainText(int remain, int max)
+{
+	FString text = FString::Printf(TEXT("%d / %d"), remain, max);
+
+	TextBlock_BulletRemain->SetText(FText::FromString(text));
+}

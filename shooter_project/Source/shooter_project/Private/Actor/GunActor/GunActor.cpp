@@ -5,6 +5,9 @@
 #include "Actor/BulletActor/BulletActor.h"
 #include "Actor/PlayerCharacter/PlayerCharacter.h"
 
+
+#include "Components/DecalComponent.h"
+
 #include "Struct/WorldItemInfo.h"
 
 #include "../shooter_project.h"
@@ -41,7 +44,13 @@ void AGunActor::BeginPlay()
 	Super::BeginPlay();
 	
 	FireBlockDecalActor = GetWorld()->SpawnActor<AActor>(FireBlockDecalActorClass);
-	FireBlockDecalActor->SetHidden(true);
+	TArray<UDecalComponent*> decalComponents;
+	FireBlockDecalActor->GetComponents<UDecalComponent>(decalComponents);
+	FireBlockDecalComponent = decalComponents[0];
+
+	FireBlockDecalComponent->SetVisibility(false);
+
+	
 }
 
 // Called every frame
@@ -49,7 +58,7 @@ void AGunActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FireBlockDecalActor->SetHidden(!IsBlocked);
+	FireBlockDecalComponent->SetVisibility(IsBlocked);
 	if (IsBlocked)
 	{
 		FireBlockDecalActor->SetActorLocationAndRotation(
@@ -57,6 +66,22 @@ void AGunActor::Tick(float DeltaTime)
 			BlockedNormal.Rotation());
 	}
 
+}
+
+void AGunActor::InitializeGunActor(FWorldItemInfo* worldItemInfo)
+{
+	GunInfo = worldItemInfo;
+
+	MaxBullets = GetMaxBulletCount();
+
+	OnReloaded();
+}
+
+void AGunActor::DecreaseRemainBullet()
+{
+	if (RemainBullets <= 0) return;
+
+	RemainBullets -= 1;
 }
 
 void AGunActor::UpdateFireDirection(const FVector& cameraWorldLocation, const FVector& direction)
@@ -94,14 +119,22 @@ void AGunActor::UpdateFireDirection(const FVector& cameraWorldLocation, const FV
 
 }
 
+void AGunActor::OnReloaded()
+{
+	RemainBullets = MaxBullets;
+}
+
 void AGunActor::UpdateLastFireTime()
 {
 	LastFireTime = GetWorld()->GetTimeSeconds();
+
+	OnFireFinished.Broadcast(RemainBullets, MaxBullets);
 }
 
 bool AGunActor::IsFirable()
 {
 	if (GunInfo == nullptr) return false;
+	if (RemainBullets <= 0) return false;
 
 	float currentTime = GetWorld()->GetTimeSeconds();
 	return currentTime > LastFireTime + GunInfo->ShotDelay;
@@ -129,6 +162,17 @@ float AGunActor::GetBulletSpeed() const
 	float speed = GunInfo->FloatValues[bulletSpeedKey];
 
 	return speed;
+}
+
+int32 AGunActor::GetMaxBulletCount() const
+{
+	FString maxBulletCountKey = TEXT("Bullets");
+
+	if (GunInfo == nullptr) return 0;
+	else if (GunInfo->IntValues.Num() == 0) return 0;
+	else if (!GunInfo->IntValues.Contains(maxBulletCountKey)) return 0;
+
+	return GunInfo->IntValues[maxBulletCountKey];
 }
 
 

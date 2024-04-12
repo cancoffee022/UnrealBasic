@@ -39,4 +39,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap<FString, float> FloatValues;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TMap<FString, int32> IntValues;
 };

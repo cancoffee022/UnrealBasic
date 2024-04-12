@@ -33,6 +33,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Replicated)
 	EWorldItemType EquippedItemType;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Replicated)
+	bool IsReload;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool IsFireStarted;
 
@@ -98,6 +101,9 @@ private:
 	// worlItemInfo : 장착 가능한 월드 아이템 정보를 전달합니다
 	void EquipItem(struct FWorldItemInfo* worldItemInfo);
 
+	UFUNCTION()
+	void OnFireFinished(int32 remain, int32 max);
+
 	void Fire();
 
 public:
@@ -110,6 +116,8 @@ public:
 
 	void OnHorizontalInput(float axis);
 	void OnVerticalInput(float axis);
+
+	void OnReload();
 
 	FORCEINLINE FIntVector GetInputAxisRaw() const
 	{

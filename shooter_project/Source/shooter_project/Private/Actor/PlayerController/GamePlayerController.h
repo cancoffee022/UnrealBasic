@@ -49,6 +49,8 @@ private:
 	void OnMouseX(float axis);
 	void OnMouseY(float axis);
 
+	void OnReload();
+
 public:
 	FORCEINLINE class UPlayerWidget* GetPlayerWidget() const
 	{

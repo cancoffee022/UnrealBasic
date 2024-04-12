@@ -39,6 +39,7 @@ APlayerCharacter::APlayerCharacter(const FObjectInitializer& ObjectInitializer) 
 	static ConstructorHelpers::FClassFinder<UPlayerCharacterAnimInstance> ANIMBP_PLAYERCHARACTER(
 		TEXT("/Script/Engine.AnimBlueprint'/Game/Blueprints/AnimInstance/AnimBP_PlayerCharacter.AnimBP_PlayerCharacter_C'"));
 
+
 	if (ANIMBP_PLAYERCHARACTER.Succeeded())
 	{
 		GetMesh()->SetAnimClass(ANIMBP_PLAYERCHARACTER.Class);
@@ -234,7 +235,7 @@ void APlayerCharacter::EquipItem(FWorldItemInfo* worldItemInfo)
 	}
 
 	EquippedGunActor = GetWorld()->SpawnActor<AGunActor>(worldItemInfo->GunActorClass, socketTransform);
-	EquippedGunActor->SetGunInfo(worldItemInfo);
+	EquippedGunActor->InitializeGunActor(worldItemInfo);
 	EquippedGunActor->SetOwnerCharacter(this);
 
 	FName socketName;
@@ -258,8 +259,24 @@ void APlayerCharacter::EquipItem(FWorldItemInfo* worldItemInfo)
 	EquippedGunActor->SetActorRelativeLocation(FVector::ZeroVector);
 	EquippedGunActor->SetActorRelativeRotation(FVector::RightVector.Rotation());
 
+	EquippedGunActor->OnFireFinished.AddUObject(this, &ThisClass::OnFireFinished);
+	OnFireFinished(EquippedGunActor->GetMaxBulletCount(), EquippedGunActor->GetMaxBulletCount());
+
 	EquippedItemType = worldItemInfo->ItemType;
 
+}
+
+void APlayerCharacter::OnFireFinished(int32 remain, int32 max)
+{
+	// 자신의 플레이어 컨트롤러를 얻습니다
+	AGamePlayerController* playerController =
+		Cast<AGamePlayerController>(GetController());
+
+	if (!IsLocallyControlled()) return;
+	if (!IsValid(playerController)) return;
+
+	playerController->GetPlayerWidget()->UpdateBulletRemainText(remain, max);
+	UE_LOG(LogTemp, Warning, TEXT("remain-%d max-%d"), remain, max);
 }
 
 void APlayerCharacter::Fire()
@@ -322,6 +339,11 @@ void APlayerCharacter::OnVerticalInput(float axis)
 	InputAxisRaw.X = axis;
 
 	movementComponent->OnVerticalMovement(axis);
+}
+
+void APlayerCharacter::OnReload()
+{
+
 }
 
 bool APlayerCharacter::IsEquipped() const
