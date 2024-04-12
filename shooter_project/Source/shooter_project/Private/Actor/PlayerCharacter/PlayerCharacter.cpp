@@ -91,7 +91,11 @@ void APlayerCharacter::Tick(float DeltaTime)
 
 	CurrentSpeed = GetVelocity().Length();
 
-	CameraPitchAngle = Cast<AGamePlayerController>(GetOwner())->GetControlRotation().Pitch;
+	AGamePlayerController* playerController = Cast<AGamePlayerController>(GetController());
+	if (!IsLocallyControlled()) return;
+	
+
+	CameraPitchAngle = playerController->GetControlRotation().Pitch;
 
 	if (IsFireStarted)
 	{
@@ -101,7 +105,8 @@ void APlayerCharacter::Tick(float DeltaTime)
 	if (IsEquipped())
 	{
 		EquippedGunActor->UpdateFireDirection(
-			CameraComponent->GetComponentLocation());
+			CameraComponent->GetComponentLocation(),
+			Cast<AActor>(playerController)->GetActorForwardVector());
 	}
 }
 

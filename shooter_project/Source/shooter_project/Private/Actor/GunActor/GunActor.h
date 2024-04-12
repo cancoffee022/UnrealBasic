@@ -12,8 +12,15 @@ class AGunActor : public AActor
 	GENERATED_BODY()
 
 private:
+	// 총알 클래스
 	UPROPERTY()
 	TSubclassOf<class ABulletActor> BP_BulletActor;
+
+	UPROPERTY()
+	TSubclassOf<class AActor> FireBlockDecalActorClass;
+
+	UPROPERTY()
+	class AActor* FireBlockDecalActor;
 
 
 protected:
@@ -23,7 +30,7 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	class USkeletalMeshComponent* GunMesh;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(BlueprintReadOnly)
 	FVector FireDirection;
 
 	UPROPERTY(VisibleAnywhere)
@@ -36,6 +43,15 @@ private:
 	// 마지막 발사시간
 	UPROPERTY()
 	float LastFireTime;
+
+	UPROPERTY()
+	bool IsBlocked;
+
+	UPROPERTY()
+	FVector BlockedNormal;
+
+	UPROPERTY()
+	FVector BlockedLocation;
 	
 public:	
 	// Sets default values for this actor's properties
@@ -58,7 +74,9 @@ public:
 	// 발사 방향을 반환합니다.
 	// cameraWorldLocation : 카메라의 월드 위치를 전달합니다
 	// return : 방향을 반환합니다
-	void UpdateFireDirection(const FVector& cameraWorldLocation) const;
+	void UpdateFireDirection(
+		const FVector& cameraWorldLocation,
+		const FVector& direction);
 
 	// 총알 발사
 	UFUNCTION(BlueprintImplementableEvent)

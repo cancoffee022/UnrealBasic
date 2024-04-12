@@ -3,6 +3,7 @@
 
 #include "Actor/GunActor/GunActor.h"
 #include "Actor/BulletActor/BulletActor.h"
+#include "Actor/PlayerCharacter/PlayerCharacter.h"
 
 #include "Struct/WorldItemInfo.h"
 
@@ -14,11 +15,12 @@ AGunActor::AGunActor()
 
 	static ConstructorHelpers::FClassFinder<ABulletActor> BP_BULLETACTOR(
 		TEXT("/Script/Engine.Blueprint'/Game/Blueprints/Actor/BP_BulletActor.BP_BulletActor_C'"));
-	if (BP_BULLETACTOR.Succeeded())
-	{
-		BP_BulletActor = BP_BULLETACTOR.Class;
-	}
+	if (BP_BULLETACTOR.Succeeded())	BP_BulletActor = BP_BULLETACTOR.Class;
 	PrimaryActorTick.bCanEverTick = true;
+
+	static ConstructorHelpers::FClassFinder<AActor> BP_FIREBLOCKDECALACTOR(
+		TEXT("/Script/Engine.Blueprint'/Game/Blueprints/Actor/BP_FireBlockDecal.BP_FireBlockDecal_C'"));
+	if (BP_FIREBLOCKDECALACTOR.Succeeded()) FireBlockDecalActorClass = BP_FIREBLOCKDECALACTOR.Class;
 
 	DefaultRootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("DEF_ROOT"));
 	SetRootComponent(DefaultRootComponent);
@@ -38,6 +40,8 @@ void AGunActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	FireBlockDecalActor = GetWorld()->SpawnActor<AActor>(FireBlockDecalActorClass);
+	FireBlockDecalActor->SetHidden(true);
 }
 
 // Called every frame
@@ -45,16 +49,48 @@ void AGunActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	FireBlockDecalActor->SetHidden(!IsBlocked);
+	if (IsBlocked)
+	{
+		FireBlockDecalActor->SetActorLocationAndRotation(
+			BlockedLocation,
+			BlockedNormal.Rotation());
+	}
+
 }
 
-void AGunActor::UpdateFireDirection(const FVector& cameraWorldLocation) const
+void AGunActor::UpdateFireDirection(const FVector& cameraWorldLocation, const FVector& direction)
 {
-	//FHitResult hitResult;
-	//
-	//GetWorld()->LineTraceSingleByProfile(hitResult,)
+	FHitResult cameraHitResult;
 
+	FVector start = cameraWorldLocation;
+	FVector end = start + (direction * 100000);
 
-	//FireDirection = 
+	bool isHit = GetWorld()->LineTraceSingleByProfile(
+		cameraHitResult, start, end, TEXT("BlockAllDynamic"));
+
+	FVector hitLocation = isHit ? cameraHitResult.Location : end;
+	if (cameraHitResult.GetActor() == OwnerCharacter)
+	{
+		hitLocation = end;
+	}
+
+	start = GunMesh->GetSocketLocation(SOCKET_NAME_FIRE_POS);
+	end = hitLocation;
+
+	FHitResult gunHitResult;
+	isHit = GetWorld()->LineTraceSingleByProfile(
+		gunHitResult, start, end, TEXT("BlockAllDynamic"));
+
+	FireDirection = (end - start).GetSafeNormal();
+
+	IsBlocked = false;
+	if (isHit)
+	{
+		BlockedNormal = gunHitResult.Normal;
+		BlockedLocation = gunHitResult.Location;
+		IsBlocked = (FVector::Distance(hitLocation, gunHitResult.Location) > 1);
+	}
 
 }
 
@@ -88,7 +124,7 @@ float AGunActor::GetBulletSpeed() const
 
 	if (GunInfo == nullptr) return 0;
 	else if (GunInfo->FloatValues.Num() == 0) return 0;
-	else if (GunInfo->FloatValues.Contains(bulletSpeedKey)) return 0;
+	else if (!GunInfo->FloatValues.Contains(bulletSpeedKey)) return 0;
 
 	float speed = GunInfo->FloatValues[bulletSpeedKey];
 

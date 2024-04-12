@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "TurnBaseRpg",
+			"Path": "..\\Source\\TurnBaseRpg.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "TurnBaseRpgEditor",
+			"Path": "..\\Source\\TurnBaseRpgEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

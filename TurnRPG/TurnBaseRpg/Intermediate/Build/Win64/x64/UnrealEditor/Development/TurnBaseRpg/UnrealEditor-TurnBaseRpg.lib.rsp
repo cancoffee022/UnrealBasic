@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-TurnBaseRpg.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\UnrealBasic\TurnRPG\TurnBaseRpg\Intermediate\Build\Win64\x64\TurnBaseRpgEditor\Development\Engine\SharedPCH.Engine.Cpp20.h.obj"
+"D:\UnrealBasic\TurnRPG\TurnBaseRpg\Intermediate\Build\Win64\x64\UnrealEditor\Development\TurnBaseRpg\TurnBaseRpg.cpp.obj"
+"D:\UnrealBasic\TurnRPG\TurnBaseRpg\Intermediate\Build\Win64\x64\UnrealEditor\Development\TurnBaseRpg\Default.rc2.res"
+/OUT:"D:\UnrealBasic\TurnRPG\TurnBaseRpg\Intermediate\Build\Win64\x64\UnrealEditor\Development\TurnBaseRpg\UnrealEditor-TurnBaseRpg.lib"

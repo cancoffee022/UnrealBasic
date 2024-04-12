@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\unrealbasic\\turnrpg\\turnbaserpg\\source\\turnbaserpg\\turnbaserpg.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\unrealbasic\\turnrpg\\turnbaserpg\\intermediate\\build\\win64\\x64\\turnbaserpgeditor\\development\\engine\\sharedpch.engine.cpp20.h.pch",
+        "Includes": [
+            "d:\\unrealbasic\\turnrpg\\turnbaserpg\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\turnbaserpg\\definitions.turnbaserpg.h",
+            "d:\\unrealbasic\\turnrpg\\turnbaserpg\\source\\turnbaserpg\\turnbaserpg.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

@@ -10,7 +10,6 @@
 // Sets default values
 ABulletActor::ABulletActor()
 {
-
 	PrimaryActorTick.bCanEverTick = true;
 
 	DefaultRootComponent = CreateDefaultSubobject<USceneComponent>("DEF_ROOT");
@@ -28,7 +27,6 @@ void ABulletActor::BeginPlay()
 	Super::BeginPlay();
 	
 	FTimerHandle timerHandle;
-
 	GetWorld()->GetTimerManager().SetTimer(
 		timerHandle,
 		FTimerDelegate::CreateUObject(this,&ThisClass::DestoryBullet),

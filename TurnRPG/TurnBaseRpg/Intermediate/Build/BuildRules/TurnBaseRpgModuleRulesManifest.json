@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"D:\\UnrealBasic\\TurnRPG\\TurnBaseRpg\\Source\\TurnBaseRpg\\TurnBaseRpg.Build.cs",
+		"D:\\UnrealBasic\\TurnRPG\\TurnBaseRpg\\Source\\TurnBaseRpg.Target.cs",
+		"D:\\UnrealBasic\\TurnRPG\\TurnBaseRpg\\Source\\TurnBaseRpgEditor.Target.cs"
+	],
+	"EngineVersion": "5.3.2"
+}
