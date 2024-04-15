@@ -134,6 +134,8 @@ void AGunActor::UpdateLastFireTime()
 bool AGunActor::IsFirable()
 {
 	if (GunInfo == nullptr) return false;
+
+	// 총알이 남아있지 않은 경우 발사 X
 	if (RemainBullets <= 0) return false;
 
 	float currentTime = GetWorld()->GetTimeSeconds();
@@ -149,6 +151,26 @@ ABulletActor* AGunActor::CreateBullet()
 		FRotator::ZeroRotator);
 
 	return bulletActor;
+}
+
+bool AGunActor::IsReloadable() const
+{
+	return RemainBullets != MaxBullets;
+}
+
+void AGunActor::StartReload()
+{
+	bIsReloading = true;
+}
+
+void AGunActor::FinishReload()
+{
+	bIsReloading = false;
+}
+
+bool AGunActor::IsReloading()
+{
+	return bIsReloading;
 }
 
 float AGunActor::GetBulletSpeed() const

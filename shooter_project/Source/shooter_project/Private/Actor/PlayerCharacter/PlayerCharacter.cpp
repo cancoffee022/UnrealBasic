@@ -28,6 +28,10 @@ APlayerCharacter::APlayerCharacter(const FObjectInitializer& ObjectInitializer) 
 	// 생성된 컴포넌트(기본 CharacterMovementComponent)의 형식으로
 	// UPlayerCharacterMovementComponent 로 교체합니다
 {
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> ANIMMONTAGE_RELOAD(
+		TEXT("/Script/Engine.AnimMontage'/Game/JetpackAnimSet/Animations/Standard/AnimMontage_Reload.AnimMontage_Reload'"));
+	if (ANIMMONTAGE_RELOAD.Succeeded()) AnimMontage_Reload = ANIMMONTAGE_RELOAD.Object;
+
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_BODY
 	(TEXT("/Script/Engine.SkeletalMesh'/Game/Characters/Mannequins/Meshes/SKM_Quinn.SKM_Quinn'"));
 
@@ -341,8 +345,31 @@ void APlayerCharacter::OnVerticalInput(float axis)
 	movementComponent->OnVerticalMovement(axis);
 }
 
-void APlayerCharacter::OnReload()
+void APlayerCharacter::OnReloadPressed()
 {
+	if (!IsValid(EquippedGunActor)) return;
+	if (!EquippedGunActor->IsReloadable()) return;
+	if (EquippedGunActor->IsReloading()) return;
+	EquippedGunActor->StartReload();
+
+	FName montageSection = FName();
+
+	switch (EquippedItemType)
+	{
+	case EWorldItemType::Weapon_Pistol:
+		montageSection = MONTAGESECTION_PISTOL_RELOAD;
+		break;
+		
+	case EWorldItemType::Weapon_Rifle:
+		montageSection = MONTAGESECTION_RIFLE_RELOAD;
+		break;
+		
+	case EWorldItemType::Weapon_Shotgun:
+		montageSection = MONTAGESECTION_SHOTGUN_RELOAD;
+		break;
+	}
+
+	PlayAnimMontage(AnimMontage_Reload, 1.0f, montageSection);
 
 }
 

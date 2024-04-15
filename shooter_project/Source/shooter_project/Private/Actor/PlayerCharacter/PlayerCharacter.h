@@ -7,6 +7,10 @@
 #include "Enum/WorldItemType.h"
 #include "PlayerCharacter.generated.h"
 
+#define MONTAGESECTION_PISTOL_RELOAD		TEXT("Section_Pistol")
+#define MONTAGESECTION_SHOTGUN_RELOAD		TEXT("Section_Shotgun")
+#define MONTAGESECTION_RIFLE_RELOAD			TEXT("Section_Rifle")
+
 UCLASS()
 class SHOOTER_PROJECT_API APlayerCharacter : public ACharacter
 {
@@ -15,7 +19,10 @@ class SHOOTER_PROJECT_API APlayerCharacter : public ACharacter
 
 
 protected:
-// SpringArm 컴포넌트 추가
+	UPROPERTY(VisibleAnywhere)
+	class UAnimMontage* AnimMontage_Reload;
+
+	// SpringArm 컴포넌트 추가
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* SpringArmComponent;
 
@@ -117,7 +124,7 @@ public:
 	void OnHorizontalInput(float axis);
 	void OnVerticalInput(float axis);
 
-	void OnReload();
+	void OnReloadPressed();
 
 	FORCEINLINE FIntVector GetInputAxisRaw() const
 	{

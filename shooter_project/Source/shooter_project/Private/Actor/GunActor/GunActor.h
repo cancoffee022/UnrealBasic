@@ -54,6 +54,9 @@ private:
 
 	UPROPERTY()
 	bool IsBlocked;
+	
+	UPROPERTY()
+	bool bIsReloading;
 
 	UPROPERTY()
 	FVector BlockedNormal;
@@ -109,6 +112,15 @@ public:
 	// 총알을 생성합니다
 	UFUNCTION(BlueprintCallable)
 	class ABulletActor* CreateBullet();
+
+	// 재장전 가능 상태를 확인합니다.
+	bool IsReloadable() const;
+
+	void StartReload();
+	void FinishReload();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsReloading();
 	
 	// 총알 속력을 얻습니다
 	UFUNCTION(BlueprintCallable)

@@ -20,7 +20,7 @@ void AGamePlayerController::SetupInputComponent()
 
 	InputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ThisClass::OnJumpInput);
 
-	InputComponent->BindAction(TEXT("Reload"), EInputEvent::IE_Pressed, this, &ThisClass::OnReload);
+	InputComponent->BindAction(TEXT("Reload"), EInputEvent::IE_Pressed, this, &ThisClass::OnReloadPressed);
 
 	InputComponent->BindAction(TEXT("Fire"), EInputEvent::IE_Pressed, this, &ThisClass::OnFirePressed);
 	InputComponent->BindAction(TEXT("Fire"), EInputEvent::IE_Released, this, &ThisClass::OnFireReleased);
@@ -124,6 +124,10 @@ void AGamePlayerController::OnMouseY(float axis)
 
 }
 
-void AGamePlayerController::OnReload()
+void AGamePlayerController::OnReloadPressed()
 {
+	APlayerCharacter* playerCharacter = Cast<APlayerCharacter>(GetPawn());
+	if (!IsValid(playerCharacter)) return;
+
+	playerCharacter->OnReloadPressed();
 }
