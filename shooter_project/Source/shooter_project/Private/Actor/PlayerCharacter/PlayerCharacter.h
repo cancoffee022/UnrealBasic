@@ -113,6 +113,9 @@ private:
 
 	void Fire();
 
+	UFUNCTION()
+	void OnReloaded();
+
 public:
 	void OnFirePressed();
 	void OnFireReleased();

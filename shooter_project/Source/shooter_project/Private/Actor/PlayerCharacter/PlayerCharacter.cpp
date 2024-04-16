@@ -87,6 +87,10 @@ void APlayerCharacter::BeginPlay()
 	
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &APlayerCharacter::OnPlayerCharacterBeginOverlap);
 	GetCapsuleComponent()->OnComponentEndOverlap.AddUniqueDynamic(this, &APlayerCharacter::OnPlayerCharacterEndOverlap);
+
+	Cast<UPlayerCharacterAnimInstance>(GetMesh()->GetAnimInstance())->OnReloadedEvent.AddUObject(this, &ThisClass::OnReloaded);
+
+	bReplicates = true;
 }
 
 // Called every frame
@@ -288,6 +292,25 @@ void APlayerCharacter::Fire()
 	if (!IsValid(EquippedGunActor)) return;
 
 	EquippedGunActor->Fire();
+}
+
+void APlayerCharacter::OnReloaded()
+{
+	if (!IsValid(EquippedGunActor)) return;
+
+	EquippedGunActor->OnReloaded();
+	
+	// 자신의 플레이어 컨트롤러를 얻습니다
+	AGamePlayerController* playerController =
+		Cast<AGamePlayerController>(GetController());
+
+	if (!IsLocallyControlled()) return;
+	if (!IsValid(playerController)) return;
+	
+	playerController->GetPlayerWidget()->UpdateBulletRemainText(EquippedGunActor->GetRemainBullets(),
+		EquippedGunActor->GetMaxBulletCount());
+
+	UE_LOG(LogTemp, Warning, TEXT("APlayerCharacter::OnReloaded"));
 }
 
 

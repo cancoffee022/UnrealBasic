@@ -17,6 +17,14 @@ public:
 	FOnFireFinishedEvent OnFireFinished;
 
 private:
+	// 사운드 클래스
+	UPROPERTY()
+	TSubclassOf<class AActor> BP_AudioActor;
+
+	// 사운드 풀
+	UPROPERTY()
+	TArray<class UAudioComponent*> SoundPool;
+
 	// 총알 클래스
 	UPROPERTY()
 	TSubclassOf<class ABulletActor> BP_BulletActor;
@@ -47,6 +55,9 @@ protected:
 
 private:
 	struct FWorldItemInfo* GunInfo;
+
+	UPROPERTY()
+	class USoundBase* FireSound;
 
 	// 마지막 발사시간
 	UPROPERTY()
@@ -85,6 +96,10 @@ public:
 public:
 	void InitializeGunActor(struct FWorldItemInfo* worldItemInfo);
 
+private:
+	class UAudioComponent* GetUseableAudioComponent();
+
+public:
 	UFUNCTION(BlueprintCallable)
 	void DecreaseRemainBullet();
 
@@ -106,8 +121,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void UpdateLastFireTime();
 
+	// 발사 가능함을 확인합니다
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsFirable();
+
+	UFUNCTION(BlueprintCallable)
+	class AActor* CreateSound();
 
 	// 총알을 생성합니다
 	UFUNCTION(BlueprintCallable)
@@ -131,6 +150,16 @@ public:
 	FORCEINLINE void SetOwnerCharacter(class APlayerCharacter* ownerCharacter)
 	{
 		OwnerCharacter = ownerCharacter;
+	}
+
+	FORCEINLINE int32 GetMaxBullets() const
+	{
+		return MaxBullets;
+	}
+	
+	FORCEINLINE int32 GetRemainBullets() const
+	{
+		return RemainBullets;
 	}
 
 };

@@ -7,6 +7,8 @@
 #include "Enum/WorldItemType.h"
 #include "PlayerCharacterAnimInstance.generated.h"
 
+DECLARE_EVENT(UPlayerCharacterAnimInstance, FOnReloadedEventSignature)
+
 /**
  * 
  */
@@ -14,6 +16,9 @@ UCLASS()
 class UPlayerCharacterAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
+
+public:
+	FOnReloadedEventSignature OnReloadedEvent;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -45,4 +50,7 @@ protected:
 public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 	
+private:
+	UFUNCTION()
+	void AnimNotify_OnReloaded();
 };

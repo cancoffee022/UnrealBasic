@@ -41,4 +41,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap<FString, int32> IntValues;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TMap<FString, class USoundBase*> Sounds;
+
 };

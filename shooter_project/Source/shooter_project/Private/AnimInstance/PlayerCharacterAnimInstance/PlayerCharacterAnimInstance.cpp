@@ -31,3 +31,8 @@ void UPlayerCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	}
 }
+
+void UPlayerCharacterAnimInstance::AnimNotify_OnReloaded()
+{
+	OnReloadedEvent.Broadcast();
+}

@@ -5,8 +5,10 @@
 #include "Actor/BulletActor/BulletActor.h"
 #include "Actor/PlayerCharacter/PlayerCharacter.h"
 
-
 #include "Components/DecalComponent.h"
+#include "Components/AudioComponent.h"
+
+#include "Sound/SoundBase.h"
 
 #include "Struct/WorldItemInfo.h"
 
@@ -24,6 +26,10 @@ AGunActor::AGunActor()
 	static ConstructorHelpers::FClassFinder<AActor> BP_FIREBLOCKDECALACTOR(
 		TEXT("/Script/Engine.Blueprint'/Game/Blueprints/Actor/BP_FireBlockDecal.BP_FireBlockDecal_C'"));
 	if (BP_FIREBLOCKDECALACTOR.Succeeded()) FireBlockDecalActorClass = BP_FIREBLOCKDECALACTOR.Class;
+
+	static ConstructorHelpers::FClassFinder<AActor> BP_AUDIOACTOR(
+		TEXT("/Script/Engine.Blueprint'/Game/Blueprints/BP_AudioActor.BP_AudioActor_C'"));
+	if (BP_AUDIOACTOR.Succeeded()) BP_AudioActor = BP_AUDIOACTOR.Class;
 
 	DefaultRootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("DEF_ROOT"));
 	SetRootComponent(DefaultRootComponent);
@@ -72,9 +78,48 @@ void AGunActor::InitializeGunActor(FWorldItemInfo* worldItemInfo)
 {
 	GunInfo = worldItemInfo;
 
+	FString fireSoundKey = TEXT("FireSound");
+	if (GunInfo->Sounds.Contains(fireSoundKey))
+	{
+		FireSound = GunInfo->Sounds[fireSoundKey];
+	}
+
 	MaxBullets = GetMaxBulletCount();
 
 	OnReloaded();
+}
+
+UAudioComponent* AGunActor::GetUseableAudioComponent()
+{ 
+	UAudioComponent* audioComponent = nullptr;
+
+	for (UAudioComponent* audioComp : SoundPool)
+	{
+		// 사용중이지 않은 오디오 컴포넌트를 찾은 경우
+		if (!audioComponent->IsPlaying())
+		{
+			audioComponent = audioComp;
+			UE_LOG(LogTemp, Warning, TEXT("AGunActor::GetUseableAudioComponent() AudioActor Recycle"));
+			break;
+		}
+	}
+
+	if (audioComponent == nullptr)
+	{
+		AActor* createdAudioActor = GetWorld()->SpawnActor<AActor>(BP_AudioActor, GetActorLocation(), FRotator::ZeroRotator);
+
+		UE_LOG(LogTemp, Warning, TEXT("AGunActor::GetUseableAudioComponent() AuidoActor Created!"))
+
+		TArray<UAudioComponent*> audioComponents;
+		createdAudioActor->GetComponents<UAudioComponent>(audioComponents);
+
+		audioComponent = audioComponents[0];
+		SoundPool.Add(audioComponent);
+
+		// 발사 사운드 설정
+		audioComponent->SetSound(FireSound);
+	}
+	return audioComponent;
 }
 
 void AGunActor::DecreaseRemainBullet()
@@ -122,6 +167,7 @@ void AGunActor::UpdateFireDirection(const FVector& cameraWorldLocation, const FV
 void AGunActor::OnReloaded()
 {
 	RemainBullets = MaxBullets;
+	FinishReload();
 }
 
 void AGunActor::UpdateLastFireTime()
@@ -140,6 +186,18 @@ bool AGunActor::IsFirable()
 
 	float currentTime = GetWorld()->GetTimeSeconds();
 	return currentTime > LastFireTime + GunInfo->ShotDelay;
+}
+
+AActor* AGunActor::CreateSound()
+{
+
+	UAudioComponent* audioComponent = GetUseableAudioComponent();
+	// 위치 설정
+	audioComponent->GetOwner()->SetActorLocation(GetActorLocation());
+	
+	audioComponent->Play();
+
+	return audioComponent->GetOwner();
 }
 
 ABulletActor* AGunActor::CreateBullet()
