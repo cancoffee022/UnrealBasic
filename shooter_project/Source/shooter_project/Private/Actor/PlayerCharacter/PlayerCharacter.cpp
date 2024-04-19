@@ -1,18 +1,18 @@
 #include "Actor/PlayerCharacter/PlayerCharacter.h"
-#include "Actor/WorldItem/WorldItemActor.h"
 #include "Actor/PlayerController/GamePlayerController.h"
-#include "Actor/BulletActor/BulletActor.h"
+#include "Actor/WorldItem/WorldItemActor.h"
 #include "Actor/GunActor/GunActor.h"
+
+#include "Component/PlayerCharacterMovementComponent/PlayerCharacterMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/SphereComponent.h"
 
 #include "AnimInstance/PlayerCharacterAnimInstance/PlayerCharacterAnimInstance.h"
 
-#include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 
 #include "Widget/PlayerWidget/PlayerWidget.h"
-
-#include "Component/PlayerCharacterMovementComponent/PlayerCharacterMovementComponent.h"
-#include "Components/CapsuleComponent.h"
 
 #include "Struct/WorldItemInfo.h"
 
@@ -22,8 +22,8 @@
 
 // Sets default values
 APlayerCharacter::APlayerCharacter(const FObjectInitializer& ObjectInitializer) :
-	Super(ObjectInitializer.SetDefaultSubobjectClass<UPlayerCharacterMovementComponent>
-	(ACharacter::CharacterMovementComponentName))
+	Super(ObjectInitializer.SetDefaultSubobjectClass<UPlayerCharacterMovementComponent>(
+		ACharacter::CharacterMovementComponentName))
 	// ACharacter::CharacterMovementComponentName 로
 	// 생성된 컴포넌트(기본 CharacterMovementComponent)의 형식으로
 	// UPlayerCharacterMovementComponent 로 교체합니다
@@ -35,26 +35,19 @@ APlayerCharacter::APlayerCharacter(const FObjectInitializer& ObjectInitializer) 
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_BODY
 	(TEXT("/Script/Engine.SkeletalMesh'/Game/Characters/Mannequins/Meshes/SKM_Quinn.SKM_Quinn'"));
 
-	if (SK_BODY.Succeeded())
-	{
-		GetMesh()->SetSkeletalMesh(SK_BODY.Object);
-	}
+	if (SK_BODY.Succeeded()) GetMesh()->SetSkeletalMesh(SK_BODY.Object);
 
 	static ConstructorHelpers::FClassFinder<UPlayerCharacterAnimInstance> ANIMBP_PLAYERCHARACTER(
 		TEXT("/Script/Engine.AnimBlueprint'/Game/Blueprints/AnimInstance/AnimBP_PlayerCharacter.AnimBP_PlayerCharacter_C'"));
 
-
-	if (ANIMBP_PLAYERCHARACTER.Succeeded())
-	{
-		GetMesh()->SetAnimClass(ANIMBP_PLAYERCHARACTER.Class);
-	}
+	if (ANIMBP_PLAYERCHARACTER.Succeeded())	GetMesh()->SetAnimClass(ANIMBP_PLAYERCHARACTER.Class);
 
 
 	// 컨트롤러의 Yaw회전을 사용하지 않습니다
 	bUseControllerRotationYaw = false;
 
 	// 스프링암 컴포넌트 추가
-	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRING_ARM"));
 	SpringArmComponent->SetupAttachment(GetRootComponent());
 	SpringArmComponent->SetRelativeLocation(FVector(0.f, 0.f, 50.f));
 	SpringArmComponent->SocketOffset = FVector::RightVector * 50.f;
@@ -64,11 +57,13 @@ APlayerCharacter::APlayerCharacter(const FObjectInitializer& ObjectInitializer) 
 	SpringArmComponent->bInheritRoll = false;
 	SpringArmComponent->bInheritYaw = true;
 
+	HeadCollision = CreateDefaultSubobject<USphereComponent>(TEXT("HEAD_COLLSISION"));
+	HeadCollision->SetupAttachment(GetMesh(), TEXT("Socket_Head"));
+
 	// 카메라 컴포넌트 추가
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CAM_COMP"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
 
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
 }
@@ -85,10 +80,16 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &APlayerCharacter::OnPlayerCharacterBeginOverlap);
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddUniqueDynamic(this, &APlayerCharacter::OnPlayerCharacterBeginOverlap);
 	GetCapsuleComponent()->OnComponentEndOverlap.AddUniqueDynamic(this, &APlayerCharacter::OnPlayerCharacterEndOverlap);
 
 	Cast<UPlayerCharacterAnimInstance>(GetMesh()->GetAnimInstance())->OnReloadedEvent.AddUObject(this, &ThisClass::OnReloaded);
+
+	GetMesh()->SetCollisionProfileName(TEXT("PhysicsBody"));
+	GetMesh()->SetGenerateOverlapEvents(true);
+
+	Tags.Add(TEXT("Character"));
+	HeadCollision->ComponentTags.Add(TEXT("Head"));
 
 	bReplicates = true;
 }
@@ -101,6 +102,7 @@ void APlayerCharacter::Tick(float DeltaTime)
 	CurrentSpeed = GetVelocity().Length();
 
 	AGamePlayerController* playerController = Cast<AGamePlayerController>(GetController());
+	if (!IsValid(playerController)) return;
 	if (!IsLocallyControlled()) return;
 	
 
@@ -124,6 +126,15 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	PLOG(TEXT("Damage : %.2f"), DamageAmount);
+
+	return 0.0f;
 }
 
 void APlayerCharacter::OnPlayerCharacterBeginOverlap(UPrimitiveComponent* OverlappedComponent,
@@ -179,7 +190,7 @@ void APlayerCharacter::SortWorldItemByDistance()
 	FVector characterLocation = GetActorLocation();
 
 	OverlappedWorldItems.Sort(
-		[characterLocation](AWorldItemActor& a, AWorldItemActor& b)
+		[characterLocation](const AWorldItemActor& a, const AWorldItemActor& b)
 		{
 			FVector aLocation = a.GetActorLocation();
 			float aDistance = FVector::Distance(characterLocation, aLocation);
@@ -245,6 +256,7 @@ void APlayerCharacter::EquipItem(FWorldItemInfo* worldItemInfo)
 	EquippedGunActor = GetWorld()->SpawnActor<AGunActor>(worldItemInfo->GunActorClass, socketTransform);
 	EquippedGunActor->InitializeGunActor(worldItemInfo);
 	EquippedGunActor->SetOwnerCharacter(this);
+	OnFireFinished(EquippedGunActor->GetMaxBulletCount(), EquippedGunActor->GetMaxBulletCount());
 
 	FName socketName;
 	switch (worldItemInfo->ItemType)
@@ -268,7 +280,7 @@ void APlayerCharacter::EquipItem(FWorldItemInfo* worldItemInfo)
 	EquippedGunActor->SetActorRelativeRotation(FVector::RightVector.Rotation());
 
 	EquippedGunActor->OnFireFinished.AddUObject(this, &ThisClass::OnFireFinished);
-	OnFireFinished(EquippedGunActor->GetMaxBulletCount(), EquippedGunActor->GetMaxBulletCount());
+
 
 	EquippedItemType = worldItemInfo->ItemType;
 
@@ -284,7 +296,7 @@ void APlayerCharacter::OnFireFinished(int32 remain, int32 max)
 	if (!IsValid(playerController)) return;
 
 	playerController->GetPlayerWidget()->UpdateBulletRemainText(remain, max);
-	UE_LOG(LogTemp, Warning, TEXT("remain-%d max-%d"), remain, max);
+	//UE_LOG(LogTemp, Warning, TEXT("remain-%d max-%d"), remain, max);
 }
 
 void APlayerCharacter::Fire()
@@ -299,6 +311,7 @@ void APlayerCharacter::OnReloaded()
 	if (!IsValid(EquippedGunActor)) return;
 
 	EquippedGunActor->OnReloaded();
+	EquippedGunActor->FinishReload();
 	
 	// 자신의 플레이어 컨트롤러를 얻습니다
 	AGamePlayerController* playerController =
@@ -310,7 +323,6 @@ void APlayerCharacter::OnReloaded()
 	playerController->GetPlayerWidget()->UpdateBulletRemainText(EquippedGunActor->GetRemainBullets(),
 		EquippedGunActor->GetMaxBulletCount());
 
-	UE_LOG(LogTemp, Warning, TEXT("APlayerCharacter::OnReloaded"));
 }
 
 
@@ -400,6 +412,3 @@ bool APlayerCharacter::IsEquipped() const
 {
 	return IsValid(EquippedGunActor);
 }
-
-
-

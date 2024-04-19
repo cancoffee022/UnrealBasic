@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Enum/WorldItemType.h"
 #include "GunActor.generated.h"
 
 DECLARE_EVENT_TwoParams(AGunActor, FOnFireFinishedEvent, int32, int32)
@@ -80,6 +81,8 @@ private:
 
 	UPROPERTY()
 	int32 RemainBullets;
+
+	float Damage;
 
 public:	
 	// Sets default values for this actor's properties

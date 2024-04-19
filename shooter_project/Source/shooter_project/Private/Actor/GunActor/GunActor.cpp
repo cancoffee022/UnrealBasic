@@ -84,6 +84,12 @@ void AGunActor::InitializeGunActor(FWorldItemInfo* worldItemInfo)
 		FireSound = GunInfo->Sounds[fireSoundKey];
 	}
 
+	FString damage = TEXT("Damage");
+	if (GunInfo->FloatValues.Contains(damage))
+	{
+		Damage = GunInfo->FloatValues[damage];
+	}
+
 	MaxBullets = GetMaxBulletCount();
 
 	OnReloaded();
@@ -96,7 +102,7 @@ UAudioComponent* AGunActor::GetUseableAudioComponent()
 	for (UAudioComponent* audioComp : SoundPool)
 	{
 		// 사용중이지 않은 오디오 컴포넌트를 찾은 경우
-		if (!audioComponent->IsPlaying())
+		if (!audioComp->IsPlaying())
 		{
 			audioComponent = audioComp;
 			UE_LOG(LogTemp, Warning, TEXT("AGunActor::GetUseableAudioComponent() AudioActor Recycle"));
@@ -190,7 +196,6 @@ bool AGunActor::IsFirable()
 
 AActor* AGunActor::CreateSound()
 {
-
 	UAudioComponent* audioComponent = GetUseableAudioComponent();
 	// 위치 설정
 	audioComponent->GetOwner()->SetActorLocation(GetActorLocation());
@@ -207,6 +212,8 @@ ABulletActor* AGunActor::CreateBullet()
 	ABulletActor* bulletActor = GetWorld()->SpawnActor<ABulletActor>(BP_BulletActor,
 		GunMesh->GetSocketLocation(SOCKET_NAME_FIRE_POS),
 		FRotator::ZeroRotator);
+
+	bulletActor->InitializeBullet(Damage);
 
 	return bulletActor;
 }

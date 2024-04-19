@@ -29,6 +29,8 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* CameraComponent;
 
+	UPROPERTY(VisibleAnywhere)
+	class USphereComponent* HeadCollision;
 
 	// 입력 축 값을 나타냅니다
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Replicated)
@@ -75,6 +77,11 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	virtual float TakeDamage(float DamageAmount,
+		struct FDamageEvent const& DamageEvent,
+		class AController* EventInstigator,
+		AActor* DamageCauser) override;
 
 private:
 	UFUNCTION()
